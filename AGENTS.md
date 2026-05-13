@@ -13,6 +13,48 @@ Prefer small, scoped changes over broad rewrites.
   - `npm run lint`
   - `npm run build`
 
+## Branch Workflow
+
+Do not work directly on `main` for feature, fix, UI, or documentation changes.
+
+Create a separate branch for every distinct task:
+
+- `feature/<short-description>` for new features
+- `fix/<short-description>` for bug fixes
+- `docs/<short-description>` for documentation-only changes
+- `refactor/<short-description>` for refactoring without behavior changes
+
+Examples:
+
+- `fix/scroll-to-top`
+- `docs/restructure-agent-context`
+- `feature/welcome-page-selector`
+- `refactor/content-adapter`
+
+Keep each branch focused on one logical change.
+Do not mix unrelated changes in the same branch.
+
+Before starting implementation:
+
+1. Check the current branch.
+2. If currently on `main`, create a new task branch.
+3. If already on a task branch, verify that the requested work belongs to that
+   branch.
+4. If the requested work is unrelated to the current branch, create a new branch
+   from updated `main`.
+
+Before commit:
+
+- Run `git status`.
+- Review changed files.
+- Make sure the branch contains only changes related to the task.
+
+After the user confirms the result:
+
+- Commit the branch.
+- Push the branch.
+- Merge into `main` only after manual/user verification or explicit approval.
+
 ## Current Project Shape
 
 - `/` is implemented in `src/app/page.js`.

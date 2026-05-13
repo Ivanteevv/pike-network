@@ -90,6 +90,8 @@ background only; they must not override the canonical docs above.
 
 ## Working Rules
 
+- Do not work directly on `main` for feature, fix, UI, or documentation changes;
+  follow the branch workflow in [AGENTS.md](AGENTS.md).
 - Treat `src/lib/content/mock-site-data.js` as a temporary development source,
   not the long-term source of truth.
 - Preserve `src/lib/content/get-site-data.js` as the content adapter boundary.
