@@ -148,13 +148,13 @@ export function AgeGate() {
     >
       <div className={styles.backdrop} />
       <section className={styles.panel}>
-        <div className={styles.brand}>ЩУКА</div>
+        <div className={styles.brand}>Щука</div>
         <h1 id="age-gate-title" className={styles.title}>
-          Добро пожаловать
+          Вам уже есть 18?
         </h1>
         <p id="age-gate-description" className={styles.description}>
-          Сайт содержит информацию об алкогольной продукции и предназначен
-          только для лиц старше {LEGAL_AGE} лет.
+          На сайте есть информация о баре, напитках и событиях. Подтвердите
+          возраст, чтобы продолжить.
         </p>
 
         <div className={styles.actions}>
@@ -163,14 +163,14 @@ export function AgeGate() {
             className={styles.primaryAction}
             onClick={handleConfirm}
           >
-            Мне есть 18
+            Да, мне есть {LEGAL_AGE}
           </button>
           <button
             type="button"
             className={styles.secondaryAction}
             onClick={handleExit}
           >
-            Мне нет 18
+            Нет
           </button>
         </div>
       </section>

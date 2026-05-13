@@ -2,165 +2,231 @@
   margin-top: 26px;
 }
 
-.pointsHeader {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.pointsKicker,
-.pointOptionIndex {
-  color: var(--color-accent);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-size: 0.74rem;
-}
-
 .pointsMeta {
-  display: grid;
-  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-.pointsCount {
+.pointsMeta span,
+.pointsMeta a,
+.status {
   display: inline-flex;
   align-items: center;
   width: fit-content;
   min-height: 34px;
   padding: 0 12px;
   border: 1px solid var(--paper-border-a16);
-  border-radius: 999px;
-  background: var(--white-a05);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--base-paper-strong);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  font-weight: 700;
 }
 
-.pointsHint {
-  max-width: 38rem;
+.pointsMeta a {
+  color: var(--orange-350);
+  transition: var(--transition-colors);
+}
+
+.pointsGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.pointCard {
+  position: relative;
+  display: grid;
+  gap: 13px;
+  min-height: 280px;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid var(--paper-border-a14);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(17, 12, 10, 0.76);
+  box-shadow:
+    inset 0 1px 0 var(--white-a08),
+    0 22px 64px rgba(0, 0, 0, 0.22);
+}
+
+.pointCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(239, 171, 139, 0.13), transparent 36%);
+  pointer-events: none;
+}
+
+.pointCard > * {
+  position: relative;
+}
+
+.pointTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pointTopline > span:first-child {
+  color: var(--orange-350);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.status {
+  min-height: 30px;
+  padding: 0 10px;
+  color: var(--base-paper-strong);
+  font-size: 0.78rem;
+}
+
+.pointCard h3 {
+  color: var(--base-paper-strong);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--type-display-card);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.address {
+  color: var(--base-paper-strong);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.42;
+}
+
+.summary {
   color: var(--color-text-muted);
   line-height: 1.58;
 }
 
-.pointsRail {
-  display: grid;
-  gap: 12px;
-}
-
-.pointOption {
-  --press-x: 50%;
-  --press-y: 50%;
-  --press-rotate-x: 0deg;
-  --press-rotate-y: 0deg;
-  display: grid;
-  position: relative;
-  gap: 12px;
-  min-height: 0;
-  overflow: hidden;
-  padding: 18px 18px 20px;
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  background:
-    linear-gradient(180deg, var(--white-a08), var(--white-a025)),
-    linear-gradient(180deg, var(--ink-a24), var(--ink-a34));
-  box-shadow: var(--shadow-card-glass);
-  color: inherit;
-  isolation: isolate;
-  text-align: left;
-  text-decoration: none;
-  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-  transition:
-    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color var(--duration-slow) var(--ease-standard),
-    background 220ms ease,
-    box-shadow 220ms ease;
-}
-
-.pointOption > * {
-  position: relative;
-  z-index: 0;
-}
-
-.pointOptionTopline {
+.cardActions {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 10px;
+  align-self: end;
+  margin-top: 4px;
 }
 
-.pointOptionCta {
-  color: var(--paper-border-a42);
-  font-size: 0.84rem;
-  line-height: 1.2;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.cardLink,
+.phoneLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  font-weight: 800;
+  transition: var(--transition-colors);
 }
 
-.pointOptionName {
-  font-family: var(--font-display), sans-serif;
-  font-size: var(--type-display-card);
-  line-height: 0.94;
-}
-
-.pointOptionAddress {
+.cardLink {
+  border-color: var(--button-primary-border);
+  background: linear-gradient(
+    180deg,
+    var(--button-orange-500),
+    var(--button-orange-700)
+  );
   color: var(--base-paper-strong);
-  font-size: 1rem;
-  line-height: 1.4;
 }
 
-.pointOptionMeta {
-  color: var(--color-text-muted);
-  font-size: 0.94rem;
-  line-height: 1.5;
+.phoneLink {
+  border-color: var(--paper-border-a16);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--base-paper-strong);
 }
 
-.pointOption:focus-visible {
+.pointsMeta a:focus-visible,
+.cardLink:focus-visible,
+.phoneLink:focus-visible {
   outline: none;
   box-shadow:
-    inset 0 1px 0 var(--white-a14),
     var(--focus-ring),
     var(--focus-ring-soft);
 }
 
-@media (min-width: 760px) {
-  .pointsMeta {
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
+@media (hover: hover) and (pointer: fine) {
+  .pointCard {
+    transition:
+      border-color var(--duration-medium) var(--ease-standard),
+      box-shadow var(--duration-medium) var(--ease-standard),
+      transform var(--duration-medium) var(--ease-standard);
   }
 
-  .pointsRail {
+  .pointCard:hover {
+    border-color: var(--gold-a24);
+    box-shadow:
+      inset 0 1px 0 var(--white-a12),
+      0 30px 78px rgba(0, 0, 0, 0.28);
+    transform: translateY(-2px);
+  }
+
+  .pointsMeta a:hover,
+  .phoneLink:hover {
+    border-color: var(--paper-border-a24);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .cardLink:hover {
+    background: var(--button-primary-bg-hover);
+    box-shadow: var(--shadow-primary-hover);
+  }
+}
+
+@media (min-width: 760px) {
+  .pointsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 1100px) {
-  .pointsRail {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .pointOption {
-    will-change: transform;
+@media (max-width: 520px) {
+  .pointsMeta {
+    align-items: stretch;
   }
 
-  .pointOption:hover {
-    border-color: var(--gold-a24);
-    background:
-      linear-gradient(180deg, var(--white-a08), var(--white-a03)),
-      linear-gradient(180deg, var(--ink-a24), var(--ink-a34));
-    box-shadow:
-      inset 0 1px 0 var(--white-a12),
-      inset 0 16px 30px rgb(255 255 255 / 0.02),
-      inset 0 -42px 64px rgb(0 0 0 / 0.34),
-      0 34px 82px rgb(0 0 0 / 0.32);
-    transform:
-      perspective(1000px)
-      rotateX(var(--press-rotate-x))
-      rotateY(var(--press-rotate-y));
+  .pointsMeta span,
+  .pointsMeta a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pointCard {
+    min-height: 0;
+    padding: 20px 18px;
+  }
+
+  .pointTopline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cardActions {
+    flex-direction: column;
+  }
+
+  .cardLink,
+  .phoneLink {
+    width: 100%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pointOption {
+  .pointCard,
+  .pointsMeta a,
+  .cardLink,
+  .phoneLink {
     transition: none;
   }
 }

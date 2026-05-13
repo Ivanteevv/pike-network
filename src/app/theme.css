@@ -178,15 +178,15 @@
   --button-primary-text-hover: var(--base-paper-strong);
   --button-primary-inset: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   --button-primary-inset-hover: inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  --button-font-family: var(--font-display), var(--font-sans), sans-serif;
-  --button-font-size: 1.02rem;
-  --button-font-weight: 400;
-  --button-letter-spacing: 0.035em;
+  --button-font-family: var(--font-sans), sans-serif;
+  --button-font-size: 0.94rem;
+  --button-font-weight: 700;
+  --button-letter-spacing: 0.02em;
 
   /* Type scale */
-  --type-display-hero: clamp(3.2rem, 7.2vw, 5.6rem);
-  --type-display-section: clamp(1.8rem, 3.8vw, 2.9rem);
-  --type-display-card: clamp(1.55rem, 3vw, 2.2rem);
+  --type-display-hero: clamp(4.2rem, 10vw, 7.8rem);
+  --type-display-section: clamp(2.25rem, 4.8vw, 3.8rem);
+  --type-display-card: clamp(1.9rem, 3.4vw, 2.55rem);
   --type-display-location: clamp(1.7rem, 3.1vw, 2.3rem);
 
   /* Motion */

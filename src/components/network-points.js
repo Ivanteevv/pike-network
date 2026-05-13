@@ -3,81 +3,55 @@
 import Link from "next/link";
 import styles from "./network-points.module.css";
 
-const DESKTOP_POINTER_QUERY = "(hover: hover) and (pointer: fine)";
+function formatBarsCount(barsCount, countLabels) {
+  const label =
+    barsCount === 1
+      ? countLabels.one
+      : barsCount < 5
+        ? countLabels.few
+        : countLabels.many;
 
-function supportsDesktopPointer() {
-  return (
-    typeof window !== "undefined" &&
-    window.matchMedia(DESKTOP_POINTER_QUERY).matches
-  );
+  return `${barsCount} ${label}`;
 }
 
-function updatePointerDepth(event) {
-  if (event.pointerType && event.pointerType !== "mouse") {
-    return;
-  }
-
-  if (!supportsDesktopPointer()) {
-    return;
-  }
-
-  const card = event.currentTarget;
-  const rect = card.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  const ratioX = x / rect.width - 0.5;
-  const ratioY = y / rect.height - 0.5;
-
-  card.style.setProperty("--press-x", `${x}px`);
-  card.style.setProperty("--press-y", `${y}px`);
-  card.style.setProperty("--press-rotate-x", `${(-ratioY * 6.8).toFixed(2)}deg`);
-  card.style.setProperty("--press-rotate-y", `${(ratioX * 8.4).toFixed(2)}deg`);
-}
-
-function resetPointerDepth(event) {
-  const card = event.currentTarget;
-
-  card.style.setProperty("--press-x", "50%");
-  card.style.setProperty("--press-y", "50%");
-  card.style.setProperty("--press-rotate-x", "0deg");
-  card.style.setProperty("--press-rotate-y", "0deg");
-}
-
-export function NetworkPointsSection({ bars }) {
+export function NetworkPointsSection({ bars, copy, phoneE164 }) {
   const barsCountLabel =
-    bars.length === 1
-      ? "1 локация"
-      : bars.length < 5
-        ? `${bars.length} локации`
-        : `${bars.length} локаций`;
+    copy?.countLabels
+      ? formatBarsCount(bars.length, copy.countLabels)
+      : `${bars.length}`;
 
   return (
     <div className={styles.pointsShell}>
-      <div className={styles.pointsHeader}>
-        <p className={styles.pointsKicker}>Выбор бара</p>
-        <div className={styles.pointsMeta}>
-          <span className={styles.pointsCount}>{barsCountLabel}</span>
-          <p className={styles.pointsHint}>Выберите точку и откройте страницу бара.</p>
-        </div>
+      <div className={styles.pointsMeta}>
+        <span>{barsCountLabel}</span>
+        <a href={`tel:${phoneE164}`}>{copy.reservationLabel}</a>
       </div>
 
-      <div className={styles.pointsRail} aria-label="Точки сети">
+      <div className={styles.pointsGrid} aria-label="Точки сети">
         {bars.map((bar, index) => (
-          <Link
-            key={bar.slug}
-            href={`/bars/${bar.slug}`}
-            className={styles.pointOption}
-            onPointerMove={updatePointerDepth}
-            onPointerLeave={resetPointerDepth}
-          >
-            <span className={styles.pointOptionTopline}>
-              <span className={styles.pointOptionIndex}>Бар {String(index + 1).padStart(2, "0")}</span>
-              <span className={styles.pointOptionCta}>Открыть</span>
-            </span>
-            <span className={styles.pointOptionName}>{bar.shortLabel}</span>
-            <span className={styles.pointOptionAddress}>{bar.addressLine}</span>
-            <span className={styles.pointOptionMeta}>Меню, события и контакты</span>
-          </Link>
+          <article key={bar.slug} className={styles.pointCard}>
+            <div className={styles.pointTopline}>
+              <span>
+                {copy.cardIndexLabel} {String(index + 1).padStart(2, "0")}
+              </span>
+              {bar.statusLabel ? (
+                <span className={styles.status}>{bar.statusLabel}</span>
+              ) : null}
+            </div>
+
+            <h3>{bar.shortLabel}</h3>
+            <p className={styles.address}>{bar.addressLine}</p>
+            <p className={styles.summary}>{bar.summary}</p>
+
+            <div className={styles.cardActions}>
+              <Link href={`/bars/${bar.slug}`} className={styles.cardLink}>
+                {copy.openLabel}
+              </Link>
+              <a href={`tel:${bar.phoneE164}`} className={styles.phoneLink}>
+                {copy.phoneLabel}
+              </a>
+            </div>
+          </article>
         ))}
       </div>
     </div>

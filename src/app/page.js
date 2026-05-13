@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { HeroMedia } from "@/components/hero-media";
 import { JsonLd } from "@/components/json-ld";
 import { NetworkPointsSection } from "@/components/network-points";
@@ -26,33 +27,37 @@ export default async function HomePage() {
 
       <HeroMedia media={network.hero.media} priority variant="immersive">
         <div className={styles.heroInner}>
+          <div className={styles.heroTopline}>
+            <Image
+              className={styles.heroLogo}
+              src={network.logoUrl}
+              alt={network.name}
+              width={76}
+              height={76}
+              priority
+            />
+            <a className={styles.heroPhone} href={`tel:${network.phoneE164}`}>
+              {network.phoneDisplay}
+            </a>
+          </div>
+
           <div className={styles.heroStage}>
             <div className={styles.heroCopy}>
+              <p className={styles.kicker}>{network.hero.eyebrow}</p>
               <h1>{network.hero.title}</h1>
+              <p className={styles.heroDescription}>{network.hero.description}</p>
 
               <div className={styles.actions}>
                 <a className={styles.primaryAction} href="#bars">
                   Выбрать бар
                 </a>
-                <div className={styles.heroUtilityActions}>
-                  <a
-                    className={styles.secondaryAction}
-                    href={network.mapSearchUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Все бары сети
-                  </a>
-                  <a
-                    className={`${styles.secondaryAction} ${styles.phoneAction}`}
-                    href={`tel:${network.phoneE164}`}
-                  >
-                    Позвонить
-                  </a>
-                </div>
+                <a
+                  className={`${styles.secondaryAction} ${styles.phoneAction}`}
+                  href={`tel:${network.phoneE164}`}
+                >
+                  Позвонить
+                </a>
               </div>
-
-              <p className={styles.heroDescription}>{network.hero.description}</p>
             </div>
           </div>
         </div>
@@ -61,27 +66,15 @@ export default async function HomePage() {
       <main className={styles.main}>
         <section id="bars" className={styles.section}>
           <div className={styles.sectionHeading}>
-            <p className={styles.sectionKicker}>Точки сети</p>
-            <h2>Сначала выберите свою локацию</h2>
-            <p>Откройте нужный бар, чтобы посмотреть меню, события и контакты.</p>
+            <p className={styles.sectionKicker}>{network.locationChoice.eyebrow}</p>
+            <h2>{network.locationChoice.title}</h2>
+            <p>{network.locationChoice.description}</p>
           </div>
-          <NetworkPointsSection bars={bars} />
-        </section>
-
-        <section className={styles.section}>
-          <div className={styles.sectionHeading}>
-            <p className={styles.sectionKicker}>Во всех точках</p>
-            <h2>Что вы найдете в каждой точке</h2>
-            <p>Базовый сценарий везде один: матч, еда, напитки и быстрый контакт.</p>
-          </div>
-          <div className={styles.commonGrid}>
-            {network.commonFormats.map((item) => (
-              <article key={item.title} className={styles.commonCard}>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </article>
-            ))}
-          </div>
+          <NetworkPointsSection
+            bars={bars}
+            copy={network.locationChoice}
+            phoneE164={network.phoneE164}
+          />
         </section>
       </main>
 
