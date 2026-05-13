@@ -48,6 +48,17 @@ Tradeoffs:
 - Slug changes should be treated as deliberate migrations, not casual text edits.
 - Homepage cards and sitemap generation should continue to derive from the same slug-bearing source.
 
+## Boundary Of This ADR
+
+This ADR defines the route shape and lookup key. It does not yet define:
+
+- whether draft records may reuse a slug held by another draft or published bar
+- whether preview mode can resolve unpublished slugs
+- whether slug redirects are mandatory in the first CMS-backed release
+
+Those follow-on governance decisions must be documented before CMS integration
+is treated as execution-ready.
+
 ## Provisional Assumptions
 
 - The single-domain route model remains acceptable for the first CMS-backed release.

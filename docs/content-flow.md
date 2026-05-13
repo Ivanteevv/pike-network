@@ -4,6 +4,9 @@
 
 This document explains how content moves through the system today and how it is expected to move after CMS integration.
 
+The internal frontend contracts referenced here are defined in
+[content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md).
+
 ## Current Flow
 
 ### Current Source of Truth
@@ -18,6 +21,9 @@ This document explains how content moves through the system today and how it is 
 3. `src/app/bars/[slug]/page.js` calls `getBarBySlug(slug)` and `getBars()`.
 4. `generateStaticParams()` derives bar routes from the current slug list.
 5. `src/app/sitemap.js` derives sitemap entries from the same bar list.
+
+Today the adapter returns the raw mock object shape directly. The desired steady
+state is that it returns only the normalized contracts consumed by routes.
 
 ### Current Media Path
 
@@ -53,15 +59,25 @@ This document explains how content moves through the system today and how it is 
 
 1. Editor uploads hero media, gallery images, and menu files through the CMS.
 2. CMS stores metadata and file references.
-3. Frontend receives stable URLs or asset descriptors from the adapter.
+3. Frontend adapter resolves CMS asset references into the URL-based media
+   fields defined in `docs/content-contracts.md`.
 4. UI components render remote assets without knowing storage internals.
 
 ## Transition Rules
 
 - Keep the content access boundary in `src/lib/content`.
 - Replace the data source behind the adapter before changing component props.
-- Preserve the current internal bar-page contract until a deliberate contract change is approved.
+- Preserve the contracts in `docs/content-contracts.md` until a deliberate
+  contract change is approved.
 - Treat `public/mock` as temporary fixture data only.
+
+## Published View Boundary
+
+- Until preview and draft behavior is explicitly approved, route generation,
+  sitemap generation, and page fetches are defined against published content
+  only.
+- Preview-only visibility and draft access must be documented before any
+  implementation relies on them.
 
 ## Current vs Target
 

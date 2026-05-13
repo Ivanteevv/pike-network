@@ -4,6 +4,9 @@
 
 This document describes the current frontend architecture in this repository and the target architecture implied by the project direction.
 
+The canonical internal frontend data contracts are defined in
+[content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md).
+
 ## Current Architecture
 
 ### Runtime
@@ -25,18 +28,26 @@ This document describes the current frontend architecture in this repository and
   - `getBars()`
   - `getBarBySlug(slug)`
 - Current adapter implementation: `src/lib/content/get-site-data.js`
+- Current implementation detail: the adapter is still a direct pass-through to
+  mock objects, so the normalization boundary is a design seam, not yet a fully
+  implemented mapper layer
 
 ### Media Layer
 
 - Temporary media is stored in `public/mock`
-- Components consume media as URL strings, not as imported files
+- Components consume renderable URL-based media contracts, not imported files
 - Hero media rendering is centralized in `src/components/hero-media.js`
 - Gallery rendering is centralized in `src/components/bar-gallery.js`
+- In the target system, CMS or storage layers may keep asset references, but the
+  frontend adapter must resolve those into the URL fields defined in
+  [content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md)
 
 ### Rendering Pattern
 
 1. Route reads from the content layer.
-2. Route passes normalized data into UI components.
+2. Today, route code still receives the raw mock object shape; the intended
+   steady state is for route code to depend only on the normalized contracts in
+   `src/lib/content`.
 3. Page emits metadata and JSON-LD.
 4. Sitemap generation reads the same bar list used for route generation.
 
@@ -112,3 +123,7 @@ Frontend routes and components should depend on a stable internal data contract,
 - Should the CMS integration support preview or draft mode in the first version?
 - Should bar pages keep full static generation, or move to revalidation/on-demand publishing?
 - Which CMS product will own the canonical schema and editorial workflow?
+
+These are not settled architecture decisions yet. CMS integration work should
+not assume answers here unless the answers are documented explicitly in the
+roadmap or a follow-on ADR.

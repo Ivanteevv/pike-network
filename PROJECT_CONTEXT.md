@@ -19,19 +19,31 @@ The old project remains unchanged and serves only as a visual/content reference.
 
 ## Architecture Baseline
 
-Recommended stack:
+Working architecture assumptions for planning:
 
 - Next.js
 - Directus
 - PostgreSQL
 - S3-compatible object storage
 
-## Source Documents
+## Current Canonical Docs
 
-Main planning docs for this project:
+Use these as the current source of truth for this repository:
 
-- [multi-bar-project-prompt.md](/Users/km/Documents/GitHub/pike-network/docs/multi-bar-project-prompt.md)
-- [multi-bar-project-context.md](/Users/km/Documents/GitHub/pike-network/docs/multi-bar-project-context.md)
+- [README.md](/Users/km/Documents/GitHub/pike-network/README.md) for onboarding and current repo reality
+- [docs/architecture.md](/Users/km/Documents/GitHub/pike-network/docs/architecture.md) for current structure and target runtime boundaries
+- [docs/content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md) for internal frontend data contracts
+- [docs/content-model.md](/Users/km/Documents/GitHub/pike-network/docs/content-model.md) for current field inventory and target CMS-oriented model
+- [docs/content-flow.md](/Users/km/Documents/GitHub/pike-network/docs/content-flow.md) for current and target content movement
+- [docs/roadmap.md](/Users/km/Documents/GitHub/pike-network/docs/roadmap.md) for sequencing and decision gates
+
+## Historical Planning Inputs
+
+These files are useful background, but they are not the current canonical source
+of truth when they conflict with the docs above:
+
+- [docs/multi-bar-project-prompt.md](/Users/km/Documents/GitHub/pike-network/docs/multi-bar-project-prompt.md)
+- [docs/multi-bar-project-context.md](/Users/km/Documents/GitHub/pike-network/docs/multi-bar-project-context.md)
 
 ## Working Rules
 

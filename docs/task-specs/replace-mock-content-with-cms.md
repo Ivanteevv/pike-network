@@ -4,6 +4,9 @@
 
 Replace the runtime dependency on `src/lib/content/mock-site-data.js` with CMS-backed content access while keeping the existing frontend behavior stable.
 
+The canonical internal frontend contracts for this work are defined in
+[docs/content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md).
+
 ## Current State
 
 - `src/lib/content/get-site-data.js` returns data directly from `mock-site-data.js`.
@@ -36,24 +39,42 @@ Out of scope:
 - Do not make the frontend repository the source of truth for editable production content.
 - Media handling must remain compatible with externally hosted assets.
 
+## Prerequisites
+
+Before the runtime source is switched away from mock content, these decisions
+must be documented explicitly:
+
+- which CMS product and API shape are in scope for the first implementation
+- whether the runtime reads published content only, or also supports preview or
+  draft access
+- how slug governance works for published records, draft records, and redirects
+- whether missing CMS configuration or fetch failures hard-fail the build/runtime
+  or fall back under a documented non-production rule
+
 ## Required Deliverables
 
 1. A CMS-backed implementation behind `src/lib/content/get-site-data.js`, or a new module used by it.
-2. A documented mapping layer from CMS fields to the frontend contract.
+2. A documented mapping layer from CMS fields to the frontend contracts in
+   `docs/content-contracts.md`.
 3. Slug loading for `generateStaticParams()` from the CMS-backed source.
 4. Sitemap generation from the same published bar source.
-5. Documentation for required environment variables and failure behavior.
+5. Documentation for required environment variables and one explicit failure
+   behavior rule.
 
 ## Acceptance Criteria
 
 - `src/lib/content/get-site-data.js` no longer imports `mock-site-data.js` in the production runtime path.
 - `getBars()` returns the list of published bars from the CMS-backed source.
 - `getBarBySlug(slug)` returns a normalized bar object or `null`.
-- The homepage renders network-level content from the CMS-backed source without changing component prop names.
+- The homepage renders network-level content from the CMS-backed source without
+  changing component prop names.
 - `/bars/[slug]` renders bar content from the CMS-backed source without changing the route pattern.
 - `generateStaticParams()` derives slugs from the CMS-backed source.
 - `src/app/sitemap.js` derives bar URLs from the same CMS-backed source as route generation.
-- The build fails clearly or handles errors according to a documented rule when required CMS configuration is missing.
+- The adapter resolves CMS asset references into the URL-based media fields
+  defined in `docs/content-contracts.md`.
+- Required CMS configuration and CMS fetch failure behavior follow one explicit,
+  documented rule rather than an ambiguous fallback.
 
 ## Suggested Implementation Sequence
 

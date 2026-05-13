@@ -61,6 +61,7 @@ npm run build
 ## Documentation Map
 
 - [docs/architecture.md](docs/architecture.md)
+- [docs/content-contracts.md](docs/content-contracts.md)
 - [docs/content-model.md](docs/content-model.md)
 - [docs/content-flow.md](docs/content-flow.md)
 - [docs/glossary.md](docs/glossary.md)

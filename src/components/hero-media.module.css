@@ -14,7 +14,7 @@
 }
 
 .immersive {
-  min-height: 92svh;
+  min-height: 100svh;
 }
 
 .mediaLayer {
@@ -69,17 +69,20 @@
 }
 
 .immersive .content {
-  min-height: 92svh;
+  min-height: 100svh;
 }
 
 @media (max-width: 759px) {
   .hero,
   .content,
   .showcase,
-  .showcase .content,
+  .showcase .content {
+    min-height: 94svh;
+  }
+
   .immersive,
   .immersive .content {
-    min-height: 94svh;
+    min-height: 100svh;
   }
 
   .showcase .image,

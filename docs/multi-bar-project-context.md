@@ -1,5 +1,13 @@
 # Multi-Bar Project Context
 
+## Status
+
+Historical planning input from early project discovery.
+
+When this file conflicts with [README.md](/Users/km/Documents/GitHub/pike-network/README.md),
+[PROJECT_CONTEXT.md](/Users/km/Documents/GitHub/pike-network/PROJECT_CONTEXT.md),
+or the current docs under `docs/`, the current repo docs win.
+
 ## Purpose
 
 This document defines the target architecture and working assumptions for the next-generation version of the bar website.

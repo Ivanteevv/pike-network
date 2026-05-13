@@ -10,6 +10,9 @@ This document defines:
 
 It is intentionally data-focused and does not define frontend implementation steps.
 
+The canonical internal frontend contracts that consume this model are defined in
+[content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md).
+
 ## Current Implemented Model
 
 The current content source is `src/lib/content/mock-site-data.js`.
@@ -104,19 +107,53 @@ Singleton collection for network-wide content.
 | --- | --- | --- | --- |
 | `brand_name` | string | yes | internal and display-safe base name |
 | `display_name` | string | yes | public-facing brand label |
+| `logo_asset` | asset reference | no | use when shared brand logo needs to be rendered from CMS-managed media |
 | `default_locale` | string | yes | initial value can remain `ru-RU` |
 | `primary_phone_display` | string | yes | display format |
 | `primary_phone_e164` | string | yes | tel links |
 | `map_search_url` | url | yes | network-level map CTA |
+| `hero_eyebrow` | string | no | retain only if the homepage renders it |
 | `hero_title` | string | yes | homepage hero |
 | `hero_description` | text | yes | homepage hero |
 | `hero_media_kind` | enum: `image`, `video` | yes | homepage hero rendering |
 | `hero_media_asset` | asset reference | yes | image or video asset |
 | `hero_media_poster_asset` | asset reference | no | video fallback poster |
 | `common_formats` | repeatable component | no | title + description pairs |
+| `cta_title` | string | no | homepage CTA copy if restored |
+| `cta_description` | text | no | homepage CTA copy if restored |
 | `social_links` | repeatable relation/component | no | label + URL |
 | `seo_title` | string | no | homepage SEO override |
 | `seo_description` | text | no | homepage SEO description |
+
+## Current Network Field Disposition
+
+This table makes the current network object explicit against the target model so
+schema work does not have to guess whether a current field is kept, renamed, or
+left out of CMS scope on purpose.
+
+| Current field | Target disposition | Notes |
+| --- | --- | --- |
+| `name` | rename to `brand_name` | target keeps the same concept under CMS-safe naming |
+| `displayName` | rename to `display_name` | public-facing label |
+| `logoUrl` | rename to `logo_asset` | adapter resolves asset reference to a renderable URL when needed |
+| `phoneDisplay` | rename to `primary_phone_display` | shared contact display value |
+| `phoneE164` | rename to `primary_phone_e164` | shared tel link value |
+| `mapSearchUrl` | rename to `map_search_url` | shared map CTA |
+| `locale` | rename to `default_locale` | editorial default locale, not route logic |
+| `routeStrategy` | move out of content model | routing strategy belongs to frontend architecture and ADR 004, not CMS content |
+| `hero.eyebrow` | rename to `hero_eyebrow` | optional until homepage renders it |
+| `hero.title` | rename to `hero_title` | homepage hero copy |
+| `hero.description` | rename to `hero_description` | homepage hero copy |
+| `hero.media.kind` | rename to `hero_media_kind` | adapter maps this into frontend media contract |
+| `hero.media.imageUrl` | fold into `hero_media_asset` | CMS stores asset reference; adapter resolves image URL |
+| `hero.media.videoUrl` | fold into `hero_media_asset` | CMS stores asset reference; adapter resolves video URL |
+| `hero.media.posterUrl` | rename to `hero_media_poster_asset` | separate poster fallback when needed |
+| `commonFormats[]` | rename to `common_formats` | repeatable structured items |
+| `cta.title` | rename to `cta_title` | optional until homepage renders CTA copy again |
+| `cta.description` | rename to `cta_description` | optional until homepage renders CTA copy again |
+| `socials[]` | rename to `social_links` | repeatable shared links |
+| `seo.title` | rename to `seo_title` | optional homepage override |
+| `seo.description` | rename to `seo_description` | homepage SEO description |
 
 ## Entity: `bars`
 

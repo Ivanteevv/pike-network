@@ -3,64 +3,144 @@
   right: max(18px, env(safe-area-inset-right));
   bottom: max(18px, calc(env(safe-area-inset-bottom) + 18px));
   z-index: 90;
-  width: 54px;
-  height: 54px;
+  width: 72px;
+  min-height: 112px;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid transparent;
-  border-radius: var(--radius-pill);
-  background:
-    linear-gradient(180deg, var(--white-a1), var(--white-a03)),
-    var(--ink-a24);
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--color-text);
-  backdrop-filter: blur(18px) saturate(118%);
-  box-shadow: var(--shadow-floating);
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(14px) scale(0.94);
+  transform: translateY(18px) scale(0.92);
   transition:
-    opacity var(--duration-medium) var(--ease-standard),
-    transform var(--duration-medium) var(--ease-standard),
-    border-color var(--duration-medium) var(--ease-standard),
-    background-color var(--duration-medium) var(--ease-standard),
+    opacity 420ms var(--ease-standard),
+    transform 520ms var(--ease-standard),
     color var(--duration-medium) var(--ease-standard),
-    box-shadow var(--duration-medium) var(--ease-standard),
     filter var(--duration-medium) var(--ease-standard);
+  outline: 2px solid transparent;
+  outline-offset: 6px;
 }
 
 .visible {
-  opacity: 1;
-  pointer-events: auto;
+  opacity: 0.9;
   transform: translateY(0) scale(1);
 }
 
+.ready {
+  pointer-events: auto;
+}
+
+.iconFrame {
+  position: relative;
+  width: 72px;
+  height: 88px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 20px 32px var(--shadow-dark-a28));
+}
+
 .icon {
-  font-size: 1.2rem;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bottleGlass {
+  fill: rgba(117, 78, 39, 0.34);
+  stroke: rgba(255, 243, 220, 0.18);
+  stroke-width: 1.4;
+}
+
+.bottleEdge {
+  fill: none;
+  stroke: rgba(255, 243, 220, 0.5);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+
+.bottleLabel {
+  fill: rgba(247, 230, 198, 0.16);
+  stroke: rgba(255, 244, 230, 0.32);
+  stroke-width: 1.2;
+}
+
+.tooltip {
+  min-height: 20px;
+  margin-top: -5px;
+  padding: 3px 8px 4px;
+  border: 1px solid var(--paper-border-a16);
+  border-radius: var(--radius-pill);
+  background: rgba(12, 9, 8, 0.52);
+  color: rgba(255, 248, 239, 0.9);
+  font-size: 0.72rem;
+  font-weight: 800;
   line-height: 1;
-  transform: translateY(-1px);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 260ms var(--ease-standard),
+    transform 300ms var(--ease-standard),
+    border-color var(--duration-medium) var(--ease-standard),
+    background-color var(--duration-medium) var(--ease-standard);
+  backdrop-filter: blur(14px) saturate(120%);
+}
+
+.ready:hover .tooltip,
+.ready:focus-visible .tooltip {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .button:focus-visible {
-  outline: none;
+  outline-color: rgba(255, 248, 239, 0.88);
   color: var(--color-text-strong);
-  box-shadow:
-    inset 0 1px 0 var(--white-a14),
-    0 18px 34px var(--shadow-dark-a24),
-    var(--focus-ring),
-    var(--focus-ring-soft);
+}
+
+.button:focus-visible .iconFrame {
+  filter:
+    drop-shadow(0 20px 32px var(--shadow-dark-a24))
+    drop-shadow(0 0 12px rgba(255, 248, 239, 0.16));
+}
+
+.button:focus-visible .bottleGlass {
+  fill: rgba(145, 93, 43, 0.4);
+}
+
+.button:focus-visible .bottleEdge {
+  stroke: rgba(255, 248, 239, 1);
+}
+
+.button:focus-visible .bottleLabel {
+  fill: rgba(255, 240, 214, 0.24);
+  stroke: rgba(255, 244, 230, 0.54);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .button:hover {
-    background:
-      linear-gradient(180deg, var(--white-a14), var(--white-a04)),
-      var(--ink-a24);
-    color: var(--color-text-strong);
-    box-shadow:
-      inset 0 1px 0 var(--white-a14),
-      0 18px 34px var(--shadow-dark-a24);
+  .ready:hover {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  .ready:hover .iconFrame {
+    filter: drop-shadow(0 22px 38px var(--shadow-dark-a3));
+  }
+
+  .ready:hover .bottleGlass {
+    fill: rgba(151, 96, 45, 0.42);
+  }
+
+  .ready:hover .bottleEdge {
+    stroke: rgba(255, 248, 239, 1);
+  }
+
+  .ready:hover .bottleLabel {
+    fill: rgba(255, 236, 202, 0.22);
   }
 }
 
@@ -68,13 +148,37 @@
   .button {
     right: max(14px, env(safe-area-inset-right));
     bottom: max(14px, calc(env(safe-area-inset-bottom) + 14px));
-    width: 50px;
-    height: 50px;
+    width: 62px;
+    min-height: 76px;
+  }
+
+  .iconFrame {
+    width: 62px;
+    height: 76px;
+  }
+
+  .tooltip {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .button {
     transition: none;
+  }
+
+  .visible,
+  .ready {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .tooltip {
+    transition: none;
+  }
+
+  .ready:hover .tooltip,
+  .ready:focus-visible .tooltip {
+    transform: none;
   }
 }

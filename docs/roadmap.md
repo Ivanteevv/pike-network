@@ -17,9 +17,31 @@ This roadmap describes the likely sequence for moving from the current mock-cont
 - The frontend reads published content through a stable adapter.
 - Adding or updating a bar does not require editing mock content in code.
 
+## Phase Status Snapshot
+
+- Phase 1: active
+- Phase 2: planned
+- Phase 3: active
+- Phase 4: blocked pending decision gates
+- Phase 5: future
+
+## Decision Gates Before Phase 4
+
+Phase 4 should not be treated as execution-ready until these decisions are
+documented explicitly:
+
+- CMS product and API shape
+- published versus draft versus preview visibility rules
+- slug governance, including whether slug redirects are required
+- build/runtime failure behavior when required CMS configuration is missing or
+  CMS content cannot be fetched
+
 ## Phases
 
 ### Phase 1: Documentation Baseline
+
+Status:
+active
 
 Goal:
 Create a documentation set that reflects current reality and reduces implementation ambiguity.
@@ -38,6 +60,9 @@ Exit criteria:
 
 ### Phase 2: Frontend Content Contract
 
+Status:
+planned
+
 Goal:
 Make the current frontend depend on an explicit content contract instead of implicit object shape knowledge.
 
@@ -53,6 +78,9 @@ Exit criteria:
 - routes no longer depend on raw CMS field names
 
 ### Phase 3: CMS Schema Definition
+
+Status:
+active
 
 Goal:
 Define the content schema required to support the existing frontend behavior and near-term editorial needs.
@@ -71,6 +99,9 @@ Exit criteria:
 
 ### Phase 4: CMS Integration
 
+Status:
+blocked until the decision gates above are documented
+
 Goal:
 Replace repo-local mock content with CMS-backed data access.
 
@@ -88,6 +119,9 @@ Exit criteria:
 - a content edit can be reflected without editing repo-local mock data
 
 ### Phase 5: Editorial Hardening
+
+Status:
+future
 
 Goal:
 Make the content workflow safe for real editors.

@@ -1,5 +1,13 @@
 # Multi-Bar Project Prompt
 
+## Status
+
+Historical planning input from early project discovery.
+
+When this file conflicts with [README.md](/Users/km/Documents/GitHub/pike-network/README.md),
+[PROJECT_CONTEXT.md](/Users/km/Documents/GitHub/pike-network/PROJECT_CONTEXT.md),
+or the current docs under `docs/`, the current repo docs win.
+
 ## Goal
 
 Design and build a production-ready multi-location bar website with:

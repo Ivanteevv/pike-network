@@ -51,10 +51,7 @@ export default async function HomePage() {
                 <a className={styles.primaryAction} href="#bars">
                   Выбрать бар
                 </a>
-                <a
-                  className={`${styles.secondaryAction} ${styles.phoneAction}`}
-                  href={`tel:${network.phoneE164}`}
-                >
+                <a className={styles.secondaryAction} href={`tel:${network.phoneE164}`}>
                   Позвонить
                 </a>
               </div>

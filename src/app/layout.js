@@ -34,6 +34,8 @@ export const metadata = {
   },
 };
 
+// Keep the approved age gate hidden before React hydrates.
+// This intentionally mutates <html>, so RootLayout suppresses that one mismatch.
 const ageGateBootScript = `
   (() => {
     try {
@@ -43,14 +45,14 @@ const ageGateBootScript = `
         document.documentElement.dataset.ageGate = "approved";
       }
     } catch (error) {
-      document.documentElement.dataset.ageGate = "";
+      delete document.documentElement.dataset.ageGate;
     }
   })();
 `;
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
       <body className={`${manrope.variable} ${playfairDisplay.variable}`}>
         <script dangerouslySetInnerHTML={{ __html: ageGateBootScript }} />
         <AgeGate />

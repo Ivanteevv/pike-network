@@ -29,7 +29,8 @@ export const mockSiteData = {
       description:
         "Теплый бар для вечера после работы: еда, напитки, компания и спортивные трансляции, ради которых удобно собраться вместе.",
       media: {
-        kind: "image",
+        kind: "video",
+        videoUrl: "/mock/network/hero/bgVid7_mod.mp4",
         imageUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
         posterUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
       },
@@ -128,8 +129,7 @@ export const mockSiteData = {
         subtitle: "Место для тех, кто любит вечер с характером.",
         description:
           "Большой экран, плотная кухня, спортивные трансляции и узнаваемая барная подача в духе Щуки.",
-        kind: "video",
-        videoUrl: "/mock/network/hero/bgVid7_mod.mp4",
+        kind: "image",
         imageUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
         posterUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
       },
