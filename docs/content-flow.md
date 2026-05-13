@@ -5,7 +5,7 @@
 This document explains how content moves through the system today and how it is expected to move after CMS integration.
 
 The internal frontend contracts referenced here are defined in
-[content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md).
+[content-contracts.md](content-contracts.md).
 
 ## Current Flow
 

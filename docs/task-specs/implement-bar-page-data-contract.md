@@ -34,7 +34,7 @@ Out of scope:
 
 The canonical contract definitions for this task should live in:
 
-- [docs/content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md)
+- [docs/content-contracts.md](../content-contracts.md)
 
 This task should update that file instead of creating parallel contract notes in
 multiple places.

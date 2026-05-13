@@ -5,7 +5,7 @@
 This document describes the current frontend architecture in this repository and the target architecture implied by the project direction.
 
 The canonical internal frontend data contracts are defined in
-[content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md).
+[content-contracts.md](content-contracts.md).
 
 ## Current Architecture
 
@@ -40,7 +40,7 @@ The canonical internal frontend data contracts are defined in
 - Gallery rendering is centralized in `src/components/bar-gallery.js`
 - In the target system, CMS or storage layers may keep asset references, but the
   frontend adapter must resolve those into the URL fields defined in
-  [content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md)
+  [content-contracts.md](content-contracts.md)
 
 ### Rendering Pattern
 

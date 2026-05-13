@@ -1,4 +1,48 @@
-# Welcome Page Redesign Notes
+# Welcome Page Research Notes
+
+Historical research and prompt exploration for the welcome page.
+
+Canonical current direction lives in:
+
+- `docs/features/welcome-page.md`
+- `docs/task-specs/welcome-page-redesign.md`
+
+This file is background only. Do not use it as the primary source of truth
+unless the task explicitly asks for historical reasoning.
+
+## Archived Source: Welcome Design System And Work Plan
+
+The former `docs/welcome-design-system-and-plan.md` was consolidated into:
+
+- `docs/features/welcome-page.md` for the current product and design direction.
+- `docs/task-specs/welcome-page-redesign.md` for execution-ready implementation
+  guidance.
+
+Historical details preserved from that plan:
+
+- The page should answer where the guest arrived, what kind of place Pike is,
+  and which bar to choose next.
+- The first screen should include Pike branding, atmospheric hero material,
+  `Выбрать бар`, a phone action, and concise brand copy.
+- Mandatory launch structure was `Hero` plus `Location Choice`; sports, food,
+  atmosphere, socials, and map were optional supporting sections.
+- The visual mood was cinematic, warm, grounded, comfortable, slightly vintage,
+  and not theatrical.
+- The typography direction was readable body text with a stronger
+  Cyrillic-friendly display face for large brand moments; `Playfair Display`
+  was the selected display direction in that planning pass.
+- The age gate should stay short, clear, brand-aligned, and keep an obvious
+  confirmation path plus exit path.
+- Guest-facing technical copy about platform architecture, CMS readiness,
+  separate content entities, and SEO implementation details should not appear
+  on the public welcome page.
+- CMS readiness rules from the plan are now canonical in
+  `docs/features/welcome-page.md`.
+- The old implementation phases were design tokens, content, components, age
+  gate, and verification. Future implementation should follow the current task
+  spec instead of treating those phases as binding.
+
+## Archived Source: Welcome Page Redesign Notes
 
 Updated: 2026-04-20
 

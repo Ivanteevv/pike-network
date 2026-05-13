@@ -5,7 +5,7 @@
 Replace the runtime dependency on `src/lib/content/mock-site-data.js` with CMS-backed content access while keeping the existing frontend behavior stable.
 
 The canonical internal frontend contracts for this work are defined in
-[docs/content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md).
+[docs/content-contracts.md](../content-contracts.md).
 
 ## Current State
 

@@ -2,11 +2,12 @@
 
 ## Status
 
-Historical planning input from early project discovery.
+Archived historical planning input from early project discovery.
 
-When this file conflicts with [README.md](/Users/km/Documents/GitHub/pike-network/README.md),
-[PROJECT_CONTEXT.md](/Users/km/Documents/GitHub/pike-network/PROJECT_CONTEXT.md),
-or the current docs under `docs/`, the current repo docs win.
+Canonical current direction lives in `README.md`, `AGENTS.md`, `PROJECT_CONTEXT.md`,
+and the current docs under `docs/`. This file is background only and should not
+be used as the primary source of truth unless a task explicitly asks for
+historical reasoning.
 
 ## Purpose
 

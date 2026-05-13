@@ -3,118 +3,74 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./scroll-to-top.module.css";
 
-const SCROLL_TO_TOP_MIN_MS = 320;
-const SCROLL_TO_TOP_MAX_MS = 680;
-
-function easeOutCubic(progress) {
-  return 1 - (1 - progress) ** 3;
-}
+const TOP_SCROLL_TOLERANCE = 1;
+const VISIBILITY_THRESHOLD = 320;
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
-  const isVisibleRef = useRef(false);
+  const [isConcealed, setIsConcealed] = useState(false);
   const isScrollingToTopRef = useRef(false);
-  const scrollAnimationFrameRef = useRef(null);
+  const scrollWatchFrameRef = useRef(null);
+  const scrollWatchTimeoutRef = useRef(null);
+
+  function stopWatchingScrollToTop() {
+    window.cancelAnimationFrame(scrollWatchFrameRef.current);
+    window.clearTimeout(scrollWatchTimeoutRef.current);
+    scrollWatchFrameRef.current = null;
+    scrollWatchTimeoutRef.current = null;
+    isScrollingToTopRef.current = false;
+    setIsConcealed(false);
+    setIsVisible(window.scrollY > VISIBILITY_THRESHOLD);
+  }
+
+  function watchScrollToTop() {
+    window.cancelAnimationFrame(scrollWatchFrameRef.current);
+    window.clearTimeout(scrollWatchTimeoutRef.current);
+
+    const tick = () => {
+      if (!isScrollingToTopRef.current) {
+        return;
+      }
+
+      if (window.scrollY <= TOP_SCROLL_TOLERANCE) {
+        stopWatchingScrollToTop();
+        return;
+      }
+
+      scrollWatchFrameRef.current = window.requestAnimationFrame(tick);
+    };
+
+    scrollWatchFrameRef.current = window.requestAnimationFrame(tick);
+    scrollWatchTimeoutRef.current = window.setTimeout(stopWatchingScrollToTop, 3000);
+  }
 
   useEffect(() => {
     const updateVisibility = () => {
-      const heroSection = document.querySelector("[data-hero-section='true']");
-      const threshold = heroSection
-        ? Math.max(heroSection.getBoundingClientRect().height - 120, 160)
-        : window.innerHeight * 0.9;
-      const nextVisible = window.scrollY > threshold;
-
-      if (isScrollingToTopRef.current && window.scrollY > 4) {
+      if (isScrollingToTopRef.current) {
         return;
       }
 
-      if (isScrollingToTopRef.current && window.scrollY <= 4) {
-        isScrollingToTopRef.current = false;
-      }
-
-      if (nextVisible === isVisibleRef.current) {
-        return;
-      }
-
-      isVisibleRef.current = nextVisible;
-      setIsVisible(nextVisible);
+      setIsVisible(window.scrollY > VISIBILITY_THRESHOLD);
     };
 
     updateVisibility();
     window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
 
     return () => {
-      window.cancelAnimationFrame(scrollAnimationFrameRef.current);
+      window.cancelAnimationFrame(scrollWatchFrameRef.current);
+      window.clearTimeout(scrollWatchTimeoutRef.current);
       window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
     };
   }, []);
 
-  function finishScrollToTop() {
-    window.cancelAnimationFrame(scrollAnimationFrameRef.current);
-    scrollAnimationFrameRef.current = null;
-    isScrollingToTopRef.current = false;
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }
-
-  function animateScrollToTop() {
-    const startY = window.scrollY;
-
-    if (
-      startY <= 4 ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      finishScrollToTop();
-      return;
-    }
-
-    const duration = Math.min(
-      SCROLL_TO_TOP_MAX_MS,
-      Math.max(SCROLL_TO_TOP_MIN_MS, startY * 0.28)
-    );
-    const startTime = performance.now();
-
-    const step = (timestamp) => {
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const nextY = Math.round(startY * (1 - easeOutCubic(progress)));
-
-      window.scrollTo({ top: nextY, left: 0, behavior: "auto" });
-
-      if (progress < 1 && window.scrollY > 0) {
-        scrollAnimationFrameRef.current = window.requestAnimationFrame(step);
-        return;
-      }
-
-      finishScrollToTop();
-    };
-
-    scrollAnimationFrameRef.current = window.requestAnimationFrame(step);
-  }
-
-  function activateScrollToTop() {
-    if (!isVisibleRef.current) {
-      return;
-    }
+  function handleClick() {
+    const scrollOptions = { top: 0, left: 0, behavior: "smooth" };
 
     isScrollingToTopRef.current = true;
-    window.cancelAnimationFrame(scrollAnimationFrameRef.current);
-    isVisibleRef.current = false;
-    setIsVisible(false);
-    animateScrollToTop();
-  }
-
-  function handlePointerDown(event) {
-    if (event.button !== 0) {
-      return;
-    }
-
-    event.preventDefault();
-    activateScrollToTop();
-  }
-
-  function handleClick() {
-    activateScrollToTop();
+    setIsConcealed(true);
+    watchScrollToTop();
+    window.scrollTo(scrollOptions);
+    document.scrollingElement?.scrollTo(scrollOptions);
   }
 
   return (
@@ -122,13 +78,12 @@ export function ScrollToTop() {
       type="button"
       className={`${styles.button} ${isVisible ? styles.visible : ""} ${
         isVisible ? styles.ready : ""
-      }`}
-      onPointerDown={handlePointerDown}
+      } ${isConcealed ? styles.concealed : ""}`}
       onClick={handleClick}
       disabled={!isVisible}
       aria-label="Наверх"
-      aria-hidden={!isVisible}
-      tabIndex={isVisible ? 0 : -1}
+      aria-hidden={!isVisible || isConcealed}
+      tabIndex={isVisible && !isConcealed ? 0 : -1}
     >
       <span className={styles.iconFrame} aria-hidden="true">
         <svg

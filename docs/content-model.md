@@ -11,7 +11,7 @@ This document defines:
 It is intentionally data-focused and does not define frontend implementation steps.
 
 The canonical internal frontend contracts that consume this model are defined in
-[content-contracts.md](/Users/km/Documents/GitHub/pike-network/docs/content-contracts.md).
+[content-contracts.md](content-contracts.md).
 
 ## Current Implemented Model
 

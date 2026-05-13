@@ -35,6 +35,12 @@
   pointer-events: auto;
 }
 
+.concealed {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.96);
+}
+
 .iconFrame {
   position: relative;
   width: 72px;
@@ -142,6 +148,11 @@
   .ready:hover .bottleLabel {
     fill: rgba(255, 236, 202, 0.22);
   }
+
+  .concealed.ready:hover {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
 }
 
 @media (max-width: 759px) {
@@ -179,6 +190,13 @@
 
   .ready:hover .tooltip,
   .ready:focus-visible .tooltip {
+    transform: none;
+  }
+
+  .concealed,
+  .concealed.ready,
+  .concealed.ready:hover {
+    opacity: 0;
     transform: none;
   }
 }

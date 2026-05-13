@@ -12,7 +12,7 @@ It is the canonical contract reference for:
 - `getBarBySlug(slug)`
 
 This document does not define the CMS schema. CMS-specific fields, relations,
-and asset references belong in [content-model.md](/Users/km/Documents/GitHub/pike-network/docs/content-model.md).
+and asset references belong in [content-model.md](content-model.md).
 
 ## Contract Rules
 
@@ -225,10 +225,10 @@ Rules:
 ## Current Consumers
 
 - `getSiteData()`:
-  [src/app/page.js](/Users/km/Documents/GitHub/pike-network/src/app/page.js:19),
-  [src/components/site-footer.js](/Users/km/Documents/GitHub/pike-network/src/components/site-footer.js:4)
+  [`src/app/page.js`](../src/app/page.js),
+  [`src/components/site-footer.js`](../src/components/site-footer.js)
 - `getBars()`:
-  [src/app/bars/[slug]/page.js](/Users/km/Documents/GitHub/pike-network/src/app/bars/[slug]/page.js:37),
-  [src/app/sitemap.js](/Users/km/Documents/GitHub/pike-network/src/app/sitemap.js:4)
+  [`src/app/bars/[slug]/page.js`](../src/app/bars/%5Bslug%5D/page.js),
+  [`src/app/sitemap.js`](../src/app/sitemap.js)
 - `getBarBySlug(slug)`:
-  [src/app/bars/[slug]/page.js](/Users/km/Documents/GitHub/pike-network/src/app/bars/[slug]/page.js:58)
+  [`src/app/bars/[slug]/page.js`](../src/app/bars/%5Bslug%5D/page.js)
