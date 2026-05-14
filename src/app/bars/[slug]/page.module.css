@@ -91,34 +91,6 @@
   margin-top: 24px;
 }
 
-.actions .primaryAction,
-.actions .secondaryAction {
-  justify-content: flex-start;
-  min-height: auto;
-  padding: 0 0 6px;
-  border: 0;
-  border-radius: 0;
-  letter-spacing: 0.08em;
-  backdrop-filter: none;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  white-space: nowrap;
-  box-shadow: none;
-}
-
-.actions .primaryAction {
-  background: transparent;
-  color: var(--base-paper-strong);
-  border-bottom-color: rgba(255, 248, 239, 0.3);
-}
-
-.actions .secondaryAction {
-  background: transparent;
-  color: rgba(255, 248, 239, 0.8);
-}
-
-.primaryAction,
-.secondaryAction,
 .placeholderLink {
   display: inline-flex;
   align-items: center;
@@ -136,13 +108,17 @@
   transition: var(--transition-colors);
 }
 
-.primaryAction {
-  background: transparent;
-  color: var(--base-paper-strong);
-  box-shadow: none;
+.heroTextAction,
+.menuTextAction,
+.contactTextAction {
+  justify-content: flex-start;
 }
 
-.secondaryAction,
+.heroTextActionStrong {
+  color: var(--base-paper-strong);
+  border-bottom-color: rgba(255, 248, 239, 0.3);
+}
+
 .placeholderLink {
   color: var(--color-text-muted);
   background: transparent;
@@ -265,28 +241,16 @@
   font-size: 0.8rem;
 }
 
-.infoCard a,
+.menuTextAction,
 .placeholderLink {
   margin-top: 20px;
 }
 
-.primaryAction:focus-visible,
-.secondaryAction:focus-visible,
-.contactActions a:focus-visible,
 .switchOption:focus-visible,
 .placeholderLink:focus-visible {
   outline: none;
 }
 
-.primaryAction:focus-visible {
-  color: var(--orange-350);
-  box-shadow: none;
-  outline: 2px solid rgba(255, 248, 239, 0.82);
-  outline-offset: 8px;
-}
-
-.secondaryAction:focus-visible,
-.contactActions a:focus-visible,
 .switchOption:focus-visible,
 .placeholderLink:focus-visible {
   color: var(--color-text-strong);
@@ -295,55 +259,13 @@
   outline-offset: 8px;
 }
 
-.primaryAction:active,
-.secondaryAction:active,
 .placeholderLink:active {
   transform: none;
 }
 
-.primaryAction:active {
-  color: var(--orange-350);
-  box-shadow: none;
-}
-
-.secondaryAction:active,
 .placeholderLink:active {
   color: var(--color-text-strong);
   background: transparent;
-}
-
-.actions .primaryAction:focus-visible {
-  color: var(--base-paper-strong);
-  box-shadow: none;
-  outline: none;
-  border-bottom-color: rgba(255, 248, 239, 0.78);
-}
-
-.actions .secondaryAction:focus-visible {
-  color: var(--color-text-strong);
-  box-shadow: none;
-  outline: none;
-  border-bottom-color: rgba(255, 248, 239, 0.44);
-}
-
-.actions .primaryAction:active {
-  color: var(--base-paper-strong);
-  background: transparent;
-  box-shadow: none;
-}
-
-.actions .secondaryAction:active {
-  color: var(--base-paper-strong);
-  background: transparent;
-  box-shadow: none;
-}
-
-.actions .primaryAction:focus-visible,
-.actions .secondaryAction:focus-visible,
-.actions .primaryAction:active,
-.actions .secondaryAction:active {
-  outline: none;
-  outline-offset: 0;
 }
 
 .galleryItem {
@@ -373,7 +295,6 @@
   margin-top: 24px;
 }
 
-.contactActions a,
 .switchOption {
   display: inline-flex;
   align-items: center;
@@ -498,16 +419,11 @@
     margin-top: 18px;
   }
 
-  .primaryAction,
-  .secondaryAction,
   .placeholderLink {
     width: auto;
   }
 
-  .actions .primaryAction,
-  .actions .secondaryAction {
-    min-height: auto;
-    padding: 0 0 6px;
+  .heroTextAction {
     font-size: 0.96rem;
   }
 
@@ -555,7 +471,7 @@
     gap: 12px 16px;
   }
 
-  .contactActions a {
+  .contactTextAction {
     width: 100%;
   }
 
@@ -578,39 +494,15 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .primaryAction:hover {
-    background: transparent;
-    color: var(--orange-350);
-    box-shadow: none;
-  }
-
-  .secondaryAction:hover,
-  .contactActions a:hover,
   .switchOption:hover,
   .placeholderLink:hover {
     box-shadow: none;
   }
 
-  .secondaryAction:hover,
-  .contactActions a:hover,
   .switchOption:hover,
   .placeholderLink:hover {
     background: transparent;
     color: var(--base-paper-strong);
-  }
-
-  .actions .primaryAction:hover {
-    color: var(--base-paper-strong);
-    background: transparent;
-    box-shadow: none;
-    border-bottom-color: rgba(255, 248, 239, 0.78);
-  }
-
-  .actions .secondaryAction:hover {
-    color: var(--base-paper-strong);
-    background: transparent;
-    box-shadow: none;
-    border-bottom-color: rgba(255, 248, 239, 0.44);
   }
 }
 
@@ -641,9 +533,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .primaryAction,
-  .secondaryAction,
-  .contactActions a,
   .switchOption,
   .placeholderLink {
     transition: none;

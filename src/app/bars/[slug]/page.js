@@ -5,6 +5,8 @@ import { JsonLd } from "@/components/json-ld";
 import { BarHeroNav } from "@/components/bar-hero-nav";
 import { BarGallery } from "@/components/bar-gallery";
 import { SiteFooter } from "@/components/site-footer";
+import buttonStyles from "@/components/button.module.css";
+import { cx } from "@/lib/class-names";
 import { getBarBySlug, getBars, getSiteData } from "@/lib/content/get-site-data";
 import { siteUrl } from "@/lib/site-url";
 import styles from "./page.module.css";
@@ -94,10 +96,26 @@ export default async function BarPage({ params }) {
               </div>
 
               <div className={styles.actions}>
-                <a className={styles.primaryAction} href={`tel:${bar.phoneE164}`}>
+                <a
+                  className={cx(
+                    buttonStyles.buttonBase,
+                    buttonStyles.buttonGhostAction,
+                    styles.heroTextAction,
+                    styles.heroTextActionStrong
+                  )}
+                  href={`tel:${bar.phoneE164}`}
+                >
                   Позвонить
                 </a>
-                <a className={styles.secondaryAction} href="#menu">
+                <a
+                  className={cx(
+                    buttonStyles.buttonBase,
+                    buttonStyles.buttonGhostAction,
+                    buttonStyles.buttonArrow,
+                    styles.heroTextAction
+                  )}
+                  href="#menu"
+                >
                   Меню
                 </a>
               </div>
@@ -135,7 +153,17 @@ export default async function BarPage({ params }) {
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
                 {item.href ? (
-                  <a href={item.href} target="_blank" rel="noreferrer">
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cx(
+                      buttonStyles.buttonBase,
+                      buttonStyles.buttonGhostAction,
+                      buttonStyles.buttonArrow,
+                      styles.menuTextAction
+                    )}
+                  >
                     Открыть
                   </a>
                 ) : (
@@ -172,8 +200,27 @@ export default async function BarPage({ params }) {
               <h2>Быстро переключиться между барами сети</h2>
 
               <div className={styles.contactActions}>
-                <a href={`tel:${bar.phoneE164}`}>Позвонить</a>
-                <a href={bar.mapUrl} target="_blank" rel="noreferrer">
+                <a
+                  className={cx(
+                    buttonStyles.buttonBase,
+                    buttonStyles.buttonGhostAction,
+                    styles.contactTextAction
+                  )}
+                  href={`tel:${bar.phoneE164}`}
+                >
+                  Позвонить
+                </a>
+                <a
+                  className={cx(
+                    buttonStyles.buttonBase,
+                    buttonStyles.buttonGhostAction,
+                    buttonStyles.buttonArrow,
+                    styles.contactTextAction
+                  )}
+                  href={bar.mapUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Открыть карту
                 </a>
               </div>

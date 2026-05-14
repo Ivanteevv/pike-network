@@ -31,11 +31,5 @@
 }
 
 .link {
-  display: inline-flex;
   margin-top: 22px;
-  padding: 14px 22px;
-  border-radius: 999px;
-  background: var(--color-accent);
-  color: var(--color-primary-ink);
-  font-weight: 700;
 }

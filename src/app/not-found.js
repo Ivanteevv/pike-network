@@ -1,4 +1,6 @@
 import Link from "next/link";
+import buttonStyles from "@/components/button.module.css";
+import { cx } from "@/lib/class-names";
 import styles from "./not-found.module.css";
 
 export default function NotFound() {
@@ -11,7 +13,16 @@ export default function NotFound() {
           Возможно, ссылка устарела или точка ещё не добавлена в сеть. На
           главной уже можно выбрать доступную локацию.
         </p>
-        <Link href="/" className={styles.link}>
+        <Link
+          href="/"
+          className={cx(
+            buttonStyles.buttonBase,
+            buttonStyles.buttonGhostAction,
+            buttonStyles.buttonLg,
+            buttonStyles.buttonArrow,
+            styles.link
+          )}
+        >
           Вернуться на главную
         </Link>
       </div>

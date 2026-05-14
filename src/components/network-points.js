@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import buttonStyles from "@/components/button.module.css";
+import { cx } from "@/lib/class-names";
 import styles from "./network-points.module.css";
 
 function formatBarsCount(barsCount, countLabels) {
@@ -24,7 +26,17 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
     <div className={styles.pointsShell}>
       <div className={styles.pointsMeta}>
         <span>{barsCountLabel}</span>
-        <a href={`tel:${phoneE164}`}>{copy.reservationLabel}</a>
+        <a
+          className={cx(
+            buttonStyles.buttonBase,
+            buttonStyles.buttonGhostAction,
+            buttonStyles.buttonSm,
+            styles.reservationLink
+          )}
+          href={`tel:${phoneE164}`}
+        >
+          {copy.reservationLabel}
+        </a>
       </div>
 
       <div className={styles.pointsGrid} aria-label="Точки сети">
@@ -44,10 +56,27 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
             <p className={styles.summary}>{bar.summary}</p>
 
             <div className={styles.cardActions}>
-              <Link href={`/bars/${bar.slug}`} className={styles.cardLink}>
+              <Link
+                href={`/bars/${bar.slug}`}
+                className={cx(
+                  buttonStyles.buttonBase,
+                  buttonStyles.buttonGhostAction,
+                  buttonStyles.buttonMd,
+                  buttonStyles.buttonArrow,
+                  styles.cardAction
+                )}
+              >
                 {copy.openLabel}
               </Link>
-              <a href={`tel:${bar.phoneE164}`} className={styles.phoneLink}>
+              <a
+                href={`tel:${bar.phoneE164}`}
+                className={cx(
+                  buttonStyles.buttonBase,
+                  buttonStyles.buttonGhostAction,
+                  buttonStyles.buttonMd,
+                  styles.cardAction
+                )}
+              >
                 {copy.phoneLabel}
               </a>
             </div>

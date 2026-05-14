@@ -12,7 +12,6 @@
 }
 
 .pointsMeta span,
-.pointsMeta a,
 .status {
   display: inline-flex;
   align-items: center;
@@ -25,11 +24,6 @@
   color: var(--base-paper-strong);
   font-size: 0.88rem;
   font-weight: 700;
-}
-
-.pointsMeta a {
-  color: var(--orange-350);
-  transition: var(--transition-colors);
 }
 
 .pointsGrid {
@@ -118,45 +112,6 @@
   margin-top: 4px;
 }
 
-.cardLink,
-.phoneLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 0 16px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-pill);
-  font-size: 0.9rem;
-  font-weight: 800;
-  transition: var(--transition-colors);
-}
-
-.cardLink {
-  border-color: var(--button-primary-border);
-  background: linear-gradient(
-    180deg,
-    var(--button-orange-500),
-    var(--button-orange-700)
-  );
-  color: var(--base-paper-strong);
-}
-
-.phoneLink {
-  border-color: var(--paper-border-a16);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--base-paper-strong);
-}
-
-.pointsMeta a:focus-visible,
-.cardLink:focus-visible,
-.phoneLink:focus-visible {
-  outline: none;
-  box-shadow:
-    var(--focus-ring),
-    var(--focus-ring-soft);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .pointCard {
     transition:
@@ -173,16 +128,6 @@
     transform: translateY(-2px);
   }
 
-  .pointsMeta a:hover,
-  .phoneLink:hover {
-    border-color: var(--paper-border-a24);
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .cardLink:hover {
-    background: var(--button-primary-bg-hover);
-    box-shadow: var(--shadow-primary-hover);
-  }
 }
 
 @media (min-width: 760px) {
@@ -197,7 +142,7 @@
   }
 
   .pointsMeta span,
-  .pointsMeta a {
+  .reservationLink {
     width: 100%;
     justify-content: center;
   }
@@ -216,17 +161,13 @@
     flex-direction: column;
   }
 
-  .cardLink,
-  .phoneLink {
+  .cardAction {
     width: 100%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pointCard,
-  .pointsMeta a,
-  .cardLink,
-  .phoneLink {
+  .pointCard {
     transition: none;
   }
 }

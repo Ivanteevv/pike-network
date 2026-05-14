@@ -42,7 +42,7 @@ export default async function HomePage() {
             <a
               className={cx(
                 buttonStyles.buttonBase,
-                buttonStyles.buttonSecondary,
+                buttonStyles.buttonGhostAction,
                 buttonStyles.buttonSm,
                 styles.heroPhone
               )}
@@ -63,7 +63,7 @@ export default async function HomePage() {
                 <a
                   className={cx(
                     buttonStyles.buttonBase,
-                    buttonStyles.buttonSecondary,
+                    buttonStyles.buttonGhostAction,
                     buttonStyles.buttonLg,
                     styles.heroAction
                   )}

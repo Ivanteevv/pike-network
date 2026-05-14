@@ -120,6 +120,75 @@
   transform: translateY(1px);
 }
 
+.buttonGhostAction {
+  --ghost-x: 50%;
+  --ghost-y: 50%;
+  isolation: isolate;
+  overflow: visible;
+  justify-content: flex-start;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 244, 229, 0.76);
+  box-shadow: none;
+  backdrop-filter: none;
+  text-transform: uppercase;
+}
+
+.buttonGhostAction::before {
+  content: "";
+  position: absolute;
+  inset: -18px -30px -16px;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle at var(--ghost-x) var(--ghost-y),
+      rgba(255, 226, 166, 0.24),
+      rgba(212, 106, 53, 0.14) 30%,
+      rgba(177, 91, 48, 0.055) 50%,
+      transparent 70%
+    ),
+    linear-gradient(
+      105deg,
+      transparent,
+      rgba(255, 226, 166, 0.08),
+      transparent
+    );
+  clip-path: circle(6% at var(--ghost-x) var(--ghost-y));
+  filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.98);
+  transition:
+    clip-path 760ms cubic-bezier(0.16, 0.84, 0.28, 1),
+    opacity 520ms var(--ease-standard),
+    transform 640ms var(--ease-standard);
+}
+
+.buttonGhostAction:focus-visible {
+  color: var(--base-paper-strong);
+  box-shadow: none;
+  outline: 2px solid rgba(255, 248, 239, 0.82);
+  outline-offset: 7px;
+}
+
+.buttonGhostAction:focus-visible::before {
+  --ghost-x: 50%;
+  --ghost-y: 50%;
+  clip-path: circle(125% at var(--ghost-x) var(--ghost-y));
+  opacity: 0.82;
+  transform: scale(1);
+}
+
+.buttonGhostAction:active {
+  color: var(--orange-350);
+  transform: translateY(1px);
+}
+
+.buttonGhostAction.buttonArrow::after {
+  color: rgba(239, 171, 139, 0.72);
+}
+
 .buttonUtility {
   min-height: 42px;
   padding: 0 14px;
@@ -222,6 +291,19 @@
     box-shadow: none;
   }
 
+  .buttonGhostAction:hover {
+    color: var(--base-paper-strong);
+    background: transparent;
+    box-shadow: none;
+    text-shadow: 0 2px 10px rgba(239, 171, 139, 0.14);
+  }
+
+  .buttonGhostAction:hover::before {
+    clip-path: circle(125% at var(--ghost-x) var(--ghost-y));
+    opacity: 0.82;
+    transform: scale(1);
+  }
+
   .buttonUtility:hover {
     border-color: rgba(239, 171, 139, 0.44);
     background:
@@ -236,10 +318,15 @@
   .buttonArrow:hover::after {
     transform: translateX(3px);
   }
+
+  .buttonGhostAction.buttonArrow:hover::after {
+    color: rgba(255, 218, 153, 0.94);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .buttonBase,
+  .buttonGhostAction::before,
   .buttonArrow::after {
     transition: none;
   }

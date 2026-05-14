@@ -90,10 +90,7 @@
   gap: 10px;
 }
 
-.counter,
-.navButton,
-.previewHint,
-.previewClose {
+.counter {
   border: 1px solid var(--paper-border-a16);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.035)),
@@ -119,19 +116,10 @@
 }
 
 .previewHint {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: fit-content;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: var(--radius-pill);
-  color: var(--base-paper-strong);
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  cursor: pointer;
-  transition: var(--transition-glass);
 }
 
 .controls {
@@ -144,15 +132,10 @@
 }
 
 .navButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 46px;
   height: 46px;
-  border-radius: var(--radius-pill);
-  color: var(--base-paper-strong);
-  cursor: pointer;
-  transition: var(--transition-glass);
+  min-height: 0;
+  padding: 0;
 }
 
 .navButton span {
@@ -285,15 +268,7 @@
 }
 
 .previewClose {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: var(--radius-pill);
-  color: var(--base-paper-strong);
-  cursor: pointer;
-  transition: var(--transition-glass);
+  --button-icon-size: 46px;
 }
 
 .previewClose span {
@@ -329,11 +304,8 @@
   object-fit: contain;
 }
 
-.navButton:focus-visible,
 .thumbButton:focus-visible,
-.stageSlideButton:focus-visible,
-.previewHint:focus-visible,
-.previewClose:focus-visible {
+.stageSlideButton:focus-visible {
   outline: none;
   box-shadow:
     inset 0 1px 0 var(--white-a14),
@@ -342,10 +314,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .navButton:hover,
-  .thumbButton:hover,
-  .previewHint:hover,
-  .previewClose:hover {
+  .thumbButton:hover {
     color: var(--base-paper-strong);
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)),
@@ -440,10 +409,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .stageImage,
-  .navButton,
   .thumbButton,
-  .previewHint,
-  .previewClose {
+  .stageSlideButton {
     transition: none;
   }
 }

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import buttonStyles from "@/components/button.module.css";
+import { cx } from "@/lib/class-names";
 import styles from "./bar-gallery.module.css";
 
 function blockScroll(shouldBlock) {
@@ -193,7 +195,12 @@ export function BarGallery({ images }) {
           </div>
           <button
             type="button"
-            className={styles.previewHint}
+            className={cx(
+              buttonStyles.buttonBase,
+              buttonStyles.buttonUtility,
+              buttonStyles.buttonSm,
+              styles.previewHint
+            )}
             onClick={() => openPreview(activeIndex)}
           >
             Открыть целиком
@@ -203,7 +210,11 @@ export function BarGallery({ images }) {
         <div className={styles.controls}>
           <button
             type="button"
-            className={styles.navButton}
+            className={cx(
+              buttonStyles.buttonBase,
+              buttonStyles.buttonUtility,
+              styles.navButton
+            )}
             onClick={() => showPrev()}
             aria-label="Предыдущее фото"
           >
@@ -211,7 +222,11 @@ export function BarGallery({ images }) {
           </button>
           <button
             type="button"
-            className={styles.navButton}
+            className={cx(
+              buttonStyles.buttonBase,
+              buttonStyles.buttonUtility,
+              styles.navButton
+            )}
             onClick={() => showNext()}
             aria-label="Следующее фото"
           >
@@ -284,7 +299,12 @@ export function BarGallery({ images }) {
               </div>
               <button
                 type="button"
-                className={styles.previewClose}
+                className={cx(
+                  buttonStyles.buttonBase,
+                  buttonStyles.buttonUtility,
+                  buttonStyles.buttonIcon,
+                  styles.previewClose
+                )}
                 onClick={closePreview}
                 aria-label="Закрыть просмотр"
               >
@@ -296,7 +316,12 @@ export function BarGallery({ images }) {
           <div className={styles.previewViewport}>
             <button
               type="button"
-              className={`${styles.navButton} ${styles.previewNavButton}`}
+              className={cx(
+                buttonStyles.buttonBase,
+                buttonStyles.buttonUtility,
+                styles.navButton,
+                styles.previewNavButton
+              )}
               onClick={showPreviewPrev}
               aria-label="Предыдущее фото"
             >
@@ -316,7 +341,12 @@ export function BarGallery({ images }) {
 
             <button
               type="button"
-              className={`${styles.navButton} ${styles.previewNavButton}`}
+              className={cx(
+                buttonStyles.buttonBase,
+                buttonStyles.buttonUtility,
+                styles.navButton,
+                styles.previewNavButton
+              )}
               onClick={showPreviewNext}
               aria-label="Следующее фото"
             >

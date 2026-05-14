@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import buttonStyles from "@/components/button.module.css";
+import { cx } from "@/lib/class-names";
 import styles from "./age-gate.module.css";
 import { AGE_GATE_SESSION_KEY, LEGAL_AGE } from "@/lib/age-gate";
 
@@ -160,14 +162,24 @@ export function AgeGate() {
         <div className={styles.actions}>
           <button
             type="button"
-            className={styles.primaryAction}
+            className={cx(
+              buttonStyles.buttonBase,
+              buttonStyles.buttonPrimary,
+              buttonStyles.buttonLg,
+              styles.actionButton
+            )}
             onClick={handleConfirm}
           >
             Да, мне есть {LEGAL_AGE}
           </button>
           <button
             type="button"
-            className={styles.secondaryAction}
+            className={cx(
+              buttonStyles.buttonBase,
+              buttonStyles.buttonSecondary,
+              buttonStyles.buttonLg,
+              styles.actionButton
+            )}
             onClick={handleExit}
           >
             Нет

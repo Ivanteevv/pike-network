@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import buttonStyles from "@/components/button.module.css";
+import { cx } from "@/lib/class-names";
 import styles from "./bar-hero-nav.module.css";
 
 export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
@@ -68,7 +70,13 @@ export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
 
         <button
           type="button"
-          className={`${styles.menuToggle} ${isOpen ? styles.menuToggleOpen : ""}`}
+          className={cx(
+            buttonStyles.buttonBase,
+            buttonStyles.buttonUtility,
+            buttonStyles.buttonIcon,
+            styles.menuToggle,
+            isOpen ? styles.menuToggleOpen : ""
+          )}
           onClick={toggleMenu}
           aria-expanded={isOpen}
           aria-controls="bar-mobile-nav"
@@ -128,7 +136,13 @@ export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
             </a>
 
             <a
-              className={styles.mobileMap}
+              className={cx(
+                buttonStyles.buttonBase,
+                buttonStyles.buttonGhostAction,
+                buttonStyles.buttonMd,
+                buttonStyles.buttonArrow,
+                styles.mobileMap
+              )}
               href={mapUrl}
               target="_blank"
               rel="noreferrer"
