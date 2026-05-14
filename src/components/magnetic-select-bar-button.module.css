@@ -1,0 +1,76 @@
+.button {
+  --magnet-x: 0px;
+  --magnet-y: 0px;
+  --magnet-hit-x: 18px;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  margin-left: calc(var(--magnet-hit-x) * -1);
+  padding: 10px var(--magnet-hit-x);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 248, 239, 0.92);
+  box-shadow: none;
+  cursor: pointer;
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transform: translate3d(var(--magnet-x), var(--magnet-y), 0);
+  transition: color 360ms var(--ease-standard);
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: inherit;
+  white-space: nowrap;
+  transition: opacity 360ms var(--ease-standard);
+}
+
+.button:focus-visible {
+  outline: 2px solid rgba(255, 248, 239, 0.84);
+  outline-offset: 8px;
+}
+
+.button:active {
+  color: var(--orange-350);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover,
+  .button:focus-visible {
+    color: var(--amber-300);
+  }
+}
+
+@media (max-width: 420px) {
+  .button {
+    --magnet-hit-x: 12px;
+    align-self: flex-start;
+    margin-left: calc(var(--magnet-hit-x) * -1);
+    min-height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .label {
+    transition-duration: 1ms;
+  }
+
+  .button {
+    transform: none;
+  }
+}

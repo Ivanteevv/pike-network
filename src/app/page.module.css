@@ -26,18 +26,7 @@
 }
 
 .heroPhone {
-  display: inline-flex;
-  align-items: center;
-  min-height: 42px;
-  padding: 0 16px;
-  border: 1px solid var(--paper-border-a18);
-  border-radius: var(--radius-pill);
-  background: rgba(12, 9, 8, 0.32);
-  color: var(--base-paper-strong);
-  font-size: 0.94rem;
-  font-weight: 700;
-  backdrop-filter: blur(14px) saturate(120%);
-  transition: var(--transition-colors);
+  flex-shrink: 0;
 }
 
 .heroStage {
@@ -48,6 +37,8 @@
 }
 
 .heroCopy {
+  display: grid;
+  justify-items: start;
   max-width: 48rem;
   animation: fade-up var(--duration-slow) var(--ease-standard) both;
 }
@@ -88,48 +79,11 @@
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 30px;
-}
-
-.primaryAction,
-.secondaryAction {
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-height: 52px;
-  padding: 0 22px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-pill);
-  font-family: var(--button-font-family);
-  font-size: var(--button-font-size);
-  font-weight: var(--button-font-weight);
-  letter-spacing: var(--button-letter-spacing);
-  line-height: 1;
-  text-decoration: none;
-  transition: var(--transition-colors);
-}
-
-.primaryAction {
-  border-color: var(--button-primary-border);
-  background: linear-gradient(
-    180deg,
-    var(--button-orange-500),
-    var(--button-orange-700)
-  );
-  color: var(--button-primary-text);
-  box-shadow:
-    var(--button-primary-inset-hover),
-    0 18px 34px rgba(0, 0, 0, 0.24);
-}
-
-.secondaryAction {
-  border-color: var(--paper-border-a16);
-  background: rgba(12, 9, 8, 0.34);
-  color: var(--base-paper-strong);
-  box-shadow: inset 0 1px 0 var(--white-a08);
-  backdrop-filter: blur(14px) saturate(120%);
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: flex-start;
+  margin-top: 30px;
 }
 
 .main {
@@ -160,39 +114,6 @@
   line-height: 1.62;
 }
 
-.primaryAction:focus-visible,
-.secondaryAction:focus-visible,
-.heroPhone:focus-visible {
-  outline: none;
-  box-shadow:
-    var(--focus-ring),
-    var(--focus-ring-soft);
-}
-
-.primaryAction:active,
-.secondaryAction:active,
-.heroPhone:active {
-  transform: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .heroPhone:hover,
-  .secondaryAction:hover {
-    border-color: var(--paper-border-a24);
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--base-paper-strong);
-  }
-
-  .primaryAction:hover {
-    border-color: var(--button-primary-border);
-    background: var(--button-primary-bg-hover);
-    color: var(--button-primary-text-hover);
-    box-shadow:
-      var(--button-primary-inset-hover),
-      var(--shadow-primary-hover-strong);
-  }
-}
-
 @media (max-width: 759px) {
   .heroInner {
     width: min(100%, calc(100% - 24px));
@@ -202,12 +123,6 @@
 
   .heroTopline {
     align-items: flex-start;
-  }
-
-  .heroPhone {
-    min-height: 38px;
-    padding: 0 12px;
-    font-size: 0.84rem;
   }
 
   .heroStage {
@@ -227,14 +142,8 @@
   }
 
   .actions {
-    gap: 10px;
+    gap: 16px;
     margin-top: 24px;
-  }
-
-  .primaryAction,
-  .secondaryAction {
-    min-height: 48px;
-    padding: 0 18px;
   }
 
   .main {
@@ -258,19 +167,15 @@
     align-items: stretch;
   }
 
-  .primaryAction,
-  .secondaryAction {
+  .heroAction {
     width: 100%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .heroCopy,
-  .primaryAction,
-  .secondaryAction,
   .heroPhone {
     animation: none;
-    transition: none;
   }
 }
 

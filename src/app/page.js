@@ -1,8 +1,11 @@
 import Image from "next/image";
 import { HeroMedia } from "@/components/hero-media";
 import { JsonLd } from "@/components/json-ld";
+import { MagneticSelectBarButton } from "@/components/magnetic-select-bar-button";
 import { NetworkPointsSection } from "@/components/network-points";
 import { SiteFooter } from "@/components/site-footer";
+import buttonStyles from "@/components/button.module.css";
+import { cx } from "@/lib/class-names";
 import { getSiteData } from "@/lib/content/get-site-data";
 import { siteUrl } from "@/lib/site-url";
 import styles from "./page.module.css";
@@ -36,7 +39,15 @@ export default async function HomePage() {
               height={76}
               priority
             />
-            <a className={styles.heroPhone} href={`tel:${network.phoneE164}`}>
+            <a
+              className={cx(
+                buttonStyles.buttonBase,
+                buttonStyles.buttonSecondary,
+                buttonStyles.buttonSm,
+                styles.heroPhone
+              )}
+              href={`tel:${network.phoneE164}`}
+            >
               {network.phoneDisplay}
             </a>
           </div>
@@ -48,10 +59,16 @@ export default async function HomePage() {
               <p className={styles.heroDescription}>{network.hero.description}</p>
 
               <div className={styles.actions}>
-                <a className={styles.primaryAction} href="#bars">
-                  Выбрать бар
-                </a>
-                <a className={styles.secondaryAction} href={`tel:${network.phoneE164}`}>
+                <MagneticSelectBarButton href="#bars" />
+                <a
+                  className={cx(
+                    buttonStyles.buttonBase,
+                    buttonStyles.buttonSecondary,
+                    buttonStyles.buttonLg,
+                    styles.heroAction
+                  )}
+                  href={`tel:${network.phoneE164}`}
+                >
                   Позвонить
                 </a>
               </div>
