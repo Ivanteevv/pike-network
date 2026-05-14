@@ -1,4 +1,3 @@
-import Link from "next/link";
 import styles from "./site-footer.module.css";
 
 export function SiteFooter({ network }) {
@@ -36,9 +35,6 @@ export function SiteFooter({ network }) {
 
         <div className={styles.bottomRow}>
           <p>{`© ${year} ${network.displayName}`}</p>
-          <Link href="#page-top" className={styles.inlineLink}>
-            Наверх
-          </Link>
         </div>
       </div>
     </footer>
