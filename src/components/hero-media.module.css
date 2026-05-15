@@ -4,6 +4,8 @@
   isolation: isolate;
   overflow: hidden;
   border-bottom: 1px solid var(--color-border);
+  --hero-focus-duration: 1100ms;
+  --hero-focus-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .defaultVariant {
@@ -20,6 +22,11 @@
 .mediaLayer {
   position: absolute;
   inset: 0;
+  transform: scale(1);
+  filter: saturate(1) contrast(1) brightness(1);
+  transition:
+    transform var(--hero-focus-duration) var(--hero-focus-ease),
+    filter var(--hero-focus-duration) var(--hero-focus-ease);
 }
 
 .image,
@@ -46,6 +53,8 @@
   background:
     linear-gradient(180deg, var(--ink-a18), var(--ink-a82)),
     linear-gradient(90deg, var(--ink-a74), var(--ink-a24) 48%, var(--ink-a74));
+  opacity: 1;
+  transition: opacity 900ms var(--hero-focus-ease);
 }
 
 .showcase .scrim {
@@ -58,10 +67,55 @@
   background: rgba(10, 8, 7, 0.42);
 }
 
+.focusLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 5, 4, 0.48),
+      rgba(7, 5, 4, 0.08) 24%,
+      rgba(7, 5, 4, 0.04) 62%,
+      rgba(7, 5, 4, 0.58)
+    ),
+    radial-gradient(circle at 50% 52%, rgba(255, 246, 232, 0.08), rgba(7, 5, 4, 0.08) 42%, rgba(7, 5, 4, 0.52) 100%);
+  transition: opacity var(--hero-focus-duration) var(--hero-focus-ease);
+}
+
 .content {
   position: relative;
   z-index: 1;
   min-height: 88svh;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  transition:
+    opacity 760ms var(--hero-focus-ease),
+    transform 900ms var(--hero-focus-ease),
+    filter 760ms var(--hero-focus-ease);
+}
+
+.idle .scrim,
+.idle .content {
+  opacity: 0;
+}
+
+.idle .mediaLayer {
+  transform: scale(1.012);
+  filter: saturate(1.08) contrast(1.08) brightness(1.02);
+}
+
+.idle .focusLayer {
+  opacity: 1;
+  transition-delay: 140ms;
+}
+
+.idle .content {
+  transform: translateY(10px) scale(0.985);
+  filter: blur(4px);
+  pointer-events: none;
 }
 
 .showcase .content {
@@ -117,6 +171,19 @@
   .immersive .video {
     animation: none;
     transform: none;
+  }
+
+  .scrim,
+  .focusLayer,
+  .mediaLayer,
+  .content {
+    transition: none;
+  }
+
+  .idle .mediaLayer,
+  .idle .content {
+    transform: none;
+    filter: none;
   }
 }
 

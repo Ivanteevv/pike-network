@@ -15,14 +15,8 @@
 .heroTopline {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 18px;
-}
-
-.heroLogo {
-  width: clamp(58px, 7vw, 78px);
-  height: auto;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.28));
 }
 
 .heroPhone {

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { HeroMedia } from "@/components/hero-media";
 import { JsonLd } from "@/components/json-ld";
 import { MagneticSelectBarButton } from "@/components/magnetic-select-bar-button";
@@ -31,14 +30,6 @@ export default async function HomePage() {
       <HeroMedia media={network.hero.media} priority variant="immersive">
         <div className={styles.heroInner}>
           <div className={styles.heroTopline}>
-            <Image
-              className={styles.heroLogo}
-              src={network.logoUrl}
-              alt={network.name}
-              width={76}
-              height={76}
-              priority
-            />
             <a
               className={cx(
                 buttonStyles.buttonBase,

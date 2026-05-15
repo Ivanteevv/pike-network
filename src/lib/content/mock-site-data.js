@@ -17,7 +17,7 @@ export const mockSiteData = {
   network: {
     name: "Бар Щука",
     displayName: 'Сеть баров "Щука"',
-    logoUrl: "/Лого-Щука.svg",
+    logoUrl: "/logo-shchuka.svg",
     phoneDisplay: sharedPhoneDisplay,
     phoneE164: sharedPhoneE164,
     mapSearchUrl: networkMapSearchUrl,
