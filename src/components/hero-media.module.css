@@ -1,6 +1,11 @@
 .hero {
+  --hero-target-height: 88svh;
+  --hero-layout-height: min(
+    var(--hero-target-height),
+    var(--hero-visible-height, var(--hero-target-height))
+  );
   position: relative;
-  min-height: 88svh;
+  min-height: var(--hero-layout-height);
   isolation: isolate;
   overflow: hidden;
   border-bottom: 1px solid var(--color-border);
@@ -12,11 +17,13 @@
 }
 
 .showcase {
-  min-height: 100svh;
+  --hero-target-height: 100svh;
+  min-height: var(--hero-layout-height);
 }
 
 .immersive {
-  min-height: 100svh;
+  --hero-target-height: 100svh;
+  min-height: var(--hero-layout-height);
 }
 
 .mediaLayer {
@@ -87,7 +94,7 @@
 .content {
   position: relative;
   z-index: 1;
-  min-height: 88svh;
+  min-height: var(--hero-layout-height);
   opacity: 1;
   transform: translateY(0) scale(1);
   filter: blur(0);
@@ -119,24 +126,20 @@
 }
 
 .showcase .content {
-  min-height: 100svh;
+  min-height: var(--hero-layout-height);
 }
 
 .immersive .content {
-  min-height: 100svh;
+  min-height: var(--hero-layout-height);
 }
 
 @media (max-width: 759px) {
-  .hero,
-  .content,
-  .showcase,
-  .showcase .content {
-    min-height: 94svh;
+  .hero {
+    --hero-target-height: 94svh;
   }
 
-  .immersive,
-  .immersive .content {
-    min-height: 100svh;
+  .immersive {
+    --hero-target-height: 100svh;
   }
 
   .showcase .image,

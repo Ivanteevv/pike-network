@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { HeroMedia } from "@/components/hero-media";
 import { JsonLd } from "@/components/json-ld";
 import { BarHeroNav } from "@/components/bar-hero-nav";
+import { BarBroadcasts } from "@/components/bar-broadcasts";
 import { BarGallery } from "@/components/bar-gallery";
 import { SiteFooter } from "@/components/site-footer";
 import buttonStyles from "@/components/button.module.css";
@@ -68,6 +69,7 @@ export default async function BarPage({ params }) {
   const heroEyebrow = formatHeroEyebrow(bar);
   const heroLocation = formatHeroLocation(bar);
   const networkBars = siteData.bars;
+  const broadcasts = bar.broadcasts ?? [];
 
   return (
     <div id="page-top" className={styles.page}>
@@ -140,6 +142,16 @@ export default async function BarPage({ params }) {
             </ul>
           </div>
         </section>
+
+        {broadcasts.length > 0 ? (
+          <section id="broadcast" className={styles.section}>
+            <div className={styles.sectionHeading}>
+              <p className={styles.sectionKicker}>Broadcast</p>
+              <h2>Ближайшие трансляции в баре</h2>
+            </div>
+            <BarBroadcasts broadcasts={broadcasts} />
+          </section>
+        ) : null}
 
         <section id="menu" className={styles.section}>
           <div className={styles.sectionHeading}>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "./hero-media.module.css";
 
 const HERO_IDLE_DELAY_MS = 10000;
+const HERO_VISIBLE_HEIGHT_PROPERTY = "--hero-visible-height";
 const HERO_ACTIVITY_EVENTS = [
   "mousemove",
   "mousedown",
@@ -27,6 +28,45 @@ export function HeroMedia({
   const [shouldUseVideo, setShouldUseVideo] = useState(true);
   const [isHeroInView, setIsHeroInView] = useState(true);
   const [isIdle, setIsIdle] = useState(false);
+
+  useEffect(() => {
+    const heroElement = heroRef.current;
+
+    if (!heroElement || typeof window === "undefined") {
+      return undefined;
+    }
+
+    const updateVisibleHeight = () => {
+      const visualViewport = window.visualViewport;
+      const visibleHeight = visualViewport?.height || window.innerHeight;
+
+      if (!visibleHeight) {
+        return;
+      }
+
+      heroElement.style.setProperty(
+        HERO_VISIBLE_HEIGHT_PROPERTY,
+        `${Math.round(visibleHeight)}px`
+      );
+    };
+
+    updateVisibleHeight();
+
+    window.addEventListener("resize", updateVisibleHeight, { passive: true });
+    window.addEventListener("orientationchange", updateVisibleHeight, {
+      passive: true,
+    });
+    window.visualViewport?.addEventListener("resize", updateVisibleHeight);
+    window.visualViewport?.addEventListener("scroll", updateVisibleHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateVisibleHeight);
+      window.removeEventListener("orientationchange", updateVisibleHeight);
+      window.visualViewport?.removeEventListener("resize", updateVisibleHeight);
+      window.visualViewport?.removeEventListener("scroll", updateVisibleHeight);
+      heroElement.style.removeProperty(HERO_VISIBLE_HEIGHT_PROPERTY);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") {

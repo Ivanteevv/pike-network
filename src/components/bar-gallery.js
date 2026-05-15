@@ -3,8 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import buttonStyles from "@/components/button.module.css";
+import { RollingNumber, formatRollingNumber } from "@/components/rolling-number";
 import { cx } from "@/lib/class-names";
 import styles from "./bar-gallery.module.css";
+
+const COMPACT_PREVIEW_QUERY = "(max-width: 759px)";
 
 function blockScroll(shouldBlock) {
   if (typeof document === "undefined") {
@@ -27,10 +30,37 @@ function blockScroll(shouldBlock) {
 
 export function BarGallery({ images }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isCompactPreviewDisabled, setIsCompactPreviewDisabled] =
+    useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [previewIndex, setPreviewIndex] = useState(0);
   const stageMediaRef = useRef(null);
+  const pendingScrollIndexRef = useRef(null);
   const previewDialogRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const compactQuery = window.matchMedia(COMPACT_PREVIEW_QUERY);
+    const updatePreviewAvailability = () => {
+      const isCompact = compactQuery.matches;
+
+      setIsCompactPreviewDisabled(isCompact);
+
+      if (isCompact) {
+        setIsPreviewOpen(false);
+      }
+    };
+
+    updatePreviewAvailability();
+    compactQuery.addEventListener("change", updatePreviewAvailability);
+
+    return () => {
+      compactQuery.removeEventListener("change", updatePreviewAvailability);
+    };
+  }, []);
 
   useEffect(() => {
     if (!isPreviewOpen || typeof window === "undefined") {
@@ -78,8 +108,10 @@ export function BarGallery({ images }) {
 
   function scrollToIndex(index, behavior = "smooth") {
     const stageMedia = stageMediaRef.current;
+    pendingScrollIndexRef.current = index;
 
     if (!stageMedia) {
+      pendingScrollIndexRef.current = null;
       return;
     }
 
@@ -117,6 +149,10 @@ export function BarGallery({ images }) {
   }
 
   function openPreview(index = activeIndex) {
+    if (isCompactPreviewDisabled) {
+      return;
+    }
+
     setPreviewIndex(index);
     setIsPreviewOpen(true);
   }
@@ -148,6 +184,19 @@ export function BarGallery({ images }) {
     }
 
     const nextIndex = Math.round(stageMedia.scrollLeft / slideWidth);
+    const pendingScrollIndex = pendingScrollIndexRef.current;
+
+    if (pendingScrollIndex !== null) {
+      if (nextIndex === pendingScrollIndex) {
+        pendingScrollIndexRef.current = null;
+
+        if (nextIndex !== activeIndex) {
+          setActiveIndex(nextIndex);
+        }
+      }
+
+      return;
+    }
 
     if (nextIndex !== activeIndex) {
       setActiveIndex(nextIndex);
@@ -168,43 +217,58 @@ export function BarGallery({ images }) {
               className={styles.stageSlide}
               aria-current={index === activeIndex ? "true" : "false"}
             >
-              <button
-                type="button"
-                className={styles.stageSlideButton}
-                onClick={() => openPreview(index)}
-                aria-label={`Открыть фото ${index + 1} во весь экран`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes="(max-width: 759px) 100vw, (max-width: 1160px) 90vw, 1160px"
-                  className={styles.stageImage}
-                  priority={index < 2}
-                />
-              </button>
+              {isCompactPreviewDisabled ? (
+                <div className={styles.stageSlideButton}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 759px) 100vw, (max-width: 1160px) 90vw, 1160px"
+                    className={styles.stageImage}
+                    priority={index < 2}
+                  />
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.stageSlideButton}
+                  onClick={() => openPreview(index)}
+                  aria-label={`Открыть фото ${index + 1} во весь экран`}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 759px) 100vw, (max-width: 1160px) 90vw, 1160px"
+                    className={styles.stageImage}
+                    priority={index < 2}
+                  />
+                </button>
+              )}
             </div>
           ))}
         </div>
 
         <div className={styles.stageTopline}>
           <div className={styles.counter}>
-            <span>{String(activeIndex + 1).padStart(2, "0")}</span>
+            <RollingNumber value={activeIndex + 1} total={images.length} />
             <span className={styles.counterDivider}>/</span>
-            <span>{String(images.length).padStart(2, "0")}</span>
+            <span>{formatRollingNumber(images.length)}</span>
           </div>
-          <button
-            type="button"
-            className={cx(
-              buttonStyles.buttonBase,
-              buttonStyles.buttonUtility,
-              buttonStyles.buttonSm,
-              styles.previewHint
-            )}
-            onClick={() => openPreview(activeIndex)}
-          >
-            Открыть целиком
-          </button>
+          {isCompactPreviewDisabled ? null : (
+            <button
+              type="button"
+              className={cx(
+                buttonStyles.buttonBase,
+                buttonStyles.buttonUtility,
+                buttonStyles.buttonSm,
+                styles.previewHint
+              )}
+              onClick={() => openPreview(activeIndex)}
+            >
+              Открыть целиком
+            </button>
+          )}
         </div>
 
         <div className={styles.controls}>
@@ -264,7 +328,6 @@ export function BarGallery({ images }) {
         className={styles.previewDialog}
         tabIndex={-1}
         aria-labelledby="gallery-preview-title"
-        aria-describedby="gallery-preview-description"
         onCancel={(event) => {
           event.preventDefault();
           closePreview();
@@ -286,16 +349,13 @@ export function BarGallery({ images }) {
               <p id="gallery-preview-title" className={styles.previewKicker}>
                 Полный просмотр
               </p>
-              <p id="gallery-preview-description" className={styles.previewCaption}>
-                {images[previewIndex].alt}
-              </p>
             </div>
 
             <div className={styles.previewActions}>
               <div className={styles.counter}>
-                <span>{String(previewIndex + 1).padStart(2, "0")}</span>
+                <RollingNumber value={previewIndex + 1} total={images.length} />
                 <span className={styles.counterDivider}>/</span>
-                <span>{String(images.length).padStart(2, "0")}</span>
+                <span>{formatRollingNumber(images.length)}</span>
               </div>
               <button
                 type="button"

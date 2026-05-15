@@ -145,6 +145,41 @@ export const mockSiteData = {
         { src: "/mock/bars/shchuka-8-marta-18k1/gallery/09.jpg", alt: "Подача тартар в баре Щука" },
         { src: "/mock/bars/shchuka-8-marta-18k1/gallery/10.jpg", alt: "Крылышки и закуски в баре Щука" },
       ],
+      broadcasts: [
+        {
+          title: "Футбол на большом экране",
+          status: "Сегодня",
+          timeLabel: "20:45 · главный зал",
+          description:
+            "Заглушка под карточку матча: здесь появятся команды, турнир и точное время трансляции.",
+          image: {
+            src: "/mock/bars/shchuka-8-marta-18k1/gallery/04.jpg",
+            alt: "Спортивная трансляция в баре Щука",
+          },
+        },
+        {
+          title: "Хоккейный вечер",
+          status: "Скоро",
+          timeLabel: "Пятница · 19:30",
+          description:
+            "Карточка для будущего расписания: можно заменить на лигу, команды и условия брони.",
+          image: {
+            src: "/mock/bars/shchuka-8-marta-18k1/gallery/05.jpg",
+            alt: "Стол с блюдами в баре Щука",
+          },
+        },
+        {
+          title: "Большой спортивный слот",
+          status: "В расписании",
+          timeLabel: "Выходные · вечер",
+          description:
+            "Резервный слот для UFC, дерби или другого события, которое бар захочет выделить отдельно.",
+          image: {
+            src: "/mock/bars/shchuka-8-marta-18k1/gallery/01.jpg",
+            alt: "Интерьер бара Щука на 8 Марта",
+          },
+        },
+      ],
       menuLinks: [
         {
           title: "Основное меню",
@@ -239,6 +274,41 @@ export const mockSiteData = {
         { src: "/mock/bars/shchuka-9-marta-19k2/gallery/11.webp", alt: "Интерьер с посадочными местами" },
         { src: "/mock/bars/shchuka-9-marta-19k2/gallery/12.webp", alt: "Обстановка для встречи с друзьями" },
         { src: "/mock/bars/shchuka-9-marta-19k2/gallery/13.jpg", alt: "Закуски в баре Щука на 9 Марта" },
+      ],
+      broadcasts: [
+        {
+          title: "Локальный матч недели",
+          status: "Сегодня",
+          timeLabel: "21:00 · основной экран",
+          description:
+            "Заглушка под ближайшую трансляцию этой точки: команды и турнир можно будет подставить из контента.",
+          image: {
+            src: "/mock/bars/shchuka-9-marta-19k2/gallery/03.jpg",
+            alt: "Посадка и интерьер бара Щука",
+          },
+        },
+        {
+          title: "Вечер хоккея",
+          status: "Скоро",
+          timeLabel: "Пятница · 19:30",
+          description:
+            "Будущий слот для расписания трансляций с коротким описанием события и настроения вечера.",
+          image: {
+            src: "/mock/bars/shchuka-9-marta-19k2/gallery/09.webp",
+            alt: "Вечерняя атмосфера бара Щука",
+          },
+        },
+        {
+          title: "Спорт для компании",
+          status: "В расписании",
+          timeLabel: "Выходные · после 18:00",
+          description:
+            "Карточка-заглушка для крупного эфира, который нужно будет быстро подсветить на странице бара.",
+          image: {
+            src: "/mock/bars/shchuka-9-marta-19k2/gallery/13.jpg",
+            alt: "Закуски в баре Щука на 9 Марта",
+          },
+        },
       ],
       menuLinks: [
         {
