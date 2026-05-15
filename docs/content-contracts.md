@@ -175,6 +175,18 @@ Rules:
       "alt": "string"
     }
   ],
+  "broadcasts": [
+    {
+      "title": "string",
+      "status": "string",
+      "timeLabel": "string",
+      "description": "string",
+      "image": {
+        "src": "string",
+        "alt": "string"
+      }
+    }
+  ],
   "menuLinks": [
     {
       "title": "string",
@@ -215,9 +227,10 @@ Rules:
 
 Rules:
 
-- `hours`, `bestFor`, `gallery`, `menuLinks`, `menuPreview`, `features`,
-  `events`, and `socialLinks` return arrays, not `null`.
+- `hours`, `bestFor`, `gallery`, `broadcasts`, `menuLinks`, `menuPreview`,
+  `features`, `events`, and `socialLinks` return arrays, not `null`.
 - `gallery[].alt` is required.
+- `broadcasts[].image.alt` is required.
 - `menuLinks[].status` remains required even when `href` is `null`.
 - `summary`, `vibe`, and other not-yet-rendered singleton fields may be `null`
   until the UI uses them consistently.

@@ -85,9 +85,13 @@
   position: absolute;
   top: 16px;
   left: 16px;
+  right: 16px;
   z-index: 2;
-  display: grid;
-  gap: 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
 }
 
 .counter {
@@ -102,6 +106,7 @@
 .counter {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   min-height: 38px;
   padding: 0 14px;
@@ -109,6 +114,7 @@
   color: var(--base-paper-strong);
   font-size: 0.88rem;
   letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
 }
 
 .counterDivider {
@@ -116,10 +122,16 @@
 }
 
 .previewHint {
-  width: fit-content;
+  width: auto;
+  justify-content: center;
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.counter,
+.previewHint {
+  pointer-events: auto;
 }
 
 .controls {
@@ -253,14 +265,6 @@
   text-transform: uppercase;
 }
 
-.previewCaption {
-  margin-top: 10px;
-  max-width: 32rem;
-  color: rgba(255, 248, 239, 0.88);
-  font-size: 1rem;
-  line-height: 1.45;
-}
-
 .previewActions {
   display: flex;
   align-items: center;
@@ -340,6 +344,7 @@
   .stageTopline {
     top: 12px;
     left: 12px;
+    right: 12px;
     gap: 8px;
   }
 

@@ -9,6 +9,7 @@ import styles from "./bar-hero-nav.module.css";
 export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
   const [isOpen, setIsOpen] = useState(false);
   const navItems = [
+    { href: "#broadcast", label: "Broadcast" },
     { href: "#menu", label: "Меню" },
     { href: "#gallery", label: "Галерея" },
     { href: "#contacts", label: "Контакты" },

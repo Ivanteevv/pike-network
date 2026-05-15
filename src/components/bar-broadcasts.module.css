@@ -1,0 +1,198 @@
+.broadcastShell {
+  margin-top: 24px;
+}
+
+.broadcastCard {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.92fr);
+  min-height: clamp(24rem, 48svh, 34rem);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, var(--white-a08), var(--white-a025)),
+    linear-gradient(180deg, var(--ink-a24), var(--ink-a34));
+  box-shadow: var(--shadow-card-glass);
+}
+
+.broadcastCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(135deg, var(--white-a1), transparent 28%);
+  pointer-events: none;
+}
+
+.broadcastMedia {
+  position: relative;
+  min-width: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background: rgba(12, 9, 8, 0.34);
+}
+
+.broadcastMedia::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 58%, rgba(8, 7, 6, 0.5)),
+    linear-gradient(0deg, rgba(8, 7, 6, 0.18), transparent 36%);
+  pointer-events: none;
+}
+
+.broadcastImage {
+  object-fit: cover;
+  animation: broadcastImageEnter 420ms var(--ease-standard) both;
+}
+
+.broadcastCopy {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 24px;
+  min-width: 0;
+  padding: 24px;
+}
+
+.broadcastTopline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.broadcastStatus,
+.broadcastTime {
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.broadcastCounter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--paper-border-a16);
+  border-radius: var(--radius-pill);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.035)),
+    rgba(12, 9, 8, 0.26);
+  color: var(--base-paper-strong);
+  font-size: 0.88rem;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  backdrop-filter: blur(18px) saturate(124%);
+  box-shadow: inset 0 1px 0 var(--white-a1);
+}
+
+.broadcastCounterDivider {
+  color: var(--color-text-muted);
+}
+
+.broadcastMain {
+  align-self: end;
+  display: grid;
+  gap: 14px;
+}
+
+.broadcastMain h3 {
+  color: var(--base-paper-strong);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: 0.9;
+}
+
+.broadcastMain p:last-child {
+  max-width: 30rem;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.58;
+}
+
+.broadcastControls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.broadcastNavButton {
+  width: 46px;
+  height: 46px;
+  min-height: 0;
+  padding: 0;
+}
+
+.broadcastNavButton span {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+@keyframes broadcastImageEnter {
+  from {
+    opacity: 0.76;
+    transform: scale(1.02);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 759px) {
+  .broadcastShell {
+    margin-top: 18px;
+  }
+
+  .broadcastCard {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .broadcastMedia {
+    aspect-ratio: 0.95;
+    min-height: 0;
+  }
+
+  .broadcastMedia::after {
+    background:
+      linear-gradient(180deg, transparent 42%, rgba(8, 7, 6, 0.52)),
+      linear-gradient(0deg, rgba(8, 7, 6, 0.16), transparent 36%);
+  }
+
+  .broadcastCopy {
+    gap: 20px;
+    padding: 18px;
+  }
+
+  .broadcastTopline {
+    align-items: center;
+  }
+
+  .broadcastMain h3 {
+    font-size: clamp(2.05rem, 13vw, 3.2rem);
+  }
+
+  .broadcastControls {
+    justify-content: flex-start;
+  }
+
+  .broadcastNavButton {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .broadcastImage {
+    animation: none;
+  }
+}

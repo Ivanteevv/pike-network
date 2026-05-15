@@ -1,0 +1,121 @@
+.rollingNumber {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  block-size: 1.1em;
+  line-height: 1;
+  contain: layout paint;
+}
+
+.rollingNumberDigits {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1ch;
+  column-gap: 0.14em;
+  letter-spacing: 0;
+}
+
+.rollingDigit {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1ch;
+  block-size: 1.1em;
+  overflow: hidden;
+}
+
+.rollingNumberTrack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.rollingNumberPrevious,
+.rollingNumberCurrent {
+  grid-area: 1 / 1;
+  will-change: transform, opacity;
+}
+
+.rollingNumberPrevious {
+  animation: rollingNumberPreviousNext 520ms var(--ease-standard) both;
+}
+
+.rollingNumberCurrent {
+  animation: rollingNumberCurrentNext 520ms var(--ease-standard) both;
+}
+
+.rollingNumber[data-direction="previous"] .rollingNumberPrevious {
+  animation-name: rollingNumberPreviousPrevious;
+}
+
+.rollingNumber[data-direction="previous"] .rollingNumberCurrent {
+  animation-name: rollingNumberCurrentPrevious;
+}
+
+.rollingNumber[data-direction="none"] .rollingNumberCurrent {
+  animation: none;
+}
+
+.rollingDigit[data-rolling="false"] .rollingNumberCurrent {
+  animation: none;
+}
+
+@keyframes rollingNumberPreviousNext {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0.34;
+    transform: translateY(-112%);
+  }
+}
+
+@keyframes rollingNumberCurrentNext {
+  from {
+    opacity: 0.34;
+    transform: translateY(112%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rollingNumberPreviousPrevious {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0.34;
+    transform: translateY(112%);
+  }
+}
+
+@keyframes rollingNumberCurrentPrevious {
+  from {
+    opacity: 0.34;
+    transform: translateY(-112%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rollingNumberPrevious,
+  .rollingNumberCurrent {
+    animation: none;
+  }
+
+  .rollingNumberPrevious {
+    display: none;
+  }
+}

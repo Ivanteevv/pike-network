@@ -106,6 +106,12 @@ reasoning, old prompts, or prior research.
 
 ## Validation
 
+The user tests rendered behavior manually.
+
+Do not start dev servers, production servers, browser sessions, Playwright,
+screenshots, or other interactive/runtime visual checks unless the user
+explicitly asks for them in the current task.
+
 After code changes, run the most relevant check:
 
 - `npm run lint`
