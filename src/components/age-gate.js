@@ -136,6 +136,11 @@ export function AgeGate() {
     window.location.replace("https://yandex.ru/");
   }
 
+  const confirmLabel = `Да, мне есть ${LEGAL_AGE}`;
+  const confirmHoverLabel = "Добро пожаловать";
+  const exitLabel = "Нет";
+  const exitHoverLabel = "До встречи";
+
   return (
     <dialog
       ref={dialogRef}
@@ -162,27 +167,37 @@ export function AgeGate() {
         <div className={styles.actions}>
           <button
             type="button"
+            aria-label={confirmLabel}
             className={cx(
               buttonStyles.buttonBase,
-              buttonStyles.buttonPrimary,
+              buttonStyles.buttonFillAction,
+              buttonStyles.buttonFillPositive,
               buttonStyles.buttonLg,
               styles.actionButton
             )}
             onClick={handleConfirm}
           >
-            Да, мне есть {LEGAL_AGE}
+            <span className={buttonStyles.buttonLabelRoll} aria-hidden="true">
+              <span className={buttonStyles.buttonLabelCurrent}>{confirmLabel}</span>
+              <span className={buttonStyles.buttonLabelNext}>{confirmHoverLabel}</span>
+            </span>
           </button>
           <button
             type="button"
+            aria-label={exitLabel}
             className={cx(
               buttonStyles.buttonBase,
-              buttonStyles.buttonSecondary,
+              buttonStyles.buttonFillAction,
+              buttonStyles.buttonFillNegative,
               buttonStyles.buttonLg,
               styles.actionButton
             )}
             onClick={handleExit}
           >
-            Нет
+            <span className={buttonStyles.buttonLabelRoll} aria-hidden="true">
+              <span className={buttonStyles.buttonLabelCurrent}>{exitLabel}</span>
+              <span className={buttonStyles.buttonLabelNext}>{exitHoverLabel}</span>
+            </span>
           </button>
         </div>
       </section>

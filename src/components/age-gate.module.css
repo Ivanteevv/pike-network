@@ -108,12 +108,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
-  margin-top: 28px;
+  gap: 16px 18px;
+  margin-top: 30px;
+  padding: 4px 8px 10px 0;
 }
 
 .actionButton {
-  min-width: 190px;
+  min-width: 196px;
+  min-height: 50px;
 }
 
 @media (max-width: 640px) {
@@ -131,6 +133,8 @@
 
   .actions {
     flex-direction: column;
+    gap: 14px;
+    padding: 4px 6px 8px 0;
   }
 
   .actionButton {
