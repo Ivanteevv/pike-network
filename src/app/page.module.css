@@ -2,6 +2,25 @@
   min-height: 100vh;
 }
 
+.heroOverlayScene {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-background);
+}
+
+.overlayHero {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+}
+
+.overlayContent {
+  position: relative;
+  z-index: 2;
+  background: var(--color-background);
+  scroll-margin-top: 0;
+}
+
 .heroInner {
   position: relative;
   display: grid;
@@ -85,13 +104,62 @@
 }
 
 .main {
-  width: min(1120px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 46px 0 82px;
+  background: var(--color-background);
 }
 
 .section {
-  padding: 18px 0 8px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  min-height: 100svh;
+  padding: clamp(34px, 6svh, 58px) 0 clamp(34px, 6svh, 58px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 76% 12%, rgba(255, 244, 230, 0.045), transparent 28rem),
+    radial-gradient(circle at 18% 0%, rgba(186, 92, 40, 0.08), transparent 24rem),
+    linear-gradient(180deg, #181210 0%, #120d0b 38%, #0d0908 100%),
+    var(--color-background);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      92deg,
+      transparent 0 42px,
+      rgba(255, 244, 230, 0.018) 43px,
+      transparent 45px
+    ),
+    repeating-linear-gradient(
+      8deg,
+      transparent 0 86px,
+      rgba(239, 171, 139, 0.016) 87px,
+      transparent 89px
+    );
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 244, 230, 0.045), transparent 34rem),
+    linear-gradient(180deg, transparent 0%, rgba(5, 3, 3, 0.24) 100%);
+  pointer-events: none;
+}
+
+.section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sectionFrame {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
 }
 
 .sectionHeading {
@@ -110,6 +178,12 @@
   margin-top: 16px;
   color: var(--color-text-muted);
   line-height: 1.62;
+}
+
+@media (min-width: 760px) {
+  .sectionHeading h2 {
+    max-width: 10ch;
+  }
 }
 
 @media (max-width: 759px) {
@@ -144,9 +218,19 @@
     margin-top: 24px;
   }
 
-  .main {
+  .section {
+    align-items: flex-start;
+    min-height: 100svh;
+    padding: 28px 0 38px;
+    background:
+      radial-gradient(circle at 76% 12%, rgba(255, 244, 230, 0.035), transparent 18rem),
+      radial-gradient(circle at 18% 0%, rgba(186, 92, 40, 0.06), transparent 16rem),
+      linear-gradient(180deg, #17110f 0%, #110c0a 42%, #0d0908 100%),
+      var(--color-background);
+  }
+
+  .sectionFrame {
     width: min(100%, calc(100% - 24px));
-    padding: 34px 0 68px;
   }
 
   .sectionHeading h2 {
@@ -174,6 +258,14 @@
   .heroCopy,
   .heroPhone {
     animation: none;
+  }
+
+  .heroOverlayScene {
+    overflow: visible;
+  }
+
+  .overlayHero {
+    position: relative;
   }
 }
 
