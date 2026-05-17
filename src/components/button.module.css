@@ -215,72 +215,85 @@
 }
 
 .buttonGhostAction {
-  --ghost-x: 50%;
-  --ghost-y: 50%;
+  --lit-border-idle: rgba(251, 146, 60, 0.3);
+  --lit-border-on: #fb923c;
+  --lit-text-idle: rgba(255, 248, 239, 0.72);
+  --lit-text-flicker: rgba(255, 248, 239, 0.94);
+  --lit-text-on: #fff;
   isolation: isolate;
   overflow: visible;
   justify-content: flex-start;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: rgba(255, 244, 229, 0.76);
+  min-height: 54px;
+  padding: 0 24px;
+  border: 2px solid var(--lit-border-idle);
+  border-radius: 4px;
+  background: rgba(13, 9, 8, 0.18);
+  color: var(--lit-text-idle);
   box-shadow: none;
   backdrop-filter: none;
+  font-size: 0.84rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.buttonGhostAction::before {
-  content: "";
-  position: absolute;
-  inset: -18px -30px -16px;
-  z-index: -1;
-  background:
-    radial-gradient(
-      circle at var(--ghost-x) var(--ghost-y),
-      rgba(255, 226, 166, 0.24),
-      rgba(212, 106, 53, 0.14) 30%,
-      rgba(177, 91, 48, 0.055) 50%,
-      transparent 70%
-    ),
-    linear-gradient(
-      105deg,
-      transparent,
-      rgba(255, 226, 166, 0.08),
-      transparent
-    );
-  clip-path: circle(6% at var(--ghost-x) var(--ghost-y));
-  filter: blur(12px);
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.98);
-  transition:
-    clip-path 760ms cubic-bezier(0.16, 0.84, 0.28, 1),
-    opacity 520ms var(--ease-standard),
-    transform 640ms var(--ease-standard);
-}
-
 .buttonGhostAction:focus-visible {
-  color: var(--base-paper-strong);
-  box-shadow: none;
-  outline: 2px solid rgba(255, 248, 239, 0.82);
-  outline-offset: 7px;
-}
-
-.buttonGhostAction:focus-visible::before {
-  --ghost-x: 50%;
-  --ghost-y: 50%;
-  clip-path: circle(125% at var(--ghost-x) var(--ghost-y));
-  opacity: 0.82;
-  transform: scale(1);
+  color: var(--lit-text-on);
+  border-color: var(--lit-border-on);
+  background: rgba(251, 146, 60, 0.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 15px rgba(251, 146, 60, 0.4),
+    var(--focus-ring),
+    var(--focus-ring-soft);
+  text-shadow:
+    0 0 10px #fb923c,
+    0 0 40px rgba(251, 146, 60, 0.6);
 }
 
 .buttonGhostAction:active {
-  color: var(--orange-350);
+  color: var(--lit-text-on);
+  border-color: var(--lit-border-on);
+  background: rgba(251, 146, 60, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 10px rgba(251, 146, 60, 0.28);
   transform: translateY(1px);
 }
 
 .buttonGhostAction.buttonArrow::after {
-  color: rgba(239, 171, 139, 0.72);
+  color: currentColor;
+}
+
+@keyframes litBorderFlicker {
+  0%,
+  100% {
+    color: var(--lit-text-idle);
+    border-color: var(--lit-border-idle);
+    box-shadow: none;
+    text-shadow: none;
+  }
+
+  50% {
+    color: var(--lit-text-flicker);
+    border-color: rgba(251, 146, 60, 0.78);
+    text-shadow:
+      0 0 10px #fb923c,
+      0 0 30px rgba(251, 146, 60, 0.5);
+  }
+}
+
+@keyframes litBorderGlow {
+  to {
+    color: var(--lit-text-on);
+    border-color: var(--lit-border-on);
+    background: rgba(251, 146, 60, 0.04);
+    text-shadow:
+      0 0 10px #fb923c,
+      0 0 40px rgba(251, 146, 60, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 0 15px rgba(251, 146, 60, 0.4);
+  }
 }
 
 .buttonUtility {
@@ -340,6 +353,13 @@
 
 .buttonFullWidth {
   width: 100%;
+}
+
+.buttonGhostAction.buttonMd,
+.buttonGhostAction.buttonLg {
+  min-height: 54px;
+  padding: 0 24px;
+  font-size: 0.84rem;
 }
 
 .buttonDisabled {
@@ -409,16 +429,10 @@
   }
 
   .buttonGhostAction:hover {
-    color: var(--base-paper-strong);
-    background: transparent;
-    box-shadow: none;
-    text-shadow: 0 2px 10px rgba(239, 171, 139, 0.14);
-  }
-
-  .buttonGhostAction:hover::before {
-    clip-path: circle(125% at var(--ghost-x) var(--ghost-y));
-    opacity: 0.82;
-    transform: scale(1);
+    background-color: rgba(251, 146, 60, 0.04);
+    animation:
+      litBorderFlicker 150ms ease-in-out 2,
+      litBorderGlow 300ms ease 300ms forwards;
   }
 
   .buttonUtility:hover {
@@ -437,18 +451,24 @@
   }
 
   .buttonGhostAction.buttonArrow:hover::after {
-    color: rgba(255, 218, 153, 0.94);
+    color: currentColor;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .buttonBase,
-  .buttonGhostAction::before,
   .buttonFillAction::before,
   .buttonLabelCurrent,
   .buttonLabelNext,
   .buttonArrow::after {
     transition: none;
+  }
+
+  .buttonGhostAction:hover {
+    animation: none;
+    color: var(--lit-text-on);
+    border-color: var(--lit-border-on);
+    background: rgba(251, 146, 60, 0.04);
   }
 
   .buttonFillAction:hover .buttonLabelCurrent {
