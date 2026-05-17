@@ -1,34 +1,163 @@
 .broadcastShell {
+  --broadcast-drag-offset: 0px;
+  --broadcast-drag-progress: 0;
+  position: relative;
+  display: grid;
   margin-top: 24px;
 }
 
-.broadcastCard {
+.broadcastIndexPanel {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: end;
+  align-items: end;
+  gap: 10px 14px;
+  width: min(100%, 20rem);
+  min-width: 0;
+  margin: 16px 0 0 auto;
+  color: var(--base-paper-strong);
+}
+
+.broadcastIndexNumber {
+  margin-left: -0.08em;
+  color: rgba(255, 248, 239, 0.92);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.5rem, 4.4vw, 3.8rem);
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+.broadcastIndexMeta {
+  display: grid;
+  gap: 6px;
+  padding-bottom: 0.12em;
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.broadcastIndexMeta span:first-child {
+  color: var(--color-accent);
+}
+
+.broadcastTextControls {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px 16px;
+  margin-top: 2px;
+}
+
+.broadcastTextButton {
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 248, 239, 0.72);
+  font-family: var(--button-font-family);
+  font-size: 0.76rem;
+  font-weight: var(--button-font-weight);
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  box-shadow: none;
+}
+
+.broadcastTextButton:disabled {
+  color: rgba(255, 248, 239, 0.34);
+  cursor: default;
+}
+
+.broadcastFrame {
+  position: relative;
+  min-width: 0;
+}
+
+.broadcastDeck {
   position: relative;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.92fr);
-  min-height: clamp(24rem, 48svh, 34rem);
+  block-size: clamp(27rem, 52svh, 36rem);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-card);
   background:
     linear-gradient(180deg, var(--white-a08), var(--white-a025)),
     linear-gradient(180deg, var(--ink-a24), var(--ink-a34));
   box-shadow: var(--shadow-card-glass);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
 }
 
-.broadcastCard::before {
+.broadcastDeck:active {
+  cursor: grabbing;
+}
+
+.broadcastDeck:focus-visible {
+  outline: none;
+  box-shadow:
+    var(--shadow-card-glass),
+    var(--focus-ring),
+    var(--focus-ring-soft);
+}
+
+.broadcastDeck::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 4;
   background: linear-gradient(135deg, var(--white-a1), transparent 28%);
   pointer-events: none;
+}
+
+.broadcastSlide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(22rem, 1.05fr);
+  min-width: 0;
+  transition:
+    transform 420ms var(--ease-standard),
+    opacity 420ms var(--ease-standard);
+}
+
+.broadcastShell[data-dragging="true"] .broadcastSlide {
+  transition: none;
+}
+
+.broadcastShell[data-settling="true"] .broadcastSlide {
+  transition:
+    transform 320ms var(--ease-standard),
+    opacity 320ms var(--ease-standard);
+}
+
+.broadcastSlideActive {
+  z-index: 2;
+  opacity: 1;
+  transform: translateX(var(--broadcast-drag-offset));
+}
+
+.broadcastSlidePreview {
+  z-index: 3;
+  opacity: var(--broadcast-drag-progress);
+  pointer-events: none;
+}
+
+.broadcastShell[data-direction="next"] .broadcastSlidePreview {
+  transform: translateX(calc(100% + var(--broadcast-drag-offset)));
+}
+
+.broadcastShell[data-direction="previous"] .broadcastSlidePreview {
+  transform: translateX(calc(-100% + var(--broadcast-drag-offset)));
 }
 
 .broadcastMedia {
   position: relative;
   min-width: 0;
-  min-height: 100%;
+  block-size: 100%;
   overflow: hidden;
   background: rgba(12, 9, 8, 0.34);
 }
@@ -45,17 +174,38 @@
 
 .broadcastImage {
   object-fit: cover;
-  animation: broadcastImageEnter 420ms var(--ease-standard) both;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.broadcastDragHint {
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 248, 239, 0.64);
+  font-family: var(--button-font-family);
+  font-size: 0.7rem;
+  font-weight: var(--button-font-weight);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  opacity: calc(0.78 - (0.52 * var(--broadcast-drag-progress)));
+  pointer-events: none;
 }
 
 .broadcastCopy {
   position: relative;
   z-index: 3;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 24px;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 32px);
   min-width: 0;
-  padding: 24px;
+  min-height: 0;
+  padding: clamp(24px, 3vw, 42px);
 }
 
 .broadcastTopline {
@@ -73,93 +223,85 @@
   text-transform: uppercase;
 }
 
-.broadcastCounter {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 38px;
-  padding: 0 14px;
-  border: 1px solid var(--paper-border-a16);
-  border-radius: var(--radius-pill);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.035)),
-    rgba(12, 9, 8, 0.26);
-  color: var(--base-paper-strong);
-  font-size: 0.88rem;
-  letter-spacing: 0.14em;
-  font-variant-numeric: tabular-nums;
-  backdrop-filter: blur(18px) saturate(124%);
-  box-shadow: inset 0 1px 0 var(--white-a1);
-}
-
-.broadcastCounterDivider {
+.broadcastTime {
   color: var(--color-text-muted);
+  text-align: right;
 }
 
 .broadcastMain {
-  align-self: end;
+  align-self: center;
   display: grid;
-  gap: 14px;
+  gap: 16px;
+  min-width: 0;
+  padding-bottom: 1.5rem;
 }
 
 .broadcastMain h3 {
+  display: -webkit-box;
+  overflow: hidden;
   color: var(--base-paper-strong);
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.6rem, 7vw, 5rem);
-  line-height: 0.9;
+  font-size: clamp(2.35rem, 5.4vw, 4.2rem);
+  line-height: 0.92;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .broadcastMain p:last-child {
+  display: -webkit-box;
+  overflow: hidden;
   max-width: 30rem;
   color: var(--color-text-muted);
   font-size: 1rem;
   line-height: 1.58;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
-.broadcastControls {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.broadcastNavButton {
-  width: 46px;
-  height: 46px;
-  min-height: 0;
-  padding: 0;
-}
-
-.broadcastNavButton span {
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
-@keyframes broadcastImageEnter {
-  from {
-    opacity: 0.76;
-    transform: scale(1.02);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
+@media (hover: hover) and (pointer: fine) {
+  .broadcastTextButton:hover {
+    color: var(--base-paper-strong);
+    background: transparent;
+    box-shadow: none;
   }
 }
 
 @media (max-width: 759px) {
   .broadcastShell {
+    gap: 16px;
     margin-top: 18px;
   }
 
-  .broadcastCard {
-    grid-template-columns: 1fr;
-    min-height: 0;
+  .broadcastIndexPanel {
+    grid-template-columns: auto 1fr;
+    align-items: end;
+    justify-items: start;
+    justify-content: start;
+    gap: 12px;
+    width: auto;
+    margin: 0;
   }
 
-  .broadcastMedia {
-    aspect-ratio: 0.95;
-    min-height: 0;
+  .broadcastIndexNumber {
+    font-size: clamp(2.4rem, 14vw, 3.8rem);
+  }
+
+  .broadcastIndexMeta {
+    padding-bottom: 0.28em;
+  }
+
+  .broadcastTextControls {
+    grid-column: 1 / -1;
+    margin-top: 2px;
+  }
+
+  .broadcastDeck {
+    block-size: clamp(34rem, 78svh, 42rem);
+  }
+
+  .broadcastSlide {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1.1fr) minmax(15rem, 0.9fr);
   }
 
   .broadcastMedia::after {
@@ -174,25 +316,26 @@
   }
 
   .broadcastTopline {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .broadcastMain h3 {
-    font-size: clamp(2.05rem, 13vw, 3.2rem);
+    font-size: clamp(2rem, 12vw, 3rem);
+    -webkit-line-clamp: 2;
   }
 
-  .broadcastControls {
-    justify-content: flex-start;
+  .broadcastMain p:last-child {
+    -webkit-line-clamp: 3;
   }
 
-  .broadcastNavButton {
-    width: 42px;
-    height: 42px;
+  .broadcastDragHint {
+    bottom: 22px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .broadcastImage {
-    animation: none;
+  .broadcastSlide,
+  .broadcastDragHint {
+    transition: none;
   }
 }
