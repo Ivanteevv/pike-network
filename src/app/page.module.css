@@ -21,6 +21,24 @@
   scroll-margin-top: 0;
 }
 
+.overlayContent::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  height: clamp(72px, 13svh, 150px);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(13, 9, 8, 0),
+      rgba(13, 9, 8, 0.34) 34%,
+      rgba(13, 9, 8, 0.82) 72%,
+      var(--color-background)
+    );
+  pointer-events: none;
+}
+
 .heroInner {
   position: relative;
   display: grid;
@@ -100,7 +118,7 @@
 }
 
 .heroAction {
-  padding-inline: 0;
+  padding-inline: 22px;
 }
 
 .main {

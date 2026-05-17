@@ -61,6 +61,36 @@
   animation: none;
 }
 
+.rollingNumber[data-mode="controlled"] .rollingNumberPrevious,
+.rollingNumber[data-mode="controlled"] .rollingNumberCurrent {
+  animation: none;
+}
+
+.rollingNumber[data-mode="controlled"][data-progress-motion="animated"] .rollingNumberPrevious,
+.rollingNumber[data-mode="controlled"][data-progress-motion="animated"] .rollingNumberCurrent {
+  transition:
+    transform 320ms var(--ease-standard),
+    opacity 320ms var(--ease-standard);
+}
+
+.rollingNumber[data-mode="controlled"] .rollingNumberPrevious {
+  opacity: calc(1 - (0.66 * var(--rolling-progress, 0)));
+  transform: translateY(calc(-112% * var(--rolling-progress, 0)));
+}
+
+.rollingNumber[data-mode="controlled"] .rollingNumberCurrent {
+  opacity: calc(0.34 + (0.66 * var(--rolling-progress, 0)));
+  transform: translateY(calc(112% * (1 - var(--rolling-progress, 0))));
+}
+
+.rollingNumber[data-mode="controlled"][data-direction="previous"] .rollingNumberPrevious {
+  transform: translateY(calc(112% * var(--rolling-progress, 0)));
+}
+
+.rollingNumber[data-mode="controlled"][data-direction="previous"] .rollingNumberCurrent {
+  transform: translateY(calc(-112% * (1 - var(--rolling-progress, 0))));
+}
+
 @keyframes rollingNumberPreviousNext {
   from {
     opacity: 1;
