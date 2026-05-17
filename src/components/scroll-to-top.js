@@ -86,6 +86,14 @@ export function ScrollToTop() {
       tabIndex={isVisible && !isConcealed ? 0 : -1}
     >
       <span className={styles.iconFrame} aria-hidden="true">
+        <span className={`${styles.bottleCap} ${styles.bottleCapNew}`} />
+        <span className={`${styles.bottleCap} ${styles.bottleCapFall}`} />
+        <span className={styles.revealWrapper}>
+          <span className={styles.blobStem} />
+          <span className={styles.blobBody}>
+            <span className={styles.revealLabel}>Наверх</span>
+          </span>
+        </span>
         <svg
           className={styles.icon}
           viewBox="0 0 72 72"
@@ -105,9 +113,6 @@ export function ScrollToTop() {
             d="M24.5 35.5c0-2.5 2-4.5 4.5-4.5h14c2.5 0 4.5 2 4.5 4.5v9c0 2.5-2 4.5-4.5 4.5H29c-2.5 0-4.5-2-4.5-4.5v-9Z"
           />
         </svg>
-      </span>
-      <span className={styles.tooltip} aria-hidden="true">
-        Вверх
       </span>
     </button>
   );

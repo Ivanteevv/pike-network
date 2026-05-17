@@ -1,6 +1,5 @@
 import { Manrope, Playfair_Display } from "next/font/google";
 import { AgeGate } from "@/components/age-gate";
-import { GhostActionEffects } from "@/components/ghost-action-effects";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { AGE_GATE_SESSION_KEY } from "@/lib/age-gate";
 import "./globals.css";
@@ -57,7 +56,6 @@ export default function RootLayout({ children }) {
       <body className={`${manrope.variable} ${playfairDisplay.variable}`}>
         <script dangerouslySetInnerHTML={{ __html: ageGateBootScript }} />
         <AgeGate />
-        <GhostActionEffects />
         <ScrollToTop />
         {children}
       </body>
