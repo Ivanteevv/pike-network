@@ -25,7 +25,7 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
   return (
     <div className={styles.pointsShell}>
       <div className={styles.pointsMeta}>
-        <span>{barsCountLabel}</span>
+        <span className={styles.pointsCount}>{barsCountLabel}</span>
         <a
           className={cx(
             buttonStyles.buttonBase,

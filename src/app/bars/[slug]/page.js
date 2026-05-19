@@ -182,9 +182,9 @@ export default async function BarPage({ params }) {
               </article>
             ))}
           </div>
-          <div className={styles.previewChips}>
+          <div className={styles.menuPreviewBoard}>
             {bar.menuPreview.map((preview) => (
-              <span key={preview.name} className={styles.previewChip}>
+              <span key={preview.name} className={styles.menuPreviewItem}>
                 <strong>{preview.name}</strong>
                 <em>{preview.note}</em>
               </span>

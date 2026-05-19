@@ -255,19 +255,18 @@
 }
 
 .broadcastPanelEmpty {
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
   align-items: center;
   padding: clamp(18px, 2.8vw, 28px);
 }
 
 .broadcastEmptyMark {
-  display: grid;
-  place-items: center;
-  width: 4.25rem;
-  aspect-ratio: 1;
-  border: 1px solid rgba(239, 171, 139, 0.28);
-  border-radius: 50%;
+  justify-self: start;
+  padding-bottom: 6px;
+  border: 0;
+  border-bottom: 1px solid rgba(239, 171, 139, 0.34);
+  border-radius: 0;
   color: var(--color-accent);
   font-family: var(--button-font-family);
   font-size: 0.68rem;
@@ -355,16 +354,6 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 14px;
     padding: 16px;
-  }
-
-  .broadcastEmptyMark {
-    width: auto;
-    aspect-ratio: auto;
-    justify-self: start;
-    padding-bottom: 6px;
-    border: 0;
-    border-bottom: 1px solid rgba(239, 171, 139, 0.34);
-    border-radius: 0;
   }
 
   .broadcastEmptyCopy h3 {
