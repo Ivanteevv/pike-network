@@ -10,6 +10,7 @@
 .backLink,
 .phoneInline,
 .desktopNav a {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -25,6 +26,27 @@
   font-weight: 500;
   box-shadow: none;
   transition: color var(--duration-medium) var(--ease-standard);
+}
+
+.backLink::after,
+.phoneInline::after,
+.desktopNav a::after,
+.mobileNavLabel::after,
+.mobilePhoneValue::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -7px;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  opacity: 0;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition:
+    opacity var(--duration-medium) var(--ease-standard),
+    transform 520ms var(--ease-standard);
 }
 
 .backLink,
@@ -269,6 +291,8 @@
 }
 
 .mobileNavLabel {
+  position: relative;
+  justify-self: start;
   padding-right: 48px;
   font-size: 1.28rem;
   line-height: 1.1;
@@ -302,6 +326,8 @@
 }
 
 .mobilePhoneValue {
+  position: relative;
+  justify-self: start;
   color: var(--base-paper-strong);
   font-size: clamp(1.42rem, 4.6vw, 1.86rem);
   line-height: 1.2;
@@ -321,6 +347,15 @@
   outline-offset: 8px;
   color: var(--base-paper-strong);
   box-shadow: none;
+}
+
+.backLink:focus-visible::after,
+.phoneInline:focus-visible::after,
+.desktopNav a:focus-visible::after,
+.mobileNavItem:focus-visible .mobileNavLabel::after,
+.mobilePhone:focus-visible .mobilePhoneValue::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .mobilePhone:focus-visible,
@@ -356,6 +391,15 @@
   .desktopNav a:hover {
     background: none;
     box-shadow: none;
+  }
+
+  .backLink:hover::after,
+  .phoneInline:hover::after,
+  .desktopNav a:hover::after,
+  .mobileNavItem:hover .mobileNavLabel::after,
+  .mobilePhone:hover .mobilePhoneValue::after {
+    opacity: 1;
+    transform: scaleX(1);
   }
 
   .mobilePhone:hover,
@@ -449,6 +493,11 @@
   .backLink,
   .phoneInline,
   .desktopNav a,
+  .backLink::after,
+  .phoneInline::after,
+  .desktopNav a::after,
+  .mobileNavLabel::after,
+  .mobilePhoneValue::after,
   .mobilePhone,
   .mobileNavItem,
   .menuToggle,

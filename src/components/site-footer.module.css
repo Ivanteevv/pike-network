@@ -67,7 +67,7 @@
   letter-spacing: 0.02em;
   line-height: 1.1;
   text-decoration: none;
-  transition: var(--transition-colors);
+  transition: color var(--duration-medium) var(--ease-standard);
 }
 
 .socials,
@@ -101,21 +101,16 @@
 
 .primaryContact:focus-visible,
 .socials a:focus-visible {
-  outline: none;
+  outline: 2px solid rgba(255, 248, 239, 0.82);
+  outline-offset: 7px;
 }
 
 .primaryContact:focus-visible {
   color: var(--base-paper-strong);
-  box-shadow:
-    var(--focus-ring),
-    var(--focus-ring-soft);
 }
 
 .socials a:focus-visible {
   color: var(--base-paper-strong);
-  box-shadow:
-    var(--focus-ring),
-    var(--focus-ring-soft);
 }
 
 @media (hover: hover) and (pointer: fine) {

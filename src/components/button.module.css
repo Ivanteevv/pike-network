@@ -189,10 +189,11 @@
 }
 
 .buttonText {
+  --button-hover-line-color: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  position: relative;
   min-height: 34px;
   padding: 0 0 7px;
   border: 0;
-  border-bottom: 1px solid rgba(255, 248, 239, 0.24);
   border-radius: 0;
   background: transparent;
   color: rgba(255, 248, 239, 0.82);
@@ -201,9 +202,26 @@
   text-transform: uppercase;
 }
 
+.buttonText::before,
+.buttonHoverLabel::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--button-hover-line-color);
+  opacity: 0;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition:
+    opacity var(--duration-medium) var(--ease-standard),
+    transform 520ms var(--ease-standard);
+}
+
 .buttonText:focus-visible {
   color: var(--base-paper-strong);
-  border-bottom-color: rgba(255, 248, 239, 0.74);
   box-shadow: none;
   outline: 2px solid rgba(255, 248, 239, 0.82);
   outline-offset: 7px;
@@ -215,13 +233,13 @@
 }
 
 .buttonGhostAction {
+  --button-hover-line-color: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
   isolation: isolate;
   overflow: visible;
   justify-content: flex-start;
   min-height: 34px;
   padding: 0 0 7px;
   border: 0;
-  border-bottom: 1px solid rgba(255, 248, 239, 0.24);
   border-radius: 0;
   background: transparent;
   color: rgba(255, 248, 239, 0.82);
@@ -233,11 +251,16 @@
 
 .buttonGhostAction:focus-visible {
   color: var(--base-paper-strong);
-  border-bottom-color: rgba(255, 248, 239, 0.74);
   background: transparent;
   box-shadow: none;
   outline: 2px solid rgba(255, 248, 239, 0.82);
   outline-offset: 7px;
+}
+
+.buttonText:focus-visible::before,
+.buttonGhostAction:focus-visible .buttonHoverLabel::before {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .buttonGhostAction:active {
@@ -249,6 +272,11 @@
 
 .buttonGhostAction.buttonArrow::after {
   color: currentColor;
+}
+
+.buttonHoverLabel {
+  position: relative;
+  display: inline-block;
 }
 
 .buttonUtility {
@@ -380,13 +408,17 @@
 
   .buttonText:hover {
     color: var(--base-paper-strong);
-    border-bottom-color: rgba(255, 248, 239, 0.56);
     box-shadow: none;
+  }
+
+  .buttonText:hover::before,
+  .buttonGhostAction:hover .buttonHoverLabel::before {
+    opacity: 1;
+    transform: scaleX(1);
   }
 
   .buttonGhostAction:hover {
     color: var(--base-paper-strong);
-    border-bottom-color: rgba(255, 248, 239, 0.56);
     background: transparent;
     box-shadow: none;
   }
@@ -413,6 +445,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .buttonBase,
+  .buttonText::before,
+  .buttonHoverLabel::before,
   .buttonFillAction::before,
   .buttonLabelCurrent,
   .buttonLabelNext,

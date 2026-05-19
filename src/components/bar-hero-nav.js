@@ -153,7 +153,9 @@ export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
               rel="noreferrer"
               onClick={closeMenu}
             >
-              Показать на карте
+              <span className={buttonStyles.buttonHoverLabel}>
+                Показать на карте
+              </span>
             </a>
           </div>
         </div>

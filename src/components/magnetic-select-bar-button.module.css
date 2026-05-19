@@ -39,6 +39,23 @@
   transition: opacity 360ms var(--ease-standard);
 }
 
+.button::before {
+  content: "";
+  position: absolute;
+  right: var(--magnet-hit-x);
+  bottom: 7px;
+  left: var(--magnet-hit-x);
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  opacity: 0;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition:
+    opacity var(--duration-medium) var(--ease-standard),
+    transform var(--duration-medium) var(--ease-standard);
+}
+
 .button:focus-visible {
   outline: 2px solid rgba(255, 248, 239, 0.84);
   outline-offset: 8px;
@@ -53,6 +70,12 @@
   .button:focus-visible {
     color: var(--base-paper-strong);
   }
+
+  .button:hover::before,
+  .button:focus-visible::before {
+    opacity: 1;
+    transform: scaleX(1);
+  }
 }
 
 @media (max-width: 420px) {
@@ -66,6 +89,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .button,
+  .button::before,
   .label {
     transition-duration: 1ms;
   }
