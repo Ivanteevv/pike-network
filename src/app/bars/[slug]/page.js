@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BrandLink } from "@/components/brand-link";
 import { HeroMedia } from "@/components/hero-media";
 import { JsonLd } from "@/components/json-ld";
 import { BarHeroNav } from "@/components/bar-hero-nav";
@@ -98,7 +99,8 @@ export default async function BarPage({ params }) {
               </div>
 
               <div className={styles.actions}>
-                <a
+                <BrandLink
+                  variant="ghost"
                   className={cx(
                     buttonStyles.buttonBase,
                     buttonStyles.buttonGhostAction,
@@ -108,8 +110,9 @@ export default async function BarPage({ params }) {
                   href={`tel:${bar.phoneE164}`}
                 >
                   Позвонить
-                </a>
-                <a
+                </BrandLink>
+                <BrandLink
+                  variant="ghost"
                   className={cx(
                     buttonStyles.buttonBase,
                     buttonStyles.buttonGhostAction,
@@ -119,7 +122,7 @@ export default async function BarPage({ params }) {
                   href="#menu"
                 >
                   Меню
-                </a>
+                </BrandLink>
               </div>
             </div>
           </div>
@@ -163,7 +166,8 @@ export default async function BarPage({ params }) {
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
                 {item.href ? (
-                  <a
+                  <BrandLink
+                    variant="ghost"
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
@@ -175,7 +179,7 @@ export default async function BarPage({ params }) {
                     )}
                   >
                     Открыть
-                  </a>
+                  </BrandLink>
                 ) : (
                   <span className={styles.placeholderLink}>Скоро подключим ссылку</span>
                 )}
@@ -210,7 +214,8 @@ export default async function BarPage({ params }) {
               <h2>Быстро переключиться между барами сети</h2>
 
               <div className={styles.contactActions}>
-                <a
+                <BrandLink
+                  variant="ghost"
                   className={cx(
                     buttonStyles.buttonBase,
                     buttonStyles.buttonGhostAction,
@@ -219,8 +224,9 @@ export default async function BarPage({ params }) {
                   href={`tel:${bar.phoneE164}`}
                 >
                   Позвонить
-                </a>
-                <a
+                </BrandLink>
+                <BrandLink
+                  variant="ghost"
                   className={cx(
                     buttonStyles.buttonBase,
                     buttonStyles.buttonGhostAction,
@@ -232,7 +238,7 @@ export default async function BarPage({ params }) {
                   rel="noreferrer"
                 >
                   Открыть карту
-                </a>
+                </BrandLink>
               </div>
             </div>
 

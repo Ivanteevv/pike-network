@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { BrandLink } from "@/components/brand-link";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
 import styles from "./bar-hero-nav.module.css";
@@ -47,27 +47,31 @@ export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
   return (
     <>
       <div className={styles.desktopRow}>
-        <Link href="/" className={styles.backLink}>
+        <BrandLink variant="nav" href="/" className={styles.backLink}>
           Ко всей сети
-        </Link>
+        </BrandLink>
 
         <nav className={styles.desktopNav} aria-label="Разделы страницы бара">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href}>
+            <BrandLink key={item.href} variant="nav" href={item.href}>
               {item.label}
-            </a>
+            </BrandLink>
           ))}
         </nav>
 
-        <a className={styles.phoneInline} href={`tel:${phoneE164}`}>
+        <BrandLink
+          variant="nav"
+          className={styles.phoneInline}
+          href={`tel:${phoneE164}`}
+        >
           {phoneDisplay}
-        </a>
+        </BrandLink>
       </div>
 
       <div className={styles.mobileRow}>
-        <Link href="/" className={styles.backLink}>
+        <BrandLink variant="nav" href="/" className={styles.backLink}>
           Ко всей сети
-        </Link>
+        </BrandLink>
 
         <button
           type="button"

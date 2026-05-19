@@ -26,6 +26,17 @@
   outline-offset: 6px;
 }
 
+/* Invisible hit-area extension on desktop: makes the opener reveal start
+   earlier when the pointer approaches the button without growing the
+   button's visible footprint or affecting layout. */
+.button::before {
+  content: "";
+  position: absolute;
+  inset: -36px -28px -28px -44px;
+  pointer-events: none;
+  z-index: -1;
+}
+
 .visible {
   opacity: 0.9;
   transform: translateY(0) scale(1);
@@ -313,6 +324,12 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  /* Enable the extended hit-area only on desktop hover devices, and only
+     while the button is interactive. */
+  .ready::before {
+    pointer-events: auto;
+  }
+
   .ready:hover {
     opacity: 1;
     transform: translateY(-3px) scale(1.03);
@@ -397,6 +414,11 @@
     bottom: max(14px, calc(env(safe-area-inset-bottom) + 14px));
     width: 62px;
     min-height: 76px;
+  }
+
+  .button::before {
+    inset: 0;
+    pointer-events: none;
   }
 
   .iconFrame {
