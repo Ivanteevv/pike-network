@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { BrandLink } from "@/components/brand-link";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
 import styles from "./network-points.module.css";
@@ -26,7 +26,8 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
     <div className={styles.pointsShell}>
       <div className={styles.pointsMeta}>
         <span className={styles.pointsCount}>{barsCountLabel}</span>
-        <a
+        <BrandLink
+          variant="ghost"
           className={cx(
             buttonStyles.buttonBase,
             buttonStyles.buttonGhostAction,
@@ -36,7 +37,7 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
           href={`tel:${phoneE164}`}
         >
           {copy.reservationLabel}
-        </a>
+        </BrandLink>
       </div>
 
       <div className={styles.pointsGrid} aria-label="Точки сети">
@@ -56,7 +57,8 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
             <p className={styles.summary}>{bar.summary}</p>
 
             <div className={styles.cardActions}>
-              <Link
+              <BrandLink
+                variant="ghost"
                 href={`/bars/${bar.slug}`}
                 className={cx(
                   buttonStyles.buttonBase,
@@ -67,8 +69,9 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
                 )}
               >
                 {copy.openLabel}
-              </Link>
-              <a
+              </BrandLink>
+              <BrandLink
+                variant="ghost"
                 href={`tel:${bar.phoneE164}`}
                 className={cx(
                   buttonStyles.buttonBase,
@@ -78,7 +81,7 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
                 )}
               >
                 {copy.phoneLabel}
-              </a>
+              </BrandLink>
             </div>
           </article>
         ))}

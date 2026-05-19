@@ -119,13 +119,9 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .primaryContact:hover {
-    background: none;
-    color: var(--color-accent);
-  }
-
+  .primaryContact:hover,
   .socials a:hover {
-    color: var(--base-paper-strong);
+    background: none;
   }
 }
 

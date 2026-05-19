@@ -77,21 +77,6 @@ select {
   font: inherit;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  /* Keep the opener cursor on visual hover surfaces, not only native links/buttons. */
-  :where(a[href], button:not(:disabled), summary, [role="button"]):hover {
-    cursor: url("/mock/opener-cursor.png") 12 12, pointer;
-  }
-
-  :where(
-    [class*="pointCard"],
-    [class*="switchOption"],
-    [class*="placeholderLink"]
-  ):hover {
-    cursor: url("/mock/opener-cursor.png") 12 12, pointer;
-  }
-}
-
 img {
   display: block;
   max-width: 100%;

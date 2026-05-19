@@ -1,3 +1,4 @@
+import { BrandLink } from "@/components/brand-link";
 import { HeroMedia } from "@/components/hero-media";
 import { JsonLd } from "@/components/json-ld";
 import { MagneticSelectBarButton } from "@/components/magnetic-select-bar-button";
@@ -35,7 +36,8 @@ export default async function HomePage() {
         >
           <div className={styles.heroInner}>
             <div className={styles.heroTopline}>
-              <a
+              <BrandLink
+                variant="ghost"
                 className={cx(
                   buttonStyles.buttonBase,
                   buttonStyles.buttonGhostAction,
@@ -45,7 +47,7 @@ export default async function HomePage() {
                 href={`tel:${network.phoneE164}`}
               >
                 {network.phoneDisplay}
-              </a>
+              </BrandLink>
             </div>
 
             <div className={styles.heroStage}>
@@ -56,7 +58,8 @@ export default async function HomePage() {
 
                 <div className={styles.actions}>
                   <MagneticSelectBarButton href="#bars" />
-                  <a
+                  <BrandLink
+                    variant="ghost"
                     className={cx(
                       buttonStyles.buttonBase,
                       buttonStyles.buttonGhostAction,
@@ -66,7 +69,7 @@ export default async function HomePage() {
                     href={`tel:${network.phoneE164}`}
                   >
                     Позвонить
-                  </a>
+                  </BrandLink>
                 </div>
               </div>
             </div>

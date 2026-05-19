@@ -210,7 +210,7 @@
 }
 
 .buttonText:active {
-  color: var(--orange-350);
+  color: var(--base-paper-warm);
   transform: translateY(1px);
 }
 
@@ -241,7 +241,7 @@
 }
 
 .buttonGhostAction:active {
-  color: var(--orange-350);
+  color: var(--base-paper-warm);
   background: transparent;
   box-shadow: none;
   transform: translateY(1px);

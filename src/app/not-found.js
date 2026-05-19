@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BrandLink } from "@/components/brand-link";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
 import styles from "./not-found.module.css";
@@ -13,7 +13,8 @@ export default function NotFound() {
           Возможно, ссылка устарела или точка ещё не добавлена в сеть. На
           главной уже можно выбрать доступную локацию.
         </p>
-        <Link
+        <BrandLink
+          variant="ghost"
           href="/"
           className={cx(
             buttonStyles.buttonBase,
@@ -24,7 +25,7 @@ export default function NotFound() {
           )}
         >
           Вернуться на главную
-        </Link>
+        </BrandLink>
       </div>
     </main>
   );

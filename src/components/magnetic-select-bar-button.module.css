@@ -45,13 +45,13 @@
 }
 
 .button:active {
-  color: var(--orange-350);
+  color: var(--base-paper-warm);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .button:hover,
   .button:focus-visible {
-    color: var(--amber-300);
+    color: var(--base-paper-strong);
   }
 }
 

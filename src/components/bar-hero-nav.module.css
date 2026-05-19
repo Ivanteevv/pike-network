@@ -355,7 +355,6 @@
   .phoneInline:hover,
   .desktopNav a:hover {
     background: none;
-    color: var(--base-paper-strong);
     box-shadow: none;
   }
 
@@ -363,7 +362,7 @@
   .mobileNavItem:hover {
     background:
       linear-gradient(180deg, var(--white-a14), var(--white-a04)),
-      linear-gradient(180deg, var(--gold-a14), transparent 68%),
+      linear-gradient(180deg, var(--white-a08), transparent 68%),
       linear-gradient(180deg, var(--ink-a42), var(--ink-a62));
     color: var(--color-text-strong);
     box-shadow:

@@ -1,0 +1,159 @@
+.brandLink {
+  --brand-link-underline-gradient: linear-gradient(
+    90deg,
+    var(--base-paper-warm) 0%,
+    var(--base-paper-strong) 50%,
+    var(--base-paper-warm) 100%
+  );
+  --brand-link-text-gradient: linear-gradient(
+    90deg,
+    var(--base-paper-strong) 0%,
+    var(--base-paper-warm) 50%,
+    var(--base-paper-strong) 100%
+  );
+  --brand-link-text-opacity: 0.92;
+  --brand-link-underline-thickness: 2px;
+  --brand-link-underline-offset: 0px;
+  --brand-link-duration: var(--duration-medium);
+  --brand-link-ease: var(--ease-standard);
+
+  position: relative;
+  isolation: isolate;
+}
+
+.brandLink.brandLink {
+  border-bottom: 0;
+  text-decoration: none;
+}
+
+.label {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+  white-space: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.labelOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--brand-link-text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: var(--brand-link-text-opacity);
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--brand-link-duration) var(--brand-link-ease);
+}
+
+/* The underline lives on .label (not on the link) so its width is always
+   the intrinsic text width, even if the link element gets stretched by a
+   grid/flex container. */
+.label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--brand-link-underline-offset);
+  height: var(--brand-link-underline-thickness);
+  background-image: var(--brand-link-underline-gradient);
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--brand-link-duration) var(--brand-link-ease);
+}
+
+.brandLink[data-hover-direction="left"] .labelOverlay,
+.brandLink[data-hover-direction="left"] .label::after {
+  clip-path: inset(0 100% 0 0);
+}
+
+.brandLink[data-hover-direction="right"] .labelOverlay,
+.brandLink[data-hover-direction="right"] .label::after {
+  clip-path: inset(0 0 0 100%);
+}
+
+.brandLink[data-hover-direction="top"] .labelOverlay,
+.brandLink[data-hover-direction="top"] .label::after {
+  clip-path: inset(0 0 100% 0);
+}
+
+.brandLink[data-hover-direction="bottom"] .labelOverlay,
+.brandLink[data-hover-direction="bottom"] .label::after {
+  clip-path: inset(100% 0 0 0);
+}
+
+.brandLink[data-hover-state="preparing"] .labelOverlay,
+.brandLink[data-hover-state="preparing"] .label::after {
+  transition: none;
+}
+
+.brandLink[data-hover-state="entering"] .labelOverlay,
+.brandLink[data-hover-state="entering"] .label::after {
+  clip-path: inset(0 0 0 0);
+}
+
+.brandLink:focus-visible .labelOverlay,
+.brandLink:focus-visible .label::after {
+  clip-path: inset(0 0 0 0);
+  transition-duration: var(--duration-fast);
+}
+
+.variantNav {
+  --brand-link-underline-offset: -6px;
+}
+
+.variantFooter {
+  --brand-link-underline-offset: -6px;
+}
+
+/* Footer phone link sits in a 54px-tall flex box with the label centered.
+   Original `-8px` was relative to the link's bottom edge, ~16px below the
+   label's own bottom edge. To preserve that visual gap below the text now
+   that the underline anchors to the label, the offset includes that
+   ~16px shift. On mobile the link drops min-height, so the offset falls
+   back to the original ~8px gap. */
+.variantPhone {
+  --brand-link-underline-offset: -24px;
+  --brand-link-underline-thickness: 2px;
+}
+
+@media (max-width: 759px) {
+  .variantPhone {
+    --brand-link-underline-offset: -8px;
+  }
+}
+
+/* Ghost CTAs are paired with `buttonGhostAction` (min-height 34, padding
+   0 0 7px, label vertically centered). The label's bottom sits ~12px
+   above the link box's bottom, so to keep the underline visually at the
+   button's baseline we shift by that amount. */
+.variantGhost {
+  --brand-link-underline-offset: -12px;
+  --brand-link-underline-thickness: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .labelOverlay,
+  .label::after {
+    clip-path: none;
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--brand-link-ease);
+  }
+
+  .brandLink[data-hover-state="entering"] .labelOverlay,
+  .brandLink[data-hover-state="entering"] .label::after,
+  .brandLink:focus-visible .labelOverlay,
+  .brandLink:focus-visible .label::after {
+    clip-path: none;
+    opacity: 1;
+  }
+}
