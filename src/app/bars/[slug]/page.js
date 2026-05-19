@@ -143,15 +143,13 @@ export default async function BarPage({ params }) {
           </div>
         </section>
 
-        {broadcasts.length > 0 ? (
-          <section id="broadcast" className={styles.section}>
-            <div className={styles.sectionHeading}>
-              <p className={styles.sectionKicker}>Broadcast</p>
-              <h2>Ближайшие трансляции в баре</h2>
-            </div>
-            <BarBroadcasts broadcasts={broadcasts} />
-          </section>
-        ) : null}
+        <section id="broadcast" className={styles.section}>
+          <div className={styles.sectionHeading}>
+            <p className={styles.sectionKicker}>Спорт на экране</p>
+            <h2>Трансляции, которые собирают за одним столом</h2>
+          </div>
+          <BarBroadcasts broadcasts={broadcasts} />
+        </section>
 
         <section id="menu" className={styles.section}>
           <div className={styles.sectionHeading}>
