@@ -130,22 +130,6 @@ export default async function BarPage({ params }) {
       </HeroMedia>
 
       <main className={styles.main}>
-        <section className={styles.section}>
-          <div className={styles.bestForCard}>
-            <div className={styles.sectionHeading}>
-              <p className={styles.sectionKicker}>Что Здесь Есть</p>
-              <h2>Еда, пиво и трансляции без лишних описаний</h2>
-            </div>
-            <ul className={styles.bestForList}>
-              {bar.bestFor.map((item) => (
-                <li key={item} className={styles.bestForItem}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
         <section id="broadcast" className={`${styles.section} ${styles.broadcastSection}`}>
           <div className={styles.sectionHeading}>
             <p className={styles.sectionKicker}>СПОРТ НА ЭКРАНЕ</p>

@@ -140,8 +140,7 @@
 }
 
 .infoCard,
-.contactsCard,
-.bestForCard {
+.contactsCard {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--glass-border);
@@ -154,8 +153,7 @@
 }
 
 .infoCard::before,
-.contactsCard::before,
-.bestForCard::before {
+.contactsCard::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -163,8 +161,7 @@
   pointer-events: none;
 }
 
-.contactsCard,
-.bestForCard {
+.contactsCard {
   display: grid;
   gap: 24px;
   padding: 26px;
@@ -192,20 +189,6 @@
   display: grid;
   gap: 18px;
   margin-top: 24px;
-}
-
-.bestForList {
-  display: grid;
-  gap: 14px;
-  list-style: none;
-}
-
-.bestForItem {
-  padding: 18px;
-  border-left: 2px solid var(--color-primary);
-  background: var(--white-a05);
-  backdrop-filter: blur(12px) saturate(114%);
-  border-radius: var(--radius-tile);
 }
 
 .infoCard {
@@ -446,8 +429,7 @@
     padding: 22px 0;
   }
 
-  .contactsCard,
-  .bestForCard {
+  .contactsCard {
     padding: 20px 18px;
     gap: 20px;
   }
@@ -458,7 +440,6 @@
     line-height: 1.02;
   }
 
-  .bestForItem,
   .infoCard {
     padding: 16px;
   }
@@ -535,8 +516,7 @@
     gap: 22px;
   }
 
-  .contactsCard,
-  .bestForCard {
+  .contactsCard {
     grid-template-columns: 1.1fr 1fr;
     align-items: start;
   }

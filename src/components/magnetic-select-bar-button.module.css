@@ -46,7 +46,7 @@
   bottom: 7px;
   left: var(--magnet-hit-x);
   height: 2px;
-  background: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  background: var(--action-underline-gradient);
   opacity: 0;
   pointer-events: none;
   transform: scaleX(0);
@@ -62,13 +62,13 @@
 }
 
 .button:active {
-  color: var(--base-paper-warm);
+  color: var(--action-text-soft);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .button:hover,
   .button:focus-visible {
-    color: var(--base-paper-strong);
+    color: var(--action-text);
   }
 
   .button:hover::before,

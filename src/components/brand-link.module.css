@@ -1,16 +1,6 @@
 .brandLink {
-  --brand-link-underline-gradient: linear-gradient(
-    90deg,
-    var(--base-paper-warm) 0%,
-    var(--base-paper-strong) 50%,
-    var(--base-paper-warm) 100%
-  );
-  --brand-link-text-gradient: linear-gradient(
-    90deg,
-    var(--base-paper-strong) 0%,
-    var(--base-paper-warm) 50%,
-    var(--base-paper-strong) 100%
-  );
+  --brand-link-underline-gradient: var(--action-underline-gradient);
+  --brand-link-text-gradient: var(--action-text-gradient);
   --brand-link-text-opacity: 0.92;
   --brand-link-underline-thickness: 2px;
   --brand-link-underline-offset: 0px;
@@ -108,7 +98,14 @@
 }
 
 .variantNav {
+  --brand-link-text-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.96) 100%
+  );
+  --brand-link-text-opacity: 0.9;
   --brand-link-underline-offset: -6px;
+  --brand-link-underline-thickness: 2px;
 }
 
 .variantFooter {

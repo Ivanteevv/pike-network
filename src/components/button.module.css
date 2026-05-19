@@ -38,10 +38,10 @@
 }
 
 .buttonPrimary {
-  border-color: rgba(196, 88, 37, 0.82);
+  border-color: rgba(179, 106, 60, 0.74);
   background:
-    linear-gradient(180deg, rgba(255, 244, 218, 0.26), rgba(255, 244, 218, 0) 38%),
-    linear-gradient(180deg, var(--button-orange-500) 0%, var(--button-orange-600) 45%, var(--button-orange-700) 100%);
+    linear-gradient(180deg, rgba(241, 230, 210, 0.24), rgba(241, 230, 210, 0) 40%),
+    linear-gradient(180deg, var(--action-copper) 0%, #8f5132 48%, #6d3a25 100%);
   color: var(--button-primary-text);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.32),
@@ -58,15 +58,15 @@
 
 .buttonPrimary:active {
   background:
-    linear-gradient(180deg, rgba(255, 244, 218, 0.14), rgba(255, 244, 218, 0) 34%),
-    linear-gradient(180deg, var(--button-orange-600), var(--button-orange-700));
+    linear-gradient(180deg, rgba(241, 230, 210, 0.12), rgba(241, 230, 210, 0) 34%),
+    linear-gradient(180deg, #8f5132, #6d3a25);
   box-shadow:
     inset 0 2px 6px rgba(91, 35, 16, 0.24),
     0 8px 18px rgba(0, 0, 0, 0.24);
 }
 
 .buttonSecondary {
-  border-color: rgba(239, 171, 139, 0.32);
+  border-color: rgba(196, 161, 90, 0.28);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.025)),
     rgba(12, 9, 8, 0.42);
@@ -85,9 +85,9 @@
 }
 
 .buttonSecondary:active {
-  border-color: rgba(239, 171, 139, 0.44);
+  border-color: rgba(196, 161, 90, 0.38);
   background:
-    linear-gradient(180deg, rgba(239, 171, 139, 0.16), rgba(255, 255, 255, 0.035)),
+    linear-gradient(180deg, rgba(196, 161, 90, 0.12), rgba(255, 255, 255, 0.035)),
     rgba(12, 9, 8, 0.52);
   box-shadow:
     inset 0 2px 5px rgba(0, 0, 0, 0.18),
@@ -189,7 +189,7 @@
 }
 
 .buttonText {
-  --button-hover-line-color: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  --button-hover-line-color: var(--action-underline-gradient);
   position: relative;
   min-height: 34px;
   padding: 0 0 7px;
@@ -221,19 +221,19 @@
 }
 
 .buttonText:focus-visible {
-  color: var(--base-paper-strong);
+  color: var(--action-text);
   box-shadow: none;
   outline: 2px solid rgba(255, 248, 239, 0.82);
   outline-offset: 7px;
 }
 
 .buttonText:active {
-  color: var(--base-paper-warm);
+  color: var(--action-text-soft);
   transform: translateY(1px);
 }
 
 .buttonGhostAction {
-  --button-hover-line-color: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  --button-hover-line-color: var(--action-underline-gradient);
   isolation: isolate;
   overflow: visible;
   justify-content: flex-start;
@@ -250,7 +250,7 @@
 }
 
 .buttonGhostAction:focus-visible {
-  color: var(--base-paper-strong);
+  color: var(--action-text);
   background: transparent;
   box-shadow: none;
   outline: 2px solid rgba(255, 248, 239, 0.82);
@@ -264,7 +264,7 @@
 }
 
 .buttonGhostAction:active {
-  color: var(--base-paper-warm);
+  color: var(--action-text-soft);
   background: transparent;
   box-shadow: none;
   transform: translateY(1px);
@@ -282,7 +282,7 @@
 .buttonUtility {
   min-height: 42px;
   padding: 0 14px;
-  border-color: rgba(239, 171, 139, 0.28);
+  border-color: rgba(196, 161, 90, 0.24);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035)),
     rgba(12, 9, 8, 0.34);
@@ -302,7 +302,7 @@
 
 .buttonUtility:active {
   background:
-    linear-gradient(180deg, rgba(239, 171, 139, 0.14), rgba(255, 255, 255, 0.035)),
+    linear-gradient(180deg, rgba(196, 161, 90, 0.1), rgba(255, 255, 255, 0.035)),
     rgba(12, 9, 8, 0.48);
   box-shadow:
     inset 0 2px 5px rgba(0, 0, 0, 0.2),
@@ -361,10 +361,10 @@
 
 @media (hover: hover) and (pointer: fine) {
   .buttonPrimary:hover {
-    border-color: rgba(224, 116, 59, 0.96);
+    border-color: rgba(196, 161, 90, 0.58);
     background:
-      linear-gradient(180deg, rgba(255, 244, 218, 0.34), rgba(255, 244, 218, 0) 40%),
-      linear-gradient(180deg, #ef9e76 0%, var(--button-orange-600) 44%, #c95f2f 100%);
+      linear-gradient(180deg, rgba(241, 230, 210, 0.3), rgba(241, 230, 210, 0) 40%),
+      linear-gradient(180deg, rgba(196, 161, 90, 0.9) 0%, var(--action-copper) 48%, #744027 100%);
     color: var(--button-primary-text-hover);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.36),
@@ -373,9 +373,9 @@
   }
 
   .buttonSecondary:hover {
-    border-color: rgba(239, 171, 139, 0.5);
+    border-color: rgba(196, 161, 90, 0.42);
     background:
-      linear-gradient(180deg, rgba(239, 171, 139, 0.13), rgba(255, 255, 255, 0.04)),
+      linear-gradient(180deg, rgba(196, 161, 90, 0.1), rgba(255, 255, 255, 0.04)),
       rgba(12, 9, 8, 0.48);
     color: var(--base-paper-strong);
     box-shadow:
@@ -407,7 +407,7 @@
   }
 
   .buttonText:hover {
-    color: var(--base-paper-strong);
+    color: var(--action-text);
     box-shadow: none;
   }
 
@@ -418,15 +418,15 @@
   }
 
   .buttonGhostAction:hover {
-    color: var(--base-paper-strong);
+    color: var(--action-text);
     background: transparent;
     box-shadow: none;
   }
 
   .buttonUtility:hover {
-    border-color: rgba(239, 171, 139, 0.44);
+    border-color: rgba(196, 161, 90, 0.38);
     background:
-      linear-gradient(180deg, rgba(239, 171, 139, 0.14), rgba(255, 255, 255, 0.04)),
+      linear-gradient(180deg, rgba(196, 161, 90, 0.1), rgba(255, 255, 255, 0.04)),
       rgba(12, 9, 8, 0.42);
     color: var(--base-paper-strong);
     box-shadow:

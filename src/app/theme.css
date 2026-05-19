@@ -10,13 +10,17 @@
   --base-paper-warm: #fff4df;
   --base-paper-soft: #fff2dc;
   --base-paper-cream: #fff1da;
+  --bar-ivory: #f1e6d2;
+  --bar-ivory-soft: #efe2ca;
+  --bar-aged-copper: #b36a3c;
+  --bar-muted-brass: #c4a15a;
   --orange-500: #d46a35;
   --orange-450: #de7a47;
   --orange-400: #e79268;
   --orange-350: #efab8b;
-  --button-orange-500: #e79268;
-  --button-orange-600: #de7a47;
-  --button-orange-700: #d46a35;
+  --button-orange-500: #b36a3c;
+  --button-orange-600: #8f5132;
+  --button-orange-700: #6d3a25;
   --green-300: #9fc89a;
   --amber-300: #efcf8d;
   --red-300: #f0a7a0;
@@ -100,6 +104,22 @@
   --color-kicker: var(--orange-500);
 
   /* Brand actions */
+  --action-text: rgba(255, 255, 255, 0.94);
+  --action-text-soft: rgba(255, 255, 255, 0.84);
+  --action-copper: var(--bar-aged-copper);
+  --action-brass: var(--bar-muted-brass);
+  --action-underline-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.82) 52%,
+    rgba(241, 230, 210, 0.58) 100%
+  );
+  --action-text-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.96) 56%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
   --color-primary: var(--orange-500);
   --color-primary-hover: var(--orange-450);
   --color-primary-strong: var(--orange-400);
@@ -166,12 +186,12 @@
   --focus-ring-soft: 0 0 0 8px rgba(255, 248, 239, 0.16);
 
   /* Buttons */
-  --button-primary-border: var(--button-orange-600);
+  --button-primary-border: var(--action-copper);
   --button-primary-text: var(--base-paper-strong);
   --button-primary-bg: transparent;
   --button-primary-bg-hover: linear-gradient(
     180deg,
-    var(--button-orange-500),
+    var(--action-brass),
     var(--button-orange-700)
   );
   --button-primary-bg-active: var(--button-orange-700);

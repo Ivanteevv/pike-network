@@ -19,7 +19,7 @@
   border: 0;
   border-radius: 0;
   background: none;
-  color: rgba(255, 248, 239, 0.74);
+  color: rgba(255, 255, 255, 0.72);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 0.98rem;
@@ -28,9 +28,6 @@
   transition: color var(--duration-medium) var(--ease-standard);
 }
 
-.backLink::after,
-.phoneInline::after,
-.desktopNav a::after,
 .mobileNavLabel::after,
 .mobilePhoneValue::after {
   content: "";
@@ -39,7 +36,7 @@
   bottom: -7px;
   left: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  background: var(--action-underline-gradient);
   opacity: 0;
   pointer-events: none;
   transform: scaleX(0);
@@ -345,13 +342,10 @@
 .desktopNav a:focus-visible {
   outline: 2px solid rgba(255, 248, 239, 0.82);
   outline-offset: 8px;
-  color: var(--base-paper-strong);
+  color: rgba(255, 255, 255, 0.96);
   box-shadow: none;
 }
 
-.backLink:focus-visible::after,
-.phoneInline:focus-visible::after,
-.desktopNav a:focus-visible::after,
 .mobileNavItem:focus-visible .mobileNavLabel::after,
 .mobilePhone:focus-visible .mobilePhoneValue::after {
   opacity: 1;
@@ -393,9 +387,6 @@
     box-shadow: none;
   }
 
-  .backLink:hover::after,
-  .phoneInline:hover::after,
-  .desktopNav a:hover::after,
   .mobileNavItem:hover .mobileNavLabel::after,
   .mobilePhone:hover .mobilePhoneValue::after {
     opacity: 1;
@@ -493,9 +484,6 @@
   .backLink,
   .phoneInline,
   .desktopNav a,
-  .backLink::after,
-  .phoneInline::after,
-  .desktopNav a::after,
   .mobileNavLabel::after,
   .mobilePhoneValue::after,
   .mobilePhone,
