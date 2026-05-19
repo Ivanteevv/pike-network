@@ -87,7 +87,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 18px;
+  gap: 18px 24px;
   margin-top: 24px;
 }
 
@@ -105,43 +105,96 @@
   letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: transparent;
+  box-shadow: none;
   transition: var(--transition-colors);
 }
 
-.heroTextAction,
 .menuTextAction,
 .contactTextAction {
   justify-content: flex-start;
 }
 
 .heroTextAction {
-  padding-inline: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: auto;
+  padding: 0 0 7px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 248, 239, 0.78);
+  font-family: var(--button-font-family);
+  font-size: 0.9rem;
+  font-weight: var(--button-font-weight);
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    color var(--duration-medium) var(--ease-standard);
+}
+
+.heroTextActionLabel {
+  position: relative;
+  display: inline-block;
+}
+
+.heroTextActionLabel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition:
+    opacity var(--duration-medium) var(--ease-standard),
+    transform var(--duration-medium) var(--ease-standard);
 }
 
 .heroTextActionStrong {
   color: var(--base-paper-strong);
-  border-bottom-color: rgba(255, 248, 239, 0.3);
 }
 
-.placeholderLink {
-  color: var(--color-text-muted);
-  background: transparent;
+.heroTextActionArrow::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 0.55em;
+  transform: translateX(0);
+  transition: transform var(--duration-medium) var(--ease-standard);
+}
+
+.heroTextAction:focus-visible {
+  color: var(--base-paper-strong);
   box-shadow: none;
+  outline: 2px solid rgba(255, 248, 239, 0.82);
+  outline-offset: 7px;
+}
+
+.heroTextAction:focus-visible .heroTextActionLabel::before {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .main {
   width: min(1160px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 44px 0 72px;
+  padding: clamp(42px, 5.5vw, 58px) 0 clamp(72px, 8vw, 96px);
 }
 
 .section {
-  padding: 28px 0;
+  padding: clamp(26px, 4vw, 38px) 0;
 }
 
 .infoCard,
-.contactsCard,
-.bestForCard {
+.contactsCard {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--glass-border);
@@ -153,9 +206,19 @@
   border-radius: var(--radius-card);
 }
 
+.infoCard,
+.previewChip,
+.switchOption {
+  transition:
+    color var(--duration-medium) var(--ease-standard),
+    background-color var(--duration-medium) var(--ease-standard),
+    border-color var(--duration-medium) var(--ease-standard),
+    box-shadow var(--duration-medium) var(--ease-standard),
+    transform var(--duration-medium) var(--ease-standard);
+}
+
 .infoCard::before,
-.contactsCard::before,
-.bestForCard::before {
+.contactsCard::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -163,8 +226,7 @@
   pointer-events: none;
 }
 
-.contactsCard,
-.bestForCard {
+.contactsCard {
   display: grid;
   gap: 24px;
   padding: 26px;
@@ -186,20 +248,6 @@
   display: grid;
   gap: 18px;
   margin-top: 24px;
-}
-
-.bestForList {
-  display: grid;
-  gap: 14px;
-  list-style: none;
-}
-
-.bestForItem {
-  padding: 18px;
-  border-left: 2px solid var(--color-primary);
-  background: var(--white-a05);
-  backdrop-filter: blur(12px) saturate(114%);
-  border-radius: var(--radius-tile);
 }
 
 .infoCard {
@@ -228,6 +276,7 @@
 .previewChip {
   display: grid;
   gap: 6px;
+  min-height: 64px;
   padding: 10px 12px;
   border-radius: 18px;
   border: 1px solid var(--paper-border-a14);
@@ -250,26 +299,15 @@
   margin-top: 20px;
 }
 
-.switchOption:focus-visible,
-.placeholderLink:focus-visible {
-  outline: none;
-}
-
-.switchOption:focus-visible,
-.placeholderLink:focus-visible {
+.switchOption:focus-visible {
   color: var(--color-text-strong);
-  box-shadow: none;
+  border-color: rgba(255, 248, 239, 0.36);
+  box-shadow:
+    inset 0 1px 0 var(--white-a14),
+    var(--focus-ring),
+    var(--focus-ring-soft);
   outline: 2px solid rgba(255, 248, 239, 0.82);
   outline-offset: 8px;
-}
-
-.placeholderLink:active {
-  transform: none;
-}
-
-.placeholderLink:active {
-  color: var(--color-text-strong);
-  background: transparent;
 }
 
 .galleryItem {
@@ -297,25 +335,6 @@
   flex-wrap: wrap;
   gap: 14px 20px;
   margin-top: 24px;
-}
-
-.switchOption {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: auto;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--color-text-muted);
-  font-family: var(--button-font-family);
-  font-size: 0.94rem;
-  font-weight: var(--button-font-weight);
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: var(--transition-colors);
 }
 
 .switchSection {
@@ -346,6 +365,12 @@
   border: 1px solid var(--paper-border-a12);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.02);
+  color: var(--color-text-muted);
+  font-family: var(--button-font-family);
+  font-size: 0.94rem;
+  font-weight: var(--button-font-weight);
+  line-height: 1.2;
+  text-decoration: none;
   scroll-snap-align: start;
 }
 
@@ -375,7 +400,12 @@
 .switchOptionCurrent {
   cursor: default;
   opacity: 0.9;
+  border-color: var(--paper-border-a18);
   background: rgba(255, 255, 255, 0.05);
+}
+
+a.switchOption {
+  cursor: pointer;
 }
 
 @media (max-width: 759px) {
@@ -440,8 +470,7 @@
     padding: 22px 0;
   }
 
-  .contactsCard,
-  .bestForCard {
+  .contactsCard {
     padding: 20px 18px;
     gap: 20px;
   }
@@ -452,7 +481,6 @@
     line-height: 1.02;
   }
 
-  .bestForItem,
   .infoCard {
     padding: 16px;
   }
@@ -490,6 +518,18 @@
   }
 }
 
+@media (max-width: 420px) {
+  .contactActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contactTextAction {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 @media (min-width: 980px) {
   .contactsCard {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -498,15 +538,34 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .switchOption:hover,
-  .placeholderLink:hover {
-    box-shadow: none;
+  .infoCard:hover,
+  .previewChip:hover,
+  a.switchOption:hover {
+    border-color: var(--paper-border-a24);
+    box-shadow:
+      inset 0 1px 0 var(--white-a12),
+      0 18px 42px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
   }
 
-  .switchOption:hover,
-  .placeholderLink:hover {
-    background: transparent;
+  a.switchOption:hover {
+    background: rgba(255, 255, 255, 0.055);
     color: var(--base-paper-strong);
+  }
+
+  .menuTextAction:hover,
+  .contactTextAction:hover,
+  .heroTextAction:hover {
+    color: var(--base-paper-strong);
+  }
+
+  .heroTextAction:hover .heroTextActionLabel::before {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .heroTextActionArrow:hover::after {
+    transform: translateX(3px);
   }
 }
 
@@ -529,16 +588,26 @@
     gap: 22px;
   }
 
-  .contactsCard,
-  .bestForCard {
+  .contactsCard {
     grid-template-columns: 1.1fr 1fr;
     align-items: start;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .infoCard,
+  .previewChip,
   .switchOption,
-  .placeholderLink {
+  .placeholderLink,
+  .heroTextAction,
+  .heroTextActionLabel::before,
+  .heroTextActionArrow::after {
     transition: none;
+  }
+
+  .infoCard:hover,
+  .previewChip:hover,
+  a.switchOption:hover {
+    transform: none;
   }
 }

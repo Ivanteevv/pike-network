@@ -42,29 +42,19 @@
 .heroInner {
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 1fr;
   width: min(1180px, calc(100% - 32px));
   min-height: var(--hero-layout-height, 100svh);
   margin: 0 auto;
   padding: max(20px, env(safe-area-inset-top)) 0 42px;
 }
 
-.heroTopline {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 18px;
-}
-
-.heroPhone {
-  flex-shrink: 0;
-}
-
 .heroStage {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-start;
   padding-top: clamp(42px, 9svh, 96px);
+  padding-bottom: clamp(28px, 6svh, 72px);
 }
 
 .heroCopy {
@@ -115,10 +105,6 @@
   gap: 24px;
   justify-content: flex-start;
   margin-top: 30px;
-}
-
-.heroAction {
-  padding-inline: 22px;
 }
 
 .main {
@@ -211,13 +197,10 @@
     padding-bottom: max(28px, env(safe-area-inset-bottom));
   }
 
-  .heroTopline {
-    align-items: flex-start;
-  }
-
   .heroStage {
-    align-items: end;
+    align-items: flex-end;
     padding-top: 38px;
+    padding-bottom: 0;
   }
 
   .heroCopy h1 {
@@ -257,24 +240,14 @@
 }
 
 @media (max-width: 420px) {
-  .heroPhone {
-    max-width: 168px;
-    white-space: nowrap;
-  }
-
   .actions {
     flex-direction: column;
     align-items: stretch;
   }
-
-  .heroAction {
-    width: 100%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .heroCopy,
-  .heroPhone {
+  .heroCopy {
     animation: none;
   }
 

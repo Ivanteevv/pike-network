@@ -7,9 +7,14 @@
 
 .card {
   width: min(560px, 100%);
-  padding: 36px;
-  border: 1px solid var(--color-border);
-  background: var(--ink-a82);
+  padding: clamp(28px, 6vw, 40px);
+  overflow: hidden;
+  border: 1px solid var(--paper-border-a16);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, var(--white-a08), var(--white-a025)),
+    var(--ink-a82);
+  box-shadow: var(--shadow-card-glass);
   text-align: center;
 }
 
@@ -28,6 +33,7 @@
 .card p {
   margin-top: 14px;
   color: var(--color-text-muted);
+  line-height: 1.6;
 }
 
 .link {

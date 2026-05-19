@@ -35,7 +35,7 @@
   position: relative;
   display: grid;
   gap: 13px;
-  min-height: 280px;
+  min-height: 220px;
   padding: 22px;
   overflow: hidden;
   border: 1px solid var(--paper-border-a14);
@@ -46,6 +46,10 @@
   box-shadow:
     inset 0 1px 0 var(--white-a08),
     0 22px 64px rgba(0, 0, 0, 0.22);
+  transition:
+    border-color var(--duration-medium) var(--ease-standard),
+    box-shadow var(--duration-medium) var(--ease-standard),
+    transform var(--duration-medium) var(--ease-standard);
 }
 
 .pointCard::before {
@@ -99,28 +103,84 @@
   line-height: 1.42;
 }
 
-.summary {
-  color: var(--color-text-muted);
-  line-height: 1.58;
-}
-
 .cardActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  gap: 12px 22px;
   align-self: end;
-  margin-top: 4px;
+  margin-top: 8px;
+}
+
+.cardAction {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: auto;
+  padding: 0 0 7px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 248, 239, 0.78);
+  font-family: var(--button-font-family);
+  font-size: 0.82rem;
+  font-weight: var(--button-font-weight);
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    color var(--duration-medium) var(--ease-standard);
+}
+
+.cardActionLabel {
+  position: relative;
+  display: inline-block;
+}
+
+.cardActionLabel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition:
+    opacity var(--duration-medium) var(--ease-standard),
+    transform var(--duration-medium) var(--ease-standard);
+}
+
+.cardActionPrimary {
+  color: var(--base-paper-strong);
+}
+
+.cardActionPrimary::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 0.55em;
+  transform: translateX(0);
+  transition: transform var(--duration-medium) var(--ease-standard);
+}
+
+.cardAction:focus-visible {
+  color: var(--base-paper-strong);
+  outline: 2px solid rgba(255, 248, 239, 0.82);
+  outline-offset: 7px;
+}
+
+.cardAction:focus-visible .cardActionLabel::before {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .pointCard {
-    transition:
-      border-color var(--duration-medium) var(--ease-standard),
-      box-shadow var(--duration-medium) var(--ease-standard),
-      transform var(--duration-medium) var(--ease-standard);
-  }
-
-  .pointCard:hover {
+  .pointCard:hover,
+  .pointCard:focus-within {
     border-color: var(--gold-a24);
     box-shadow:
       inset 0 1px 0 var(--white-a12),
@@ -128,6 +188,18 @@
     transform: translateY(-2px);
   }
 
+  .cardAction:hover {
+    color: var(--base-paper-strong);
+  }
+
+  .cardAction:hover .cardActionLabel::before {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .cardActionPrimary:hover::after {
+    transform: translateX(3px);
+  }
 }
 
 @media (min-width: 760px) {
@@ -141,8 +213,7 @@
     align-items: stretch;
   }
 
-  .pointsMeta span,
-  .reservationLink {
+  .pointsMeta span {
     width: 100%;
     justify-content: center;
   }
@@ -158,16 +229,20 @@
   }
 
   .cardActions {
-    flex-direction: column;
-  }
-
-  .cardAction {
-    width: 100%;
+    justify-content: flex-start;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pointCard {
+  .pointCard,
+  .cardAction,
+  .cardActionLabel::before,
+  .cardActionPrimary::after {
     transition: none;
+  }
+
+  .pointCard:hover,
+  .pointCard:focus-within {
+    transform: none;
   }
 }

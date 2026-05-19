@@ -1,374 +1,178 @@
-"use client";
-
-import { useRef, useState } from "react";
 import Image from "next/image";
 import buttonStyles from "@/components/button.module.css";
-import { RollingNumber, formatRollingNumber } from "@/components/rolling-number";
 import { cx } from "@/lib/class-names";
+import {
+  BROADCAST_LAYOUTS,
+  getBroadcastLayout,
+  orderBroadcastsForDisplay,
+} from "./bar-broadcasts-layout.mjs";
 import styles from "./bar-broadcasts.module.css";
 
-const DRAG_COMMIT_THRESHOLD = 0.24;
+const DEFAULT_EMPTY_STATE = {
+  title: "Афиша обновляется",
+  description: "Скоро здесь появятся ближайшие трансляции и события.",
+  ctas: [],
+};
 
-function clamp(value, min, max) {
-  return Math.max(min, Math.min(max, value));
-}
+/**
+ * @typedef {Object} BroadcastEvent
+ * @property {string} title
+ * @property {string} date
+ * @property {string} time
+ * @property {string} description
+ * @property {string} category
+ * @property {{ src: string, alt?: string }=} image
+ * @property {string=} status
+ * @property {boolean=} isFeatured
+ * @property {boolean=} isPublished
+ */
 
-function getRelativeIndex(index, direction, total) {
-  if (direction === "previous") {
-    return index === 0 ? total - 1 : index - 1;
+function BroadcastMedia({ broadcast, variant }) {
+  if (!broadcast.image?.src) {
+    return (
+      <div className={cx(styles.broadcastMedia, styles.broadcastMediaFallback)}>
+        <span>{broadcast.category}</span>
+      </div>
+    );
   }
 
-  return index === total - 1 ? 0 : index + 1;
-}
-
-function BroadcastSlide({ broadcast, className }) {
   return (
-    <div className={className}>
-      <div className={styles.broadcastMedia}>
-        <Image
-          key={broadcast.image.src}
-          src={broadcast.image.src}
-          alt={broadcast.image.alt}
-          fill
-          sizes="(max-width: 759px) 100vw, (max-width: 1160px) 56vw, 620px"
-          className={styles.broadcastImage}
-          draggable={false}
-        />
-      </div>
-
-      <div className={styles.broadcastCopy}>
-        <div className={styles.broadcastTopline}>
-          <p className={styles.broadcastStatus}>{broadcast.status}</p>
-          <p className={styles.broadcastTime}>{broadcast.timeLabel}</p>
-        </div>
-
-        <div className={styles.broadcastMain}>
-          <h3>{broadcast.title}</h3>
-          <p>{broadcast.description}</p>
-        </div>
-      </div>
+    <div className={styles.broadcastMedia}>
+      <Image
+        src={broadcast.image.src}
+        alt={broadcast.image.alt ?? ""}
+        fill
+        sizes={
+          variant === "featured"
+            ? "(max-width: 759px) 100vw, (max-width: 1160px) 56vw, 620px"
+            : "(max-width: 759px) 82vw, (max-width: 1160px) 34vw, 360px"
+        }
+        className={styles.broadcastImage}
+      />
     </div>
   );
 }
 
-export function BarBroadcasts({ broadcasts }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [dragState, setDragState] = useState({
-    phase: "idle",
-    startX: 0,
-    offset: 0,
-    width: 1,
-    direction: "next",
-    commitIndex: null,
-  });
-  const dragStateRef = useRef(dragState);
-  const deckRef = useRef(null);
-  const navigationFrameRef = useRef(null);
-  const isReleasingPointerRef = useRef(false);
-  const activeBroadcast = broadcasts[activeIndex];
-  const hasMultipleBroadcasts = broadcasts.length > 1;
-  const isDragging = dragState.phase === "dragging";
-  const isSettling = dragState.phase === "settling";
-  const dragOffset = hasMultipleBroadcasts ? dragState.offset : 0;
-  const dragProgress = hasMultipleBroadcasts
-    ? clamp(Math.abs(dragOffset) / dragState.width, 0, 1)
-    : 0;
-  const dragDirection =
-    dragOffset > 0 ? "previous" : dragState.direction || "next";
-  const targetIndex = getRelativeIndex(
-    activeIndex,
-    dragDirection,
-    broadcasts.length
+function BroadcastCard({ broadcast, variant = "standard" }) {
+  return (
+    <article
+      className={cx(
+        styles.broadcastCard,
+        variant === "featured" && styles.broadcastCardFeatured
+      )}
+    >
+      <BroadcastMedia broadcast={broadcast} variant={variant} />
+
+      <div className={styles.broadcastCopy}>
+        <div className={styles.broadcastTopline}>
+          <p>{broadcast.status ?? broadcast.category}</p>
+          <time>{[broadcast.date, broadcast.time].filter(Boolean).join(" · ")}</time>
+        </div>
+
+        <div className={styles.broadcastMain}>
+          <p className={styles.broadcastCategory}>{broadcast.category}</p>
+          <h3>{broadcast.title}</h3>
+          <p>{broadcast.description}</p>
+        </div>
+      </div>
+    </article>
   );
-  const targetBroadcast = broadcasts[targetIndex];
+}
 
-  function setSyncedDragState(nextState) {
-    dragStateRef.current = nextState;
-    setDragState(nextState);
-  }
+function BroadcastEmptyState({ emptyState = DEFAULT_EMPTY_STATE }) {
+  const content = {
+    ...DEFAULT_EMPTY_STATE,
+    ...emptyState,
+    ctas: emptyState.ctas ?? DEFAULT_EMPTY_STATE.ctas,
+  };
 
-  function getDeckWidth() {
-    return Math.max(deckRef.current?.getBoundingClientRect().width ?? 1, 1);
-  }
+  return (
+    <div className={styles.broadcastEmptyState}>
+      <div>
+        <p className={styles.broadcastEmptyKicker}>Скоро в расписании</p>
+        <h3>{content.title}</h3>
+        <p>{content.description}</p>
+      </div>
 
-  function resetDrag(direction = dragState.direction) {
-    if (navigationFrameRef.current !== null) {
-      window.cancelAnimationFrame(navigationFrameRef.current);
-      navigationFrameRef.current = null;
-    }
+      {content.ctas.length > 0 ? (
+        <div className={styles.broadcastEmptyActions}>
+          {content.ctas.map((cta) => (
+            <a
+              key={`${cta.href}-${cta.label}`}
+              className={cx(
+                buttonStyles.buttonBase,
+                buttonStyles.buttonGhostAction,
+                styles.broadcastEmptyAction
+              )}
+              href={cta.href}
+            >
+              {cta.label}
+            </a>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
-    setSyncedDragState({
-      phase: "idle",
-      startX: 0,
-      offset: 0,
-      width: 1,
-      direction,
-      commitIndex: null,
-    });
-  }
-
-  function startNavigation(direction) {
-    if (!hasMultipleBroadcasts || dragStateRef.current.phase !== "idle") {
-      return;
-    }
-
-    const width = getDeckWidth();
-    const commitIndex = getRelativeIndex(
-      activeIndex,
-      direction,
-      broadcasts.length
+function BroadcastGrid({ broadcasts, layout }) {
+  if (layout === BROADCAST_LAYOUTS.featured) {
+    return (
+      <div className={styles.broadcastFeaturedLayout}>
+        <BroadcastCard broadcast={broadcasts[0]} variant="featured" />
+      </div>
     );
-
-    setSyncedDragState({
-      phase: "settling",
-      startX: 0,
-      offset: 0,
-      width,
-      direction,
-      commitIndex,
-    });
-
-    navigationFrameRef.current = window.requestAnimationFrame(() => {
-      navigationFrameRef.current = null;
-
-      if (
-        dragStateRef.current.phase !== "settling" ||
-        dragStateRef.current.commitIndex !== commitIndex
-      ) {
-        return;
-      }
-
-      setSyncedDragState({
-        phase: "settling",
-        startX: 0,
-        offset: direction === "previous" ? width : -width,
-        width,
-        direction,
-        commitIndex,
-      });
-    });
   }
 
-  function showPrevious() {
-    startNavigation("previous");
-  }
-
-  function showNext() {
-    startNavigation("next");
-  }
-
-  function handlePointerDown(event) {
-    if (!hasMultipleBroadcasts || event.button !== 0 || isSettling) {
-      return;
-    }
-
-    const rect = event.currentTarget.getBoundingClientRect();
-
-    event.currentTarget.setPointerCapture(event.pointerId);
-    setSyncedDragState({
-      phase: "dragging",
-      startX: event.clientX,
-      offset: 0,
-      width: Math.max(rect.width, 1),
-      direction: "next",
-      commitIndex: null,
-    });
-  }
-
-  function handlePointerMove(event) {
-    const currentDragState = dragStateRef.current;
-
-    if (currentDragState.phase !== "dragging") {
-      return;
-    }
-
-    const nextOffset = clamp(
-      event.clientX - currentDragState.startX,
-      -currentDragState.width,
-      currentDragState.width
+  if (layout === BROADCAST_LAYOUTS.grid) {
+    return (
+      <div
+        className={styles.broadcastGrid}
+        data-count={broadcasts.length}
+      >
+        {broadcasts.map((broadcast) => (
+          <BroadcastCard key={broadcast.id ?? broadcast.title} broadcast={broadcast} />
+        ))}
+      </div>
     );
-
-    setSyncedDragState({
-      ...currentDragState,
-      offset: nextOffset,
-      direction: nextOffset > 0 ? "previous" : "next",
-    });
-  }
-
-  function finishDrag(event) {
-    const currentDragState = dragStateRef.current;
-
-    if (currentDragState.phase !== "dragging") {
-      return;
-    }
-
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      isReleasingPointerRef.current = true;
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-
-    const nextDirection = currentDragState.offset > 0 ? "previous" : "next";
-    const dragDistance = Math.abs(currentDragState.offset);
-
-    if (dragDistance < 1) {
-      resetDrag(nextDirection);
-      window.setTimeout(() => {
-        isReleasingPointerRef.current = false;
-      }, 0);
-      return;
-    }
-
-    const shouldCommit =
-      dragDistance / currentDragState.width >= DRAG_COMMIT_THRESHOLD;
-    const commitIndex = shouldCommit
-      ? getRelativeIndex(activeIndex, nextDirection, broadcasts.length)
-      : null;
-
-    setSyncedDragState({
-      phase: "settling",
-      startX: 0,
-      offset: shouldCommit
-        ? nextDirection === "previous"
-          ? currentDragState.width
-          : -currentDragState.width
-        : 0,
-      width: currentDragState.width,
-      direction: nextDirection,
-      commitIndex,
-    });
-
-    window.setTimeout(() => {
-      isReleasingPointerRef.current = false;
-    }, 0);
-  }
-
-  function handleLostPointerCapture() {
-    if (
-      isReleasingPointerRef.current ||
-      dragStateRef.current.phase !== "dragging"
-    ) {
-      return;
-    }
-
-    resetDrag();
-  }
-
-  function handleTransitionEnd(event) {
-    if (
-      event.propertyName !== "transform" ||
-      !event.target.classList.contains(styles.broadcastSlideActive) ||
-      dragState.phase !== "settling"
-    ) {
-      return;
-    }
-
-    if (dragState.commitIndex !== null) {
-      setActiveIndex(dragState.commitIndex);
-    }
-
-    resetDrag(dragState.direction);
-  }
-
-  function handleKeyDown(event) {
-    if (!hasMultipleBroadcasts) {
-      return;
-    }
-
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      showPrevious();
-    }
-
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      showNext();
-    }
-  }
-
-  if (!activeBroadcast) {
-    return null;
   }
 
   return (
     <div
-      className={styles.broadcastShell}
-      data-dragging={isDragging ? "true" : "false"}
-      data-settling={isSettling ? "true" : "false"}
-      data-direction={dragDirection}
-      style={{
-        "--broadcast-drag-offset": `${dragOffset}px`,
-        "--broadcast-drag-progress": dragProgress,
-      }}
+      className={styles.broadcastScroller}
+      role="list"
+      aria-label="Ближайшие трансляции"
     >
-      <div className={styles.broadcastFrame}>
-        <article
-          ref={deckRef}
-          className={styles.broadcastDeck}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={finishDrag}
-          onPointerCancel={finishDrag}
-          onLostPointerCapture={handleLostPointerCapture}
-          onTransitionEnd={handleTransitionEnd}
-          onKeyDown={handleKeyDown}
-          tabIndex={hasMultipleBroadcasts ? 0 : undefined}
-          aria-roledescription="carousel"
-          aria-label="Трансляции бара"
+      {broadcasts.map((broadcast) => (
+        <div
+          key={broadcast.id ?? broadcast.title}
+          className={styles.broadcastScrollItem}
+          role="listitem"
         >
-          <div className={styles.broadcastDragHint} aria-hidden="true">
-            <span>←</span>
-            <span>drag</span>
-            <span>→</span>
-          </div>
-          <BroadcastSlide
-            broadcast={activeBroadcast}
-            className={`${styles.broadcastSlide} ${styles.broadcastSlideActive}`}
-          />
-          {hasMultipleBroadcasts ? (
-            <BroadcastSlide
-              broadcast={targetBroadcast}
-              className={`${styles.broadcastSlide} ${styles.broadcastSlidePreview}`}
-            />
-          ) : null}
-        </article>
-      </div>
+          <BroadcastCard broadcast={broadcast} />
+        </div>
+      ))}
+    </div>
+  );
+}
 
-      <div className={styles.broadcastIndexPanel}>
-        <div className={styles.broadcastIndexNumber}>
-          <RollingNumber
-            value={activeIndex + 1}
-            total={broadcasts.length}
-            previewValue={targetIndex + 1}
-            progress={dragProgress}
-            direction={dragDirection}
-            animateProgress={isSettling}
-          />
-        </div>
-        <div className={styles.broadcastIndexMeta}>
-          <span>/ {formatRollingNumber(broadcasts.length)}</span>
-          <span>тяни афишу вбок</span>
-        </div>
-        {hasMultipleBroadcasts ? (
-          <div className={styles.broadcastTextControls}>
-            <button
-              type="button"
-              className={cx(buttonStyles.buttonBase, styles.broadcastTextButton)}
-              onClick={showPrevious}
-              disabled={isSettling}
-            >
-              ← Назад
-            </button>
-            <button
-              type="button"
-              className={cx(buttonStyles.buttonBase, styles.broadcastTextButton)}
-              onClick={showNext}
-              disabled={isSettling}
-            >
-              Дальше →
-            </button>
-          </div>
-        ) : null}
-      </div>
+export function BarBroadcasts({ broadcasts = [], settings = {} }) {
+  const orderedBroadcasts = orderBroadcastsForDisplay(broadcasts);
+  const layout = getBroadcastLayout(orderedBroadcasts, {
+    emptyBehavior: settings.emptyBehavior,
+  });
+
+  if (layout === BROADCAST_LAYOUTS.hidden) {
+    return null;
+  }
+
+  return (
+    <div className={styles.broadcastShell} data-layout={layout}>
+      {layout === BROADCAST_LAYOUTS.empty ? (
+        <BroadcastEmptyState emptyState={settings.emptyState} />
+      ) : (
+        <BroadcastGrid broadcasts={orderedBroadcasts} layout={layout} />
+      )}
     </div>
   );
 }

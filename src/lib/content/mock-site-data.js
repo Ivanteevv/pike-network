@@ -31,16 +31,12 @@ export const mockSiteData = {
       media: {
         kind: "video",
         videoUrl: "/mock/network/hero/bgVid7_mod.mp4",
-        imageUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
-        posterUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
+        imageUrl: "/mock/bars/shchuka-8-marta-18k1/gallery/03.webp",
+        posterUrl: "/mock/bars/shchuka-8-marta-18k1/gallery/03.webp",
       },
     },
     locationChoice: {
-      eyebrow: "Выбор бара",
-      title: "Выберите ближайшую Щуку",
-      description:
-        "Откройте страницу нужной локации, чтобы посмотреть детали бара, меню, события и контакты.",
-      reservationLabel: "Позвонить и забронировать",
+      title: "Выбор ближайшего бара",
       countLabels: {
         one: "локация",
         few: "локации",
@@ -130,8 +126,8 @@ export const mockSiteData = {
         description:
           "Большой экран, плотная кухня, спортивные трансляции и узнаваемая барная подача в духе Щуки.",
         kind: "image",
-        imageUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
-        posterUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
+        imageUrl: "/mock/bars/shchuka-8-marta-18k1/gallery/03.webp",
+        posterUrl: "/mock/bars/shchuka-8-marta-18k1/gallery/03.webp",
       },
       gallery: [
         { src: "/mock/bars/shchuka-8-marta-18k1/gallery/01.jpg", alt: "Интерьер бара Щука на 8 Марта" },
@@ -147,9 +143,13 @@ export const mockSiteData = {
       ],
       broadcasts: [
         {
+          id: "football-main-screen",
           title: "Футбол на большом экране",
+          date: "Сегодня",
+          time: "20:45",
+          category: "Футбол",
           status: "Сегодня",
-          timeLabel: "20:45 · главный зал",
+          isFeatured: true,
           description:
             "Заглушка под карточку матча: здесь появятся команды, турнир и точное время трансляции.",
           image: {
@@ -158,9 +158,12 @@ export const mockSiteData = {
           },
         },
         {
+          id: "hockey-friday",
           title: "Хоккейный вечер",
+          date: "Пятница",
+          time: "19:30",
+          category: "Хоккей",
           status: "Скоро",
-          timeLabel: "Пятница · 19:30",
           description:
             "Карточка для будущего расписания: можно заменить на лигу, команды и условия брони.",
           image: {
@@ -169,17 +172,39 @@ export const mockSiteData = {
           },
         },
         {
+          id: "weekend-sport-slot",
           title: "Большой спортивный слот",
+          date: "Выходные",
+          time: "вечер",
+          category: "Спорт",
           status: "В расписании",
-          timeLabel: "Выходные · вечер",
           description:
             "Резервный слот для UFC, дерби или другого события, которое бар захочет выделить отдельно.",
-          image: {
-            src: "/mock/bars/shchuka-8-marta-18k1/gallery/01.jpg",
-            alt: "Интерьер бара Щука на 8 Марта",
-          },
+        },
+        {
+          id: "late-match-table",
+          title: "Поздний матч за большим столом",
+          date: "Суббота",
+          time: "22:00",
+          category: "Компания",
+          status: "Под бронь",
+          description:
+            "Слот без изображения: карточка должна оставаться выразительной, даже если CMS пока не получила афишу или фото.",
         },
       ],
+      broadcastsSettings: {
+        emptyBehavior: "show",
+        emptyState: {
+          title: "Афиша обновляется",
+          description:
+            "Скоро здесь появятся ближайшие трансляции и события.",
+          ctas: [
+            { label: "Посмотреть меню", href: "#menu" },
+            { label: "Забронировать стол", href: `tel:${sharedPhoneE164}` },
+            { label: "Связаться", href: `tel:${sharedPhoneE164}` },
+          ],
+        },
+      },
       menuLinks: [
         {
           title: "Основное меню",
@@ -277,9 +302,13 @@ export const mockSiteData = {
       ],
       broadcasts: [
         {
+          id: "local-match-week",
           title: "Локальный матч недели",
+          date: "Сегодня",
+          time: "21:00",
+          category: "Футбол",
           status: "Сегодня",
-          timeLabel: "21:00 · основной экран",
+          isFeatured: true,
           description:
             "Заглушка под ближайшую трансляцию этой точки: команды и турнир можно будет подставить из контента.",
           image: {
@@ -288,9 +317,12 @@ export const mockSiteData = {
           },
         },
         {
+          id: "hockey-evening",
           title: "Вечер хоккея",
+          date: "Пятница",
+          time: "19:30",
+          category: "Хоккей",
           status: "Скоро",
-          timeLabel: "Пятница · 19:30",
           description:
             "Будущий слот для расписания трансляций с коротким описанием события и настроения вечера.",
           image: {
@@ -299,17 +331,29 @@ export const mockSiteData = {
           },
         },
         {
+          id: "company-sport",
           title: "Спорт для компании",
+          date: "Выходные",
+          time: "после 18:00",
+          category: "Спорт",
           status: "В расписании",
-          timeLabel: "Выходные · после 18:00",
           description:
             "Карточка-заглушка для крупного эфира, который нужно будет быстро подсветить на странице бара.",
-          image: {
-            src: "/mock/bars/shchuka-9-marta-19k2/gallery/13.jpg",
-            alt: "Закуски в баре Щука на 9 Марта",
-          },
         },
       ],
+      broadcastsSettings: {
+        emptyBehavior: "show",
+        emptyState: {
+          title: "Афиша обновляется",
+          description:
+            "Скоро здесь появятся ближайшие трансляции и события.",
+          ctas: [
+            { label: "Посмотреть меню", href: "#menu" },
+            { label: "Забронировать стол", href: `tel:${sharedPhoneE164}` },
+            { label: "Связаться", href: `tel:${sharedPhoneE164}` },
+          ],
+        },
+      },
       menuLinks: [
         {
           title: "Меню кухни",

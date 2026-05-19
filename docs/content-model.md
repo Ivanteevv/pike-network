@@ -80,6 +80,8 @@ Each item in `bars[]` is the current content unit for one bar page.
 | `hero.imageUrl` | string | hero media rendering |
 | `hero.posterUrl` | string | hero media fallback |
 | `gallery[]` | list of media items | rendered in gallery |
+| `broadcasts[]` | list of broadcast event items | rendered in broadcasts section |
+| `broadcastsSettings` | object | empty-state behavior and CTA copy |
 | `menuLinks[]` | list | rendered in menu section |
 | `menuPreview[]` | list | rendered in chips section |
 | `events[]` | list | stored, not currently rendered |
@@ -216,6 +218,37 @@ Primary collection for bar-specific pages.
 | `name` | string | yes | chip label |
 | `note` | string | yes | chip sublabel |
 | `sort_order` | integer | yes | output order |
+
+## Entity: `bar_broadcasts`
+
+Structured items for the rendered "Трансляции" section. The frontend adapter
+maps these fields into the normalized `broadcasts[]` contract and returns only
+published items in normal runtime views.
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `bar` | relation to `bars` | yes | owner bar |
+| `title` | string | yes | card title |
+| `date_text` | string | yes | human-readable date, for example `Сегодня` or `Пятница` |
+| `time_text` | string | yes | human-readable start time |
+| `description` | text | yes | card body |
+| `category` | string | yes | sport or event category |
+| `image_asset` | asset reference | no | optional card image |
+| `image_alt_text` | string | no | required when image conveys content |
+| `status_label` | string | no | optional label such as `Сегодня` or `Под бронь` |
+| `is_featured` | boolean | no | allows CMS editors to pin one item first |
+| `publish_state` | enum | yes | normal runtime uses published items only |
+| `sort_order` | integer | yes | output order after featured ordering |
+
+## Entity: `bar_broadcasts_settings`
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `bar` | relation to `bars` | yes | owner bar |
+| `empty_behavior` | enum: `show`, `hide` | yes | controls zero-item rendering |
+| `empty_title` | string | yes when shown | default can be `Афиша обновляется` |
+| `empty_description` | text | yes when shown | default can be `Скоро здесь появятся ближайшие трансляции и события.` |
+| `empty_ctas` | repeatable component | no | optional label + URL buttons |
 
 ## Entity: `bar_events`
 

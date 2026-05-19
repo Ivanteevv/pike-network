@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import buttonStyles from "@/components/button.module.css";
-import { cx } from "@/lib/class-names";
 import styles from "./network-points.module.css";
 
 function formatBarsCount(barsCount, countLabels) {
@@ -16,7 +14,7 @@ function formatBarsCount(barsCount, countLabels) {
   return `${barsCount} ${label}`;
 }
 
-export function NetworkPointsSection({ bars, copy, phoneE164 }) {
+export function NetworkPointsSection({ bars, copy }) {
   const barsCountLabel =
     copy?.countLabels
       ? formatBarsCount(bars.length, copy.countLabels)
@@ -26,17 +24,6 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
     <div className={styles.pointsShell}>
       <div className={styles.pointsMeta}>
         <span>{barsCountLabel}</span>
-        <a
-          className={cx(
-            buttonStyles.buttonBase,
-            buttonStyles.buttonGhostAction,
-            buttonStyles.buttonSm,
-            styles.reservationLink
-          )}
-          href={`tel:${phoneE164}`}
-        >
-          {copy.reservationLabel}
-        </a>
       </div>
 
       <div className={styles.pointsGrid} aria-label="Точки сети">
@@ -53,31 +40,16 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
 
             <h3>{bar.shortLabel}</h3>
             <p className={styles.address}>{bar.addressLine}</p>
-            <p className={styles.summary}>{bar.summary}</p>
 
             <div className={styles.cardActions}>
               <Link
                 href={`/bars/${bar.slug}`}
-                className={cx(
-                  buttonStyles.buttonBase,
-                  buttonStyles.buttonGhostAction,
-                  buttonStyles.buttonMd,
-                  buttonStyles.buttonArrow,
-                  styles.cardAction
-                )}
+                className={`${styles.cardAction} ${styles.cardActionPrimary}`}
               >
-                {copy.openLabel}
+                <span className={styles.cardActionLabel}>{copy.openLabel}</span>
               </Link>
-              <a
-                href={`tel:${bar.phoneE164}`}
-                className={cx(
-                  buttonStyles.buttonBase,
-                  buttonStyles.buttonGhostAction,
-                  buttonStyles.buttonMd,
-                  styles.cardAction
-                )}
-              >
-                {copy.phoneLabel}
+              <a href={`tel:${bar.phoneE164}`} className={styles.cardAction}>
+                <span className={styles.cardActionLabel}>{copy.phoneLabel}</span>
               </a>
             </div>
           </article>

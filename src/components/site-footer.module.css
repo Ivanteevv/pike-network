@@ -8,7 +8,7 @@
 .frame {
   width: min(1160px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 28px 0 24px;
+  padding: clamp(30px, 4vw, 44px) 0 24px;
 }
 
 .lead {
@@ -52,6 +52,7 @@
 }
 
 .primaryContact {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 54px;
@@ -67,7 +68,7 @@
   letter-spacing: 0.02em;
   line-height: 1.1;
   text-decoration: none;
-  transition: var(--transition-colors);
+  transition: color var(--duration-medium) var(--ease-standard);
 }
 
 .socials,
@@ -78,9 +79,11 @@
 }
 
 .socials a {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 0;
+  min-height: 34px;
+  padding: 0 2px;
   border: 0;
   background: none;
   color: rgba(255, 248, 239, 0.74);
@@ -89,6 +92,27 @@
   font-size: 0.76rem;
   text-decoration: none;
   transition: color var(--duration-medium) var(--ease-standard);
+}
+
+.linkLabel {
+  position: relative;
+  display: inline-block;
+}
+
+.linkLabel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), rgba(255, 248, 239, 0.58));
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition:
+    opacity var(--duration-medium) var(--ease-standard),
+    transform var(--duration-medium) var(--ease-standard);
 }
 
 .bottomRow {
@@ -101,21 +125,22 @@
 
 .primaryContact:focus-visible,
 .socials a:focus-visible {
-  outline: none;
+  outline: 2px solid rgba(255, 248, 239, 0.82);
+  outline-offset: 7px;
 }
 
 .primaryContact:focus-visible {
   color: var(--base-paper-strong);
-  box-shadow:
-    var(--focus-ring),
-    var(--focus-ring-soft);
 }
 
 .socials a:focus-visible {
   color: var(--base-paper-strong);
-  box-shadow:
-    var(--focus-ring),
-    var(--focus-ring-soft);
+}
+
+.primaryContact:focus-visible .linkLabel::after,
+.socials a:focus-visible .linkLabel::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -126,6 +151,12 @@
 
   .socials a:hover {
     color: var(--base-paper-strong);
+  }
+
+  .primaryContact:hover .linkLabel::after,
+  .socials a:hover .linkLabel::after {
+    opacity: 1;
+    transform: scaleX(1);
   }
 }
 
@@ -175,7 +206,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .primaryContact,
-  .socials a {
+  .socials a,
+  .linkLabel::after {
     transition: none;
   }
 }

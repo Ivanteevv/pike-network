@@ -177,16 +177,33 @@ Rules:
   ],
   "broadcasts": [
     {
+      "id": "string",
       "title": "string",
-      "status": "string",
-      "timeLabel": "string",
+      "date": "string",
+      "time": "string",
       "description": "string",
+      "category": "string",
       "image": {
         "src": "string",
-        "alt": "string"
-      }
+        "alt": "string|null"
+      },
+      "status": "string|null",
+      "isFeatured": "boolean"
     }
   ],
+  "broadcastsSettings": {
+    "emptyBehavior": "show|hide",
+    "emptyState": {
+      "title": "string",
+      "description": "string",
+      "ctas": [
+        {
+          "label": "string",
+          "href": "string"
+        }
+      ]
+    }
+  },
   "menuLinks": [
     {
       "title": "string",
@@ -230,7 +247,11 @@ Rules:
 - `hours`, `bestFor`, `gallery`, `broadcasts`, `menuLinks`, `menuPreview`,
   `features`, `events`, and `socialLinks` return arrays, not `null`.
 - `gallery[].alt` is required.
-- `broadcasts[].image.alt` is required.
+- `broadcasts[]` contains only published broadcasts in normal runtime views.
+- `broadcasts[].image` is optional. When present, `image.src` is required and
+  `image.alt` should be provided unless the image is decorative.
+- `broadcastsSettings.emptyBehavior` controls whether an empty broadcasts
+  section renders a designed fallback or hides the section.
 - `menuLinks[].status` remains required even when `href` is `null`.
 - `summary`, `vibe`, and other not-yet-rendered singleton fields may be `null`
   until the UI uses them consistently.

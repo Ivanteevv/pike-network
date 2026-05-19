@@ -8,6 +8,10 @@ import { BarGallery } from "@/components/bar-gallery";
 import { SiteFooter } from "@/components/site-footer";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
+import {
+  BROADCAST_LAYOUTS,
+  getBroadcastLayout,
+} from "@/components/bar-broadcasts-layout.mjs";
 import { getBarBySlug, getBars, getSiteData } from "@/lib/content/get-site-data";
 import { siteUrl } from "@/lib/site-url";
 import styles from "./page.module.css";
@@ -70,6 +74,10 @@ export default async function BarPage({ params }) {
   const heroLocation = formatHeroLocation(bar);
   const networkBars = siteData.bars;
   const broadcasts = bar.broadcasts ?? [];
+  const broadcastSettings = bar.broadcastsSettings ?? {};
+  const broadcastLayout = getBroadcastLayout(broadcasts, {
+    emptyBehavior: broadcastSettings.emptyBehavior,
+  });
 
   return (
     <div id="page-top" className={styles.page}>
@@ -99,26 +107,16 @@ export default async function BarPage({ params }) {
 
               <div className={styles.actions}>
                 <a
-                  className={cx(
-                    buttonStyles.buttonBase,
-                    buttonStyles.buttonGhostAction,
-                    styles.heroTextAction,
-                    styles.heroTextActionStrong
-                  )}
+                  className={`${styles.heroTextAction} ${styles.heroTextActionStrong}`}
                   href={`tel:${bar.phoneE164}`}
                 >
-                  Позвонить
+                  <span className={styles.heroTextActionLabel}>Позвонить</span>
                 </a>
                 <a
-                  className={cx(
-                    buttonStyles.buttonBase,
-                    buttonStyles.buttonGhostAction,
-                    buttonStyles.buttonArrow,
-                    styles.heroTextAction
-                  )}
+                  className={`${styles.heroTextAction} ${styles.heroTextActionArrow}`}
                   href="#menu"
                 >
-                  Меню
+                  <span className={styles.heroTextActionLabel}>Меню</span>
                 </a>
               </div>
             </div>
@@ -127,29 +125,13 @@ export default async function BarPage({ params }) {
       </HeroMedia>
 
       <main className={styles.main}>
-        <section className={styles.section}>
-          <div className={styles.bestForCard}>
-            <div className={styles.sectionHeading}>
-              <p className={styles.sectionKicker}>Что Здесь Есть</p>
-              <h2>Еда, пиво и трансляции без лишних описаний</h2>
-            </div>
-            <ul className={styles.bestForList}>
-              {bar.bestFor.map((item) => (
-                <li key={item} className={styles.bestForItem}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        {broadcasts.length > 0 ? (
+        {broadcastLayout !== BROADCAST_LAYOUTS.hidden ? (
           <section id="broadcast" className={styles.section}>
             <div className={styles.sectionHeading}>
               <p className={styles.sectionKicker}>Broadcast</p>
               <h2>Ближайшие трансляции в баре</h2>
             </div>
-            <BarBroadcasts broadcasts={broadcasts} />
+            <BarBroadcasts broadcasts={broadcasts} settings={broadcastSettings} />
           </section>
         ) : null}
 

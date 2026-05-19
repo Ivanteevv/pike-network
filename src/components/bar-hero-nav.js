@@ -107,10 +107,14 @@ export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
       <aside
         id="bar-mobile-nav"
         className={`${styles.mobilePanel} ${isOpen ? styles.mobilePanelOpen : ""}`}
+        role="dialog"
+        aria-modal={isOpen ? "true" : undefined}
         aria-hidden={!isOpen}
+        aria-labelledby="bar-mobile-nav-title"
+        inert={!isOpen}
       >
         <div className={styles.mobileHeader}>
-          <p>Навигация</p>
+          <p id="bar-mobile-nav-title">Навигация</p>
         </div>
 
         <div className={styles.mobileBody}>

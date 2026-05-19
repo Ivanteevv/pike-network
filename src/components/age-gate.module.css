@@ -110,7 +110,7 @@
   justify-content: center;
   gap: 16px 18px;
   margin-top: 30px;
-  padding: 4px 8px 10px 0;
+  padding: 4px 0 8px;
 }
 
 .actionButton {
@@ -134,7 +134,7 @@
   .actions {
     flex-direction: column;
     gap: 14px;
-    padding: 4px 6px 8px 0;
+    padding: 4px 0 8px;
   }
 
   .actionButton {

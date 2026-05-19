@@ -11,7 +11,7 @@ export function SiteFooter({ network }) {
             <div className={styles.contactGroup}>
               <p className={styles.kicker}>Телефон</p>
               <a className={styles.primaryContact} href={`tel:${network.phoneE164}`}>
-                {network.phoneDisplay}
+                <span className={styles.linkLabel}>{network.phoneDisplay}</span>
               </a>
             </div>
 
@@ -25,7 +25,7 @@ export function SiteFooter({ network }) {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {social.label}
+                    <span className={styles.linkLabel}>{social.label}</span>
                   </a>
                 ))}
               </div>
