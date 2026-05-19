@@ -177,15 +177,13 @@ Rules:
   ],
   "broadcasts": [
     {
-      "title": "string",
-      "status": "string",
+      "dayLabel": "string",
+      "dateLabel": "string|null",
       "timeLabel": "string",
-      "description": "string",
       "category": "string|null",
-      "image": {
-        "src": "string",
-        "alt": "string"
-      }
+      "title": "string",
+      "description": "string|null",
+      "image": null
     }
   ],
   "menuLinks": [
@@ -231,10 +229,13 @@ Rules:
 - `hours`, `bestFor`, `gallery`, `broadcasts`, `menuLinks`, `menuPreview`,
   `features`, `events`, and `socialLinks` return arrays, not `null`.
 - `gallery[].alt` is required.
+- `broadcasts` is bar-specific and should be rendered as a practical schedule,
+  not as a global homepage announcement.
 - `broadcasts[].category` may be `null`; consumers fall back to a generic sport
   label when the CMS does not provide a category.
-- `broadcasts[].image` may be `null`; consumers must not render empty image
-  placeholders. When an image is present, `broadcasts[].image.alt` is required.
+- `broadcasts[].description` and `broadcasts[].image` remain tolerated for
+  adapter compatibility, but the compact broadcasts schedule renders only date,
+  time, category, and title.
 - `menuLinks[].status` remains required even when `href` is `null`.
 - `summary`, `vibe`, and other not-yet-rendered singleton fields may be `null`
   until the UI uses them consistently.

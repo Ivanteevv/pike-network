@@ -1,11 +1,6 @@
-"use client";
-
-import { useId, useState } from "react";
-import Image from "next/image";
 import styles from "./bar-broadcasts.module.css";
 
 const DEFAULT_BROADCAST_CATEGORY = "Спорт";
-const MAX_SECONDARY_BROADCASTS = 3;
 
 function inferBroadcastCategory(broadcast) {
   const explicitCategory = broadcast.category ?? broadcast.type ?? broadcast.sport;
@@ -35,142 +30,120 @@ function inferBroadcastCategory(broadcast) {
   return DEFAULT_BROADCAST_CATEGORY;
 }
 
-function getBroadcastMetaItems(broadcast, { includeTiming = true } = {}) {
-  const timingItems = includeTiming ? [broadcast.status, broadcast.timeLabel] : [];
+function getTimeLabel(timeLabel) {
+  if (!timeLabel) {
+    return "Время уточняется";
+  }
 
-  return [...timingItems, inferBroadcastCategory(broadcast)].filter(Boolean);
+  const parts = String(timeLabel)
+    .split("·")
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const timePart = parts.find((part) => /\d{1,2}[:.]\d{2}/.test(part));
+
+  return timePart ?? parts[0] ?? timeLabel;
 }
 
-function BroadcastMetaLine({ broadcast, className, includeTiming }) {
+function normalizeBroadcast(broadcast) {
+  return {
+    dayLabel: broadcast.dayLabel ?? broadcast.status ?? "Дата уточняется",
+    dateLabel: broadcast.dateLabel ?? null,
+    timeLabel: getTimeLabel(broadcast.timeLabel),
+    category: inferBroadcastCategory(broadcast),
+    title: broadcast.title,
+  };
+}
+
+function getBroadcastKey(broadcast, index) {
+  return [
+    broadcast.dayLabel,
+    broadcast.dateLabel,
+    broadcast.timeLabel,
+    broadcast.category,
+    broadcast.title,
+    index,
+  ]
+    .filter(Boolean)
+    .join("-");
+}
+
+function getBroadcastAriaLabel(broadcast) {
+  return [
+    broadcast.dayLabel,
+    broadcast.dateLabel,
+    broadcast.timeLabel,
+    broadcast.category,
+    broadcast.title,
+  ]
+    .filter(Boolean)
+    .join(", ");
+}
+
+function DateBlock({ broadcast }) {
   return (
-    <p className={className ?? styles.broadcastMeta}>
-      {getBroadcastMetaItems(broadcast, { includeTiming }).map((item, index) => (
-        <span key={`${item}-${index}`}>{item}</span>
-      ))}
-    </p>
+    <div className={styles.dateBlock}>
+      <span>{broadcast.dayLabel}</span>
+      {broadcast.dateLabel ? <strong>{broadcast.dateLabel}</strong> : null}
+    </div>
   );
 }
 
-function BroadcastThumb({ broadcast }) {
-  if (!broadcast?.image?.src) {
-    return null;
-  }
+function BroadcastRow({ broadcast, isPrimary = false }) {
+  const className = isPrimary ? styles.primaryBroadcast : styles.broadcastRow;
 
   return (
-    <div className={styles.broadcastThumb} aria-hidden="true">
-      <Image
-        src={broadcast.image.src}
-        alt=""
-        fill
-        sizes="96px"
-        className={styles.broadcastImage}
-      />
-    </div>
+    <article
+      className={className}
+      tabIndex={0}
+      aria-label={getBroadcastAriaLabel(broadcast)}
+    >
+      <DateBlock broadcast={broadcast} />
+      <time className={styles.timeLabel}>{broadcast.timeLabel}</time>
+      <p className={styles.categoryLabel}>{broadcast.category}</p>
+      <h3>{broadcast.title}</h3>
+    </article>
   );
 }
 
 function EmptyBroadcastState() {
   return (
     <article className={`${styles.broadcastPanel} ${styles.broadcastPanelEmpty}`}>
-      <div className={styles.broadcastEmptyMark} aria-hidden="true">
-        Live
-      </div>
-      <div className={styles.broadcastEmptyCopy}>
-        <p className={styles.broadcastLabel}>Расписание обновляется</p>
-        <h3>Сегодня в эфире — ваш выбор</h3>
-        <p>
-          Ближайшие трансляции пока не указаны. Если хотите посмотреть
-          конкретный матч, уточните у бармена — в «Щуке» спорт включают по
-          настроению гостей.
-        </p>
-      </div>
-    </article>
-  );
-}
-
-function SecondaryBroadcast({ broadcast }) {
-  return (
-    <li className={styles.broadcastRow}>
-      <BroadcastMetaLine broadcast={broadcast} className={styles.broadcastRowMeta} />
-      <strong>{broadcast.title}</strong>
-      {broadcast.description ? <p>{broadcast.description}</p> : null}
-    </li>
-  );
-}
-
-function BroadcastSchedule({ primaryBroadcast, secondaryBroadcasts }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const scheduleId = useId();
-  const hasSecondaryBroadcasts = secondaryBroadcasts.length > 0;
-  const toggleLabel = isExpanded
-    ? "Свернуть расписание"
-    : `Показать дальше (${secondaryBroadcasts.length})`;
-
-  return (
-    <article className={styles.broadcastPanel}>
-      <div className={styles.broadcastPrimary}>
-        <div className={styles.broadcastTimeColumn}>
-          <span>{primaryBroadcast.status ?? "Ближайший эфир"}</span>
-          <strong>{primaryBroadcast.timeLabel ?? "Время уточняется"}</strong>
-        </div>
-
-        <div className={styles.broadcastPrimaryCopy}>
-          <p className={styles.broadcastLabel}>Ближайшая трансляция</p>
-          <BroadcastMetaLine broadcast={primaryBroadcast} includeTiming={false} />
-          <h3>{primaryBroadcast.title}</h3>
-          {primaryBroadcast.description ? <p>{primaryBroadcast.description}</p> : null}
-        </div>
-
-        <BroadcastThumb broadcast={primaryBroadcast} />
-      </div>
-
-      {hasSecondaryBroadcasts ? (
-        <div className={styles.broadcastMore}>
-          <button
-            type="button"
-            className={styles.broadcastToggle}
-            aria-expanded={isExpanded}
-            aria-controls={scheduleId}
-            aria-label={`${toggleLabel} трансляций`}
-            onClick={() => setIsExpanded((currentValue) => !currentValue)}
-          >
-            <span>Дальше в расписании</span>
-            <strong>{toggleLabel}</strong>
-          </button>
-
-          <div
-            id={scheduleId}
-            className={styles.broadcastDisclosure}
-            data-open={isExpanded ? "true" : "false"}
-            aria-hidden={isExpanded ? undefined : "true"}
-          >
-            <ol>
-              {secondaryBroadcasts.map((broadcast) => (
-                <SecondaryBroadcast
-                  key={`${broadcast.title}-${broadcast.timeLabel ?? broadcast.status ?? ""}`}
-                  broadcast={broadcast}
-                />
-              ))}
-            </ol>
-          </div>
-        </div>
-      ) : null}
+      <p>Расписание обновляется</p>
+      <strong>Ближайшие трансляции появятся после подтверждения сетки.</strong>
     </article>
   );
 }
 
 export function BarBroadcasts({ broadcasts = [] }) {
-  const [primaryBroadcast, ...restBroadcasts] = broadcasts;
-  const secondaryBroadcasts = restBroadcasts.slice(0, MAX_SECONDARY_BROADCASTS);
+  const normalizedBroadcasts = Array.isArray(broadcasts)
+    ? broadcasts
+        .filter((broadcast) => broadcast?.title)
+        .map((broadcast) => normalizeBroadcast(broadcast))
+    : [];
+  const [nextBroadcast, ...upcomingBroadcasts] = normalizedBroadcasts;
 
-  if (!primaryBroadcast) {
+  if (!nextBroadcast) {
     return <EmptyBroadcastState />;
   }
 
   return (
-    <BroadcastSchedule
-      primaryBroadcast={primaryBroadcast}
-      secondaryBroadcasts={secondaryBroadcasts}
-    />
+    <div className={styles.broadcastPanel}>
+      <BroadcastRow broadcast={nextBroadcast} isPrimary />
+
+      {upcomingBroadcasts.length > 0 ? (
+        <div className={styles.broadcastList} aria-label="Ближайшие трансляции">
+          {upcomingBroadcasts.map((broadcast, index) => (
+            <BroadcastRow
+              key={getBroadcastKey(broadcast, index)}
+              broadcast={broadcast}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className={styles.singleBroadcastNote}>
+          Следующие трансляции появятся после обновления расписания.
+        </p>
+      )}
+    </div>
   );
 }

@@ -147,37 +147,32 @@ export const mockSiteData = {
       ],
       broadcasts: [
         {
-          title: "Футбол на большом экране",
-          status: "Сегодня",
-          timeLabel: "20:45 · главный зал",
-          description:
-            "Заглушка под карточку матча: здесь появятся команды, турнир и точное время трансляции.",
-          image: {
-            src: "/mock/bars/shchuka-8-marta-18k1/gallery/04.jpg",
-            alt: "Спортивная трансляция в баре Щука",
-          },
+          dayLabel: "Сегодня",
+          dateLabel: "20 мая",
+          timeLabel: "20:45",
+          category: "Футбол",
+          title: "Спартак — Динамо",
         },
         {
-          title: "Хоккейный вечер",
-          status: "Скоро",
-          timeLabel: "Пятница · 19:30",
-          description:
-            "Карточка для будущего расписания: можно заменить на лигу, команды и условия брони.",
-          image: {
-            src: "/mock/bars/shchuka-8-marta-18k1/gallery/05.jpg",
-            alt: "Стол с блюдами в баре Щука",
-          },
+          dayLabel: "Пятница",
+          dateLabel: "22 мая",
+          timeLabel: "19:30",
+          category: "Хоккей",
+          title: "ЦСКА — Локомотив",
         },
         {
-          title: "Большой спортивный слот",
-          status: "В расписании",
-          timeLabel: "Выходные · вечер",
-          description:
-            "Резервный слот для UFC, дерби или другого события, которое бар захочет выделить отдельно.",
-          image: {
-            src: "/mock/bars/shchuka-8-marta-18k1/gallery/01.jpg",
-            alt: "Интерьер бара Щука на 8 Марта",
-          },
+          dayLabel: "Суббота",
+          dateLabel: "23 мая",
+          timeLabel: "22:00",
+          category: "UFC",
+          title: "Главный кард вечера",
+        },
+        {
+          dayLabel: "Воскресенье",
+          dateLabel: "24 мая",
+          timeLabel: "18:00",
+          category: "Футбол",
+          title: "Зенит — Краснодар",
         },
       ],
       menuLinks: [
@@ -277,37 +272,25 @@ export const mockSiteData = {
       ],
       broadcasts: [
         {
-          title: "Локальный матч недели",
-          status: "Сегодня",
-          timeLabel: "21:00 · основной экран",
-          description:
-            "Заглушка под ближайшую трансляцию этой точки: команды и турнир можно будет подставить из контента.",
-          image: {
-            src: "/mock/bars/shchuka-9-marta-19k2/gallery/03.jpg",
-            alt: "Посадка и интерьер бара Щука",
-          },
+          dayLabel: "Сегодня",
+          dateLabel: "20 мая",
+          timeLabel: "21:00",
+          category: "Футбол",
+          title: "Арсенал — Челси",
         },
         {
-          title: "Вечер хоккея",
-          status: "Скоро",
-          timeLabel: "Пятница · 19:30",
-          description:
-            "Будущий слот для расписания трансляций с коротким описанием события и настроения вечера.",
-          image: {
-            src: "/mock/bars/shchuka-9-marta-19k2/gallery/09.webp",
-            alt: "Вечерняя атмосфера бара Щука",
-          },
+          dayLabel: "Пятница",
+          dateLabel: "22 мая",
+          timeLabel: "19:30",
+          category: "Хоккей",
+          title: "Динамо — СКА",
         },
         {
-          title: "Спорт для компании",
-          status: "В расписании",
-          timeLabel: "Выходные · после 18:00",
-          description:
-            "Карточка-заглушка для крупного эфира, который нужно будет быстро подсветить на странице бара.",
-          image: {
-            src: "/mock/bars/shchuka-9-marta-19k2/gallery/13.jpg",
-            alt: "Закуски в баре Щука на 9 Марта",
-          },
+          dayLabel: "Суббота",
+          dateLabel: "23 мая",
+          timeLabel: "20:15",
+          category: "Баскетбол",
+          title: "Финал конференции",
         },
       ],
       menuLinks: [
