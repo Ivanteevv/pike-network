@@ -215,85 +215,40 @@
 }
 
 .buttonGhostAction {
-  --lit-border-idle: rgba(251, 146, 60, 0.3);
-  --lit-border-on: #fb923c;
-  --lit-text-idle: rgba(255, 248, 239, 0.72);
-  --lit-text-flicker: rgba(255, 248, 239, 0.94);
-  --lit-text-on: #fff;
   isolation: isolate;
   overflow: visible;
   justify-content: flex-start;
-  min-height: 54px;
-  padding: 0 24px;
-  border: 2px solid var(--lit-border-idle);
-  border-radius: 4px;
-  background: rgba(13, 9, 8, 0.18);
-  color: var(--lit-text-idle);
+  min-height: 34px;
+  padding: 0 0 7px;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 248, 239, 0.24);
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 248, 239, 0.82);
   box-shadow: none;
   backdrop-filter: none;
-  font-size: 0.84rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .buttonGhostAction:focus-visible {
-  color: var(--lit-text-on);
-  border-color: var(--lit-border-on);
-  background: rgba(251, 146, 60, 0.04);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 0 15px rgba(251, 146, 60, 0.4),
-    var(--focus-ring),
-    var(--focus-ring-soft);
-  text-shadow:
-    0 0 10px #fb923c,
-    0 0 40px rgba(251, 146, 60, 0.6);
+  color: var(--base-paper-strong);
+  border-bottom-color: rgba(255, 248, 239, 0.74);
+  background: transparent;
+  box-shadow: none;
+  outline: 2px solid rgba(255, 248, 239, 0.82);
+  outline-offset: 7px;
 }
 
 .buttonGhostAction:active {
-  color: var(--lit-text-on);
-  border-color: var(--lit-border-on);
-  background: rgba(251, 146, 60, 0.06);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 0 10px rgba(251, 146, 60, 0.28);
+  color: var(--orange-350);
+  background: transparent;
+  box-shadow: none;
   transform: translateY(1px);
 }
 
 .buttonGhostAction.buttonArrow::after {
   color: currentColor;
-}
-
-@keyframes litBorderFlicker {
-  0%,
-  100% {
-    color: var(--lit-text-idle);
-    border-color: var(--lit-border-idle);
-    box-shadow: none;
-    text-shadow: none;
-  }
-
-  50% {
-    color: var(--lit-text-flicker);
-    border-color: rgba(251, 146, 60, 0.78);
-    text-shadow:
-      0 0 10px #fb923c,
-      0 0 30px rgba(251, 146, 60, 0.5);
-  }
-}
-
-@keyframes litBorderGlow {
-  to {
-    color: var(--lit-text-on);
-    border-color: var(--lit-border-on);
-    background: rgba(251, 146, 60, 0.04);
-    text-shadow:
-      0 0 10px #fb923c,
-      0 0 40px rgba(251, 146, 60, 0.6);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      0 0 15px rgba(251, 146, 60, 0.4);
-  }
 }
 
 .buttonUtility {
@@ -355,11 +310,12 @@
   width: 100%;
 }
 
+.buttonGhostAction.buttonSm,
 .buttonGhostAction.buttonMd,
 .buttonGhostAction.buttonLg {
-  min-height: 54px;
-  padding: 0 24px;
-  font-size: 0.84rem;
+  min-height: 34px;
+  padding: 0 0 7px;
+  font-size: var(--button-font-size);
 }
 
 .buttonDisabled {
@@ -429,10 +385,10 @@
   }
 
   .buttonGhostAction:hover {
-    background-color: rgba(251, 146, 60, 0.04);
-    animation:
-      litBorderFlicker 150ms ease-in-out 2,
-      litBorderGlow 300ms ease 300ms forwards;
+    color: var(--base-paper-strong);
+    border-bottom-color: rgba(255, 248, 239, 0.56);
+    background: transparent;
+    box-shadow: none;
   }
 
   .buttonUtility:hover {
@@ -462,13 +418,6 @@
   .buttonLabelNext,
   .buttonArrow::after {
     transition: none;
-  }
-
-  .buttonGhostAction:hover {
-    animation: none;
-    color: var(--lit-text-on);
-    border-color: var(--lit-border-on);
-    background: rgba(251, 146, 60, 0.04);
   }
 
   .buttonFillAction:hover .buttonLabelCurrent {
