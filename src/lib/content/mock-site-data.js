@@ -177,18 +177,36 @@ export const mockSiteData = {
       ],
       menuLinks: [
         {
-          title: "Основное меню",
-          description:
-            "Закуски, горячее и позиции, вокруг которых строится спокойный вечер или большой стол.",
-          href: null,
-          status: "PDF обновляется",
-        },
-        {
           title: "Барная карта",
           description:
-            "Пиво и напитки для сценария от короткой встречи до длинного матча.",
-          href: null,
-          status: "Заменим после утверждения контента",
+            "PDF с напитками для этой точки. В CMS файл должен заменяться отдельно для каждого бара.",
+          href: "/mock/menus/bar-menu.pdf",
+          status: "PDF",
+          fileType: "pdf",
+          previewImages: [
+            {
+              src: "/mock/menus/bar-menu-01.jpg",
+              alt: "Барная карта",
+              width: 1190,
+              height: 1684,
+            },
+          ],
+        },
+        {
+          title: "Меню кухни",
+          description:
+            "PDF с кухней для этой точки. В CMS файл должен заменяться отдельно для каждого бара.",
+          href: "/mock/menus/kitchen-menu.pdf",
+          status: "PDF",
+          fileType: "pdf",
+          previewImages: [
+            {
+              src: "/mock/menus/kitchen-menu-01.jpg",
+              alt: "Меню кухни",
+              width: 1190,
+              height: 1684,
+            },
+          ],
         },
       ],
       menuPreview: [
@@ -295,18 +313,36 @@ export const mockSiteData = {
       ],
       menuLinks: [
         {
-          title: "Меню кухни",
+          title: "Барная карта",
           description:
-            "Базовый локальный набор блюд для этой точки, который можно будет менять отдельно от других баров.",
-          href: null,
-          status: "Контент для PDF добавим позже",
+            "PDF с напитками для этой точки. В CMS файл должен заменяться отдельно для каждого бара.",
+          href: "/mock/menus/bar-menu.pdf",
+          status: "PDF",
+          fileType: "pdf",
+          previewImages: [
+            {
+              src: "/mock/menus/bar-menu-01.jpg",
+              alt: "Барная карта",
+              width: 1190,
+              height: 1684,
+            },
+          ],
         },
         {
-          title: "Напитки",
+          title: "Меню кухни",
           description:
-            "Вторая точка может получать собственные позиции и обновления без влияния на остальные страницы.",
-          href: null,
-          status: "Раздел оставлен CMS-ready",
+            "PDF с кухней для этой точки. В CMS файл должен заменяться отдельно для каждого бара.",
+          href: "/mock/menus/kitchen-menu.pdf",
+          status: "PDF",
+          fileType: "pdf",
+          previewImages: [
+            {
+              src: "/mock/menus/kitchen-menu-01.jpg",
+              alt: "Меню кухни",
+              width: 1190,
+              height: 1684,
+            },
+          ],
         },
       ],
       menuPreview: [

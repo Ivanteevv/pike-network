@@ -184,6 +184,10 @@
   letter-spacing: 0;
 }
 
+.menuHeading {
+  max-width: 36rem;
+}
+
 .cardGrid,
 .galleryGrid {
   display: grid;

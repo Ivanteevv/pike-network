@@ -5,28 +5,11 @@ import Image from "next/image";
 import buttonStyles from "@/components/button.module.css";
 import { RollingNumber, formatRollingNumber } from "@/components/rolling-number";
 import { cx } from "@/lib/class-names";
+import { lockPageScroll, unlockPageScroll } from "@/lib/client-scroll-lock";
 import styles from "./bar-gallery.module.css";
 
 const COMPACT_PREVIEW_QUERY = "(max-width: 759px)";
-
-function blockScroll(shouldBlock) {
-  if (typeof document === "undefined") {
-    return undefined;
-  }
-
-  const htmlOverflow = document.documentElement.style.overflow;
-  const bodyOverflow = document.body.style.overflow;
-
-  if (shouldBlock) {
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-  }
-
-  return () => {
-    document.documentElement.style.overflow = htmlOverflow;
-    document.body.style.overflow = bodyOverflow;
-  };
-}
+const GALLERY_SCROLL_LOCK_ID = "bar-gallery-preview";
 
 export function BarGallery({ images }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -104,7 +87,14 @@ export function BarGallery({ images }) {
     return undefined;
   }, [isPreviewOpen]);
 
-  useEffect(() => blockScroll(isPreviewOpen), [isPreviewOpen]);
+  useEffect(() => {
+    if (!isPreviewOpen) {
+      unlockPageScroll(GALLERY_SCROLL_LOCK_ID);
+      return undefined;
+    }
+
+    return lockPageScroll(GALLERY_SCROLL_LOCK_ID);
+  }, [isPreviewOpen]);
 
   function scrollToIndex(index, behavior = "smooth") {
     const stageMedia = stageMediaRef.current;

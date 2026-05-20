@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/json-ld";
 import { BarHeroNav } from "@/components/bar-hero-nav";
 import { BarBroadcasts } from "@/components/bar-broadcasts";
 import { BarGallery } from "@/components/bar-gallery";
+import { MenuPdfViewer } from "@/components/menu-pdf-viewer";
 import { SiteFooter } from "@/components/site-footer";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
@@ -139,45 +140,11 @@ export default async function BarPage({ params }) {
         </section>
 
         <section id="menu" className={styles.section}>
-          <div className={styles.sectionHeading}>
+          <div className={`${styles.sectionHeading} ${styles.menuHeading}`}>
             <p className={styles.sectionKicker}>Меню</p>
-            <h2>Структура уже готова под заменяемые разделы и PDF</h2>
+            <h2>Барная карта и меню кухни</h2>
           </div>
-          <div className={styles.cardGrid}>
-            {bar.menuLinks.map((item) => (
-              <article key={item.title} className={styles.infoCard}>
-                <p className={styles.infoCardStatus}>{item.status}</p>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                {item.href ? (
-                  <BrandLink
-                    variant="ghost"
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cx(
-                      buttonStyles.buttonBase,
-                      buttonStyles.buttonGhostAction,
-                      buttonStyles.buttonArrow,
-                      styles.menuTextAction
-                    )}
-                  >
-                    Открыть
-                  </BrandLink>
-                ) : (
-                  <span className={styles.placeholderLink}>Скоро подключим ссылку</span>
-                )}
-              </article>
-            ))}
-          </div>
-          <div className={styles.menuPreviewBoard}>
-            {bar.menuPreview.map((preview) => (
-              <span key={preview.name} className={styles.menuPreviewItem}>
-                <strong>{preview.name}</strong>
-                <em>{preview.note}</em>
-              </span>
-            ))}
-          </div>
+          <MenuPdfViewer menus={bar.menuLinks} />
         </section>
 
         <section id="gallery" className={styles.section}>

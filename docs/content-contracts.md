@@ -191,7 +191,16 @@ Rules:
       "title": "string",
       "description": "string",
       "href": "string|null",
-      "status": "string"
+      "status": "string",
+      "fileType": "pdf|null",
+      "previewImages": [
+        {
+          "src": "string",
+          "alt": "string",
+          "width": "number|null",
+          "height": "number|null"
+        }
+      ]
     }
   ],
   "menuPreview": [
@@ -236,7 +245,14 @@ Rules:
 - `broadcasts[].description` and `broadcasts[].image` remain tolerated for
   adapter compatibility, but the compact broadcasts schedule renders only date,
   time, category, and title.
+- `menuLinks[].href` may point to a CMS-managed PDF menu file. The menu UI
+  keeps that PDF available for direct opening or download.
 - `menuLinks[].status` remains required even when `href` is `null`.
+- `menuLinks[].fileType` is optional compatibility metadata. When present and
+  set to `pdf`, consumers may use PDF-specific viewer behavior.
+- `menuLinks[].previewImages` contains renderable page images for the clean
+  in-page menu viewer. CMS integrations should generate or store these previews
+  alongside the downloadable PDF.
 - `summary`, `vibe`, and other not-yet-rendered singleton fields may be `null`
   until the UI uses them consistently.
 

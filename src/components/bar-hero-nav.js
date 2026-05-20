@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { BrandLink } from "@/components/brand-link";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
+import { lockPageScroll, unlockPageScroll } from "@/lib/client-scroll-lock";
 import styles from "./bar-hero-nav.module.css";
+
+const MOBILE_NAV_SCROLL_LOCK_ID = "bar-mobile-nav";
 
 export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +20,7 @@ export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
 
   useEffect(() => {
     if (!isOpen) {
-      document.body.style.removeProperty("overflow");
+      unlockPageScroll(MOBILE_NAV_SCROLL_LOCK_ID);
       return undefined;
     }
 
@@ -27,11 +30,11 @@ export function BarHeroNav({ phoneDisplay, phoneE164, mapUrl }) {
       }
     };
 
-    document.body.style.overflow = "hidden";
+    const unlockScroll = lockPageScroll(MOBILE_NAV_SCROLL_LOCK_ID);
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.removeProperty("overflow");
+      unlockScroll();
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);

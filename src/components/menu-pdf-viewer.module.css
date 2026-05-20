@@ -1,0 +1,448 @@
+.menuViewer {
+  margin-top: 24px;
+}
+
+.menuLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+}
+
+.menuLink {
+  font-size: clamp(1rem, 1.8vw, 1.28rem);
+}
+
+.menuLink::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition:
+    opacity var(--duration-medium) var(--ease-standard),
+    transform var(--duration-medium) var(--ease-standard);
+}
+
+.dialog {
+  --menu-lightbox-enter-duration: 260ms;
+  --menu-lightbox-exit-duration: 200ms;
+
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  max-width: none;
+  height: 100vh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: transparent;
+  color: var(--base-paper-strong);
+}
+
+.dialog::backdrop {
+  background: rgba(7, 5, 4, 0.24);
+  backdrop-filter: blur(18px) saturate(118%);
+}
+
+.dialog[data-state="open"]::backdrop {
+  animation: menuBackdropIn var(--menu-lightbox-enter-duration)
+    var(--ease-standard) both;
+}
+
+.dialog[data-state="closing"]::backdrop {
+  animation: menuBackdropOut var(--menu-lightbox-exit-duration)
+    var(--ease-standard) both;
+}
+
+@keyframes menuBackdropIn {
+  from {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0) saturate(100%);
+  }
+
+  to {
+    background: rgba(7, 5, 4, 0.24);
+    backdrop-filter: blur(18px) saturate(118%);
+  }
+}
+
+@keyframes menuBackdropOut {
+  from {
+    background: rgba(7, 5, 4, 0.24);
+    backdrop-filter: blur(18px) saturate(118%);
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0) saturate(100%);
+  }
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 248, 239, 0.1), transparent 32%),
+    linear-gradient(180deg, rgba(7, 5, 4, 0.22), rgba(7, 5, 4, 0.36));
+  backdrop-filter: blur(18px) saturate(112%);
+  cursor: default;
+}
+
+.dialog[data-state="open"] .backdrop {
+  animation: menuLayerIn var(--menu-lightbox-enter-duration)
+    var(--ease-standard) both;
+}
+
+.dialog[data-state="closing"] .backdrop {
+  animation: menuLayerOut var(--menu-lightbox-exit-duration)
+    var(--ease-standard) both;
+}
+
+@keyframes menuLayerIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menuLayerOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.closeButton {
+  position: fixed;
+  top: max(18px, env(safe-area-inset-top));
+  right: max(18px, env(safe-area-inset-right));
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #ff3b2f;
+  cursor: pointer;
+}
+
+.closeButton span {
+  font-size: 2.7rem;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid rgba(255, 248, 239, 0.82);
+  outline-offset: 5px;
+}
+
+.viewerStage {
+  position: fixed;
+  top: 7svh;
+  left: 50%;
+  z-index: 2;
+  width: min(73vw, 1167px);
+  height: 86svh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: transparent;
+  transform: translateX(-50%) scale(1);
+  transform-origin: center center;
+  transition:
+    transform 260ms var(--ease-standard),
+    box-shadow 260ms var(--ease-standard);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 248, 239, 0.82) transparent;
+}
+
+.dialog[data-state="open"] .viewerStage {
+  animation: menuImageIn var(--menu-lightbox-enter-duration)
+    var(--ease-standard) both;
+}
+
+.dialog[data-state="closing"] .viewerStage {
+  animation: menuImageOut var(--menu-lightbox-exit-duration)
+    var(--ease-standard) both;
+}
+
+@keyframes menuImageIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(24px) scale(0.955);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes menuImageOut {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px) scale(0.975);
+  }
+}
+
+.viewerStage::-webkit-scrollbar {
+  width: 6px;
+}
+
+.viewerStage::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.viewerStage::-webkit-scrollbar-thumb {
+  background: rgba(255, 248, 239, 0.82);
+}
+
+.pageStack {
+  display: grid;
+  gap: 14px;
+}
+
+.menuImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: transparent;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 260ms var(--ease-standard);
+}
+
+.pdfLink {
+  position: fixed;
+  right: max(22px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 3;
+  color: rgba(255, 248, 239, 0.72);
+  font-family: var(--button-font-family);
+  font-size: 0.72rem;
+  font-weight: var(--button-font-weight);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.pdfLink:focus-visible {
+  outline: 2px solid rgba(255, 248, 239, 0.82);
+  outline-offset: 5px;
+}
+
+.dialog[data-state="open"] .closeButton,
+.dialog[data-state="open"] .pdfLink {
+  animation: menuChromeIn var(--menu-lightbox-enter-duration)
+    var(--ease-standard) both;
+}
+
+.dialog[data-state="closing"] .closeButton,
+.dialog[data-state="closing"] .pdfLink {
+  animation: menuChromeOut var(--menu-lightbox-exit-duration)
+    var(--ease-standard) both;
+}
+
+@keyframes menuChromeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menuChromeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menuLink:hover::after {
+    opacity: 1;
+    transform: scaleX(0.82);
+  }
+
+  .dialog[data-state="open"] .viewerStage:hover {
+    transform: translateX(-50%) scale(1.018);
+  }
+
+  .pdfLink:hover {
+    color: var(--base-paper-strong);
+  }
+}
+
+@media (max-width: 759px) {
+  .menuViewer {
+    margin-top: 20px;
+  }
+
+  .menuLinks {
+    display: grid;
+    gap: 14px;
+  }
+
+  .menuLink {
+    justify-content: flex-start;
+    width: fit-content;
+    font-size: 1.08rem;
+  }
+
+  .dialog {
+    --menu-lightbox-enter-duration: 160ms;
+    --menu-lightbox-exit-duration: 140ms;
+
+    width: 100dvw;
+    height: 100dvh;
+    background: #000;
+  }
+
+  .dialog::backdrop {
+    background: #000;
+    backdrop-filter: none;
+  }
+
+  .dialog[data-state="open"]::backdrop,
+  .dialog[data-state="closing"]::backdrop {
+    animation: none;
+  }
+
+  .backdrop {
+    background: #000;
+    backdrop-filter: none;
+  }
+
+  .dialog[data-state="open"] .backdrop,
+  .dialog[data-state="closing"] .backdrop {
+    animation: none;
+  }
+
+  .closeButton {
+    top: max(12px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+    width: 38px;
+    height: 38px;
+  }
+
+  .closeButton span {
+    font-size: 2.35rem;
+  }
+
+  .viewerStage {
+    inset: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100dvh;
+    padding:
+      max(58px, calc(48px + env(safe-area-inset-top)))
+      8px
+      max(58px, calc(48px + env(safe-area-inset-bottom)));
+    background: #000;
+    transform: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .viewerStage::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dialog[data-state="open"] .viewerStage {
+    animation: menuMobileViewerIn var(--menu-lightbox-enter-duration)
+      var(--ease-standard) both;
+  }
+
+  .dialog[data-state="closing"] .viewerStage {
+    animation: menuMobileViewerOut var(--menu-lightbox-exit-duration)
+      var(--ease-standard) both;
+  }
+
+  @keyframes menuMobileViewerIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes menuMobileViewerOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  .pageStack {
+    gap: 8px;
+    min-height: 100%;
+    align-content: start;
+  }
+
+  .menuImage {
+    width: 100%;
+    max-width: none;
+  }
+
+  .pdfLink {
+    right: 12px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menuLink::after,
+  .viewerStage,
+  .menuImage,
+  .backdrop,
+  .closeButton,
+  .pdfLink,
+  .dialog::backdrop {
+    animation: none;
+    transition: none;
+  }
+
+  .dialog[data-state="open"] .viewerStage:hover,
+  .viewerStage:hover {
+    transform: translateX(-50%);
+  }
+}

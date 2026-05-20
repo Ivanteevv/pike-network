@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
+import { lockPageScroll, unlockPageScroll } from "@/lib/client-scroll-lock";
 import styles from "./age-gate.module.css";
 import { AGE_GATE_SESSION_KEY, LEGAL_AGE } from "@/lib/age-gate";
 
 const EXIT_DURATION_MS = 520;
+const AGE_GATE_SCROLL_LOCK_ID = "age-gate";
 
 function subscribeToAgeGateApproval(callback) {
   if (typeof window === "undefined") {
@@ -34,25 +36,6 @@ function getAgeGateApprovalSnapshot() {
   }
 
   return window.sessionStorage.getItem(AGE_GATE_SESSION_KEY) === "verified";
-}
-
-function blockScroll(shouldBlock) {
-  if (typeof document === "undefined") {
-    return undefined;
-  }
-
-  const htmlOverflow = document.documentElement.style.overflow;
-  const bodyOverflow = document.body.style.overflow;
-
-  if (shouldBlock) {
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-  }
-
-  return () => {
-    document.documentElement.style.overflow = htmlOverflow;
-    document.body.style.overflow = bodyOverflow;
-  };
 }
 
 export function AgeGate() {
@@ -107,7 +90,14 @@ export function AgeGate() {
     return undefined;
   }, [isVisible]);
 
-  useEffect(() => blockScroll(isVisible), [isVisible]);
+  useEffect(() => {
+    if (!isVisible) {
+      unlockPageScroll(AGE_GATE_SCROLL_LOCK_ID);
+      return undefined;
+    }
+
+    return lockPageScroll(AGE_GATE_SCROLL_LOCK_ID);
+  }, [isVisible]);
 
   if (!isVisible) {
     return null;
