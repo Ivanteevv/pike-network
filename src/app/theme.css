@@ -204,10 +204,21 @@
   --button-letter-spacing: 0.02em;
 
   /* Type scale */
-  --type-display-hero: clamp(4.2rem, 10vw, 7.8rem);
-  --type-display-section: clamp(2.25rem, 4.8vw, 3.8rem);
-  --type-display-card: clamp(1.9rem, 3.4vw, 2.55rem);
-  --type-display-location: clamp(1.7rem, 3.1vw, 2.3rem);
+  --type-display-hero: clamp(4rem, 9vw, 7.25rem);
+  --type-display-section: clamp(2.25rem, 4.6vw, 3.65rem);
+  --type-display-card: clamp(1.75rem, 3vw, 2.4rem);
+  --type-display-location: clamp(1.15rem, 2.1vw, 1.42rem);
+  --type-body: 1rem;
+  --type-body-large: clamp(1.02rem, 1.25vw, 1.17rem);
+  --type-meta: 0.94rem;
+  --type-label: 0.76rem;
+  --type-action: 0.94rem;
+  --line-display-tight: 0.98;
+  --line-display: 1.04;
+  --line-body: 1.62;
+  --line-meta: 1.42;
+  --tracking-label: 0.1em;
+  --tracking-action: 0.025em;
 
   /* Motion */
   --ease-standard: cubic-bezier(0.2, 0.9, 0.24, 1);

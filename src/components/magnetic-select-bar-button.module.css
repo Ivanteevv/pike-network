@@ -19,11 +19,10 @@
   font-family: var(--button-font-family);
   font-size: var(--button-font-size);
   font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1;
+  letter-spacing: var(--tracking-action);
+  line-height: 1.2;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
   transform: translate3d(var(--magnet-x), var(--magnet-y), 0);
   transition: color 360ms var(--ease-standard);
   -webkit-tap-highlight-color: transparent;

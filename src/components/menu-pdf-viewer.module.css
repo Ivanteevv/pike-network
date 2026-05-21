@@ -9,7 +9,10 @@
 }
 
 .menuLink {
-  font-size: clamp(1rem, 1.8vw, 1.28rem);
+  font-size: clamp(1rem, 1.45vw, 1.18rem);
+  letter-spacing: var(--tracking-action);
+  line-height: 1.28;
+  text-transform: none;
 }
 
 .menuLink::after {
@@ -244,6 +247,7 @@
   font-size: 0.72rem;
   font-weight: var(--button-font-weight);
   letter-spacing: 0.1em;
+  line-height: 1.35;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -313,7 +317,7 @@
   .menuLink {
     justify-content: flex-start;
     width: fit-content;
-    font-size: 1.08rem;
+    font-size: 1rem;
   }
 
   .dialog {

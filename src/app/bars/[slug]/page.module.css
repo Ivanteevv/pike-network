@@ -1,4 +1,5 @@
 .page {
+  --bar-section-heading: clamp(1.48rem, 2.6vw, 2.1rem);
   min-height: 100vh;
 }
 
@@ -14,16 +15,33 @@
 }
 
 .heroTopline {
+  position: relative;
+  z-index: 3;
   width: 100%;
 }
 
 .heroStage {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
+.heroStage::before {
+  content: "";
+  position: absolute;
+  inset: -12svh -8vw -16svh 38%;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 64% 46%, rgba(255, 248, 239, 0.1), transparent 20rem),
+    linear-gradient(90deg, transparent, rgba(7, 5, 4, 0.3) 18%, rgba(7, 5, 4, 0.58) 100%);
+  pointer-events: none;
+}
+
 .heroCopy {
+  position: relative;
+  z-index: 1;
   width: min(30rem, 100%);
   padding: 0;
 }
@@ -32,34 +50,45 @@
 .sectionKicker,
 .infoCardStatus {
   color: var(--color-accent);
-  letter-spacing: 0.16em;
+  font-size: var(--type-label);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.35;
   text-transform: uppercase;
-  font-size: 0.74rem;
 }
 
-.heroCopy h1,
+.heroCopy h1 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
 .sectionHeading h2,
 .contactsCard h2,
 .infoCard h3 {
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
 .heroBrand {
   margin-top: 14px;
-  color: rgba(255, 248, 239, 0.9);
-  font-size: clamp(1.18rem, 2vw, 1.42rem);
-  line-height: 1;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  color: var(--base-paper-strong);
+  font-size: clamp(2.2rem, 4.1vw, 3.2rem);
+  line-height: var(--line-display-tight);
+  text-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+  text-wrap: balance;
 }
 
 .heroLocation {
-  margin-top: 10px;
-  color: var(--base-paper-strong);
+  max-width: 26rem;
+  margin-top: 12px;
+  color: rgba(255, 248, 239, 0.92);
+  font-family: var(--font-sans), sans-serif;
   font-size: var(--type-display-location);
-  line-height: 1.02;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-weight: 700;
+  line-height: var(--line-meta);
+  letter-spacing: 0.01em;
 }
 
 .sectionHeading p,
@@ -67,7 +96,8 @@
 .contactsCopy {
   margin-top: 16px;
   color: var(--color-text-muted);
-  line-height: 1.58;
+  font-size: var(--type-body);
+  line-height: var(--line-body);
 }
 
 .heroMeta {
@@ -78,9 +108,10 @@
 }
 
 .heroMeta span {
-  color: var(--color-text-muted);
-  font-size: 0.98rem;
+  color: rgba(255, 248, 239, 0.82);
+  font-size: var(--type-meta);
   font-weight: 500;
+  line-height: var(--line-meta);
 }
 
 .actions {
@@ -100,18 +131,35 @@
   border: 0;
   border-radius: 0;
   font-family: var(--button-font-family);
-  font-size: 1.08rem;
+  font-size: var(--type-action);
   font-weight: var(--button-font-weight);
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
+  letter-spacing: var(--tracking-action);
+  line-height: 1.2;
   transition: var(--transition-colors);
 }
 
 .heroTextAction,
 .menuTextAction,
 .contactTextAction {
+  --brand-link-text-gradient: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    var(--base-paper-strong) 42%,
+    #f6ead8 68%,
+    #ffffff 100%
+  );
+  --brand-link-text-opacity: 1;
+  --brand-link-underline-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.38),
+    rgba(255, 248, 239, 0.86),
+    rgba(246, 234, 216, 0.68)
+  );
   justify-content: flex-start;
+  font-size: var(--type-action);
+  letter-spacing: var(--tracking-action);
+  line-height: 1.28;
+  text-transform: none;
 }
 
 .heroTextAction {
@@ -123,6 +171,13 @@
   border-bottom-color: rgba(255, 248, 239, 0.3);
 }
 
+.heroTextAction:hover,
+.heroTextAction:focus-visible,
+.contactTextAction:hover,
+.contactTextAction:focus-visible {
+  color: var(--base-paper-strong);
+}
+
 .placeholderLink {
   color: var(--color-text-muted);
   background: transparent;
@@ -132,11 +187,11 @@
 .main {
   width: min(1160px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 44px 0 72px;
+  padding: 38px 0 64px;
 }
 
 .section {
-  padding: 28px 0;
+  padding: 22px 0;
 }
 
 .infoCard,
@@ -163,25 +218,28 @@
 
 .contactsCard {
   display: grid;
-  gap: 24px;
-  padding: 26px;
+  gap: 20px;
+  padding: 22px;
 }
 
 .sectionHeading h2,
 .contactsCard h2 {
   margin-top: 12px;
-  font-size: var(--type-display-section);
-  line-height: 1;
+  font-size: var(--bar-section-heading);
+  line-height: var(--line-display);
+  text-wrap: balance;
 }
 
 .sectionHeading {
-  max-width: 44rem;
+  max-width: 42rem;
 }
 
 .broadcastSection .sectionHeading h2 {
-  font-family: var(--font-sans), sans-serif;
-  font-weight: 800;
-  letter-spacing: 0;
+  max-width: 19ch;
+}
+
+.menuHeading h2 {
+  max-width: 22ch;
 }
 
 .menuHeading {
@@ -192,7 +250,7 @@
 .galleryGrid {
   display: grid;
   gap: 18px;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .infoCard {
@@ -202,13 +260,14 @@
 .infoCard h3 {
   margin-top: 12px;
   font-size: var(--type-display-card);
-  line-height: 0.96;
+  line-height: var(--line-display-tight);
 }
 
 .eventTiming {
   margin-top: 14px;
   color: var(--color-accent-strong);
-  font-size: 0.9rem;
+  font-size: var(--type-meta);
+  line-height: var(--line-meta);
 }
 
 .menuPreviewBoard {
@@ -228,14 +287,15 @@
 }
 
 .menuPreviewItem strong {
-  font-size: 0.92rem;
+  font-size: var(--type-meta);
+  line-height: var(--line-meta);
 }
 
 .menuPreviewItem em {
   color: var(--color-text-muted);
   font-style: normal;
-  font-size: 0.8rem;
-  line-height: 1.4;
+  font-size: 0.84rem;
+  line-height: var(--line-meta);
 }
 
 .menuTextAction,
@@ -278,18 +338,22 @@
 }
 
 .contactsSection {
-  padding-bottom: 12px;
+  padding-bottom: 8px;
 }
 
 .contactsIntro {
-  max-width: 24rem;
+  max-width: 28rem;
+}
+
+.contactsCard h2 {
+  max-width: 30rem;
 }
 
 .contactActions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px 20px;
-  margin-top: 24px;
+  margin-top: 18px;
 }
 
 .switchOption {
@@ -302,11 +366,10 @@
   background: transparent;
   color: var(--color-text-muted);
   font-family: var(--button-font-family);
-  font-size: 0.94rem;
+  font-size: var(--type-action);
   font-weight: var(--button-font-weight);
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  text-transform: uppercase;
+  letter-spacing: var(--tracking-action);
+  line-height: 1.28;
   text-decoration: none;
   transition: var(--transition-colors);
 }
@@ -320,9 +383,11 @@
 
 .switchLabel {
   color: var(--color-accent);
-  letter-spacing: 0.16em;
+  font-size: var(--type-label);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.35;
   text-transform: uppercase;
-  font-size: 0.74rem;
 }
 
 .switchGrid {
@@ -349,20 +414,25 @@
 .switchOptionTitle {
   color: var(--base-paper-strong);
   font-size: 1.04rem;
+  font-weight: 800;
+  line-height: 1.28;
   letter-spacing: normal;
   text-transform: none;
 }
 
 .switchOptionMeta {
   color: var(--color-text-muted);
-  font-size: 0.9rem;
+  font-size: var(--type-meta);
+  line-height: var(--line-meta);
   letter-spacing: normal;
   text-transform: none;
 }
 
 .switchOptionState {
   color: var(--color-accent);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
 .switchOptionCurrent {
@@ -385,19 +455,28 @@
     align-items: end;
   }
 
+  .heroStage::before {
+    inset: auto -14vw -8svh -14vw;
+    height: 48svh;
+    background:
+      radial-gradient(circle at 18% 44%, rgba(255, 248, 239, 0.08), transparent 16rem),
+      linear-gradient(180deg, transparent, rgba(7, 5, 4, 0.66));
+  }
+
   .heroCopy {
     width: 100%;
   }
 
   .heroCopy h1 {
-    font-size: clamp(1.08rem, 5vw, 1.24rem);
-    line-height: 1;
+    font-size: clamp(2.28rem, 9.4vw, 3rem);
+    line-height: 1.02;
   }
 
   .heroLocation {
-    margin-top: 8px;
-    font-size: clamp(1.5rem, 8vw, 2rem);
-    line-height: 1.06;
+    max-width: 22rem;
+    margin-top: 10px;
+    font-size: clamp(1.02rem, 4.6vw, 1.22rem);
+    line-height: 1.42;
   }
 
   .heroMeta {
@@ -406,7 +485,7 @@
   }
 
   .heroMeta span {
-    font-size: 0.98rem;
+    font-size: 0.94rem;
   }
 
   .actions {
@@ -421,27 +500,27 @@
   }
 
   .heroTextAction {
-    font-size: 0.96rem;
+    font-size: 0.94rem;
   }
 
   .main {
     width: min(100%, calc(100% - 24px));
-    padding: 34px 0 64px;
+    padding: 30px 0 58px;
   }
 
   .section {
-    padding: 22px 0;
+    padding: 18px 0;
   }
 
   .contactsCard {
-    padding: 20px 18px;
-    gap: 20px;
+    padding: 18px 16px;
+    gap: 18px;
   }
 
   .sectionHeading h2,
   .contactsCard h2 {
-    font-size: clamp(1.8rem, 8vw, 2.45rem);
-    line-height: 1.02;
+    font-size: clamp(1.28rem, 5.7vw, 1.72rem);
+    line-height: 1.18;
   }
 
   .infoCard {
@@ -451,7 +530,7 @@
   .cardGrid,
   .galleryGrid {
     gap: 14px;
-    margin-top: 18px;
+    margin-top: 16px;
   }
 
   .infoCard h3 {

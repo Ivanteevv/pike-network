@@ -58,6 +58,8 @@
 
 .heroPhone {
   flex-shrink: 0;
+  letter-spacing: var(--tracking-action);
+  text-transform: none;
 }
 
 .heroStage {
@@ -70,17 +72,17 @@
 .heroCopy {
   display: grid;
   justify-items: start;
-  max-width: 48rem;
+  max-width: 50rem;
   animation: fade-up var(--duration-slow) var(--ease-standard) both;
 }
 
 .kicker,
 .sectionKicker {
   color: var(--orange-350);
-  font-size: 0.76rem;
+  font-size: var(--type-label);
   font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.35;
 }
 
 .heroCopy h1,
@@ -91,21 +93,21 @@
 }
 
 .heroCopy h1 {
-  max-width: 8ch;
+  max-width: 9ch;
   margin-top: 12px;
   color: var(--base-paper-strong);
   font-size: var(--type-display-hero);
-  line-height: 0.86;
+  line-height: var(--line-display-tight);
   text-wrap: balance;
   text-shadow: 0 18px 42px rgba(0, 0, 0, 0.38);
 }
 
 .heroDescription {
-  max-width: 35rem;
+  max-width: 34rem;
   margin-top: 22px;
   color: rgba(255, 248, 239, 0.84);
-  font-size: clamp(1.02rem, 1.35vw, 1.18rem);
-  line-height: 1.58;
+  font-size: var(--type-body-large);
+  line-height: var(--line-body);
 }
 
 .actions {
@@ -119,6 +121,8 @@
 
 .heroAction {
   padding-inline: 22px;
+  letter-spacing: var(--tracking-action);
+  text-transform: none;
 }
 
 .main {
@@ -181,21 +185,22 @@
 }
 
 .sectionHeading {
-  max-width: 44rem;
+  max-width: 42rem;
 }
 
 .sectionHeading h2 {
   margin-top: 10px;
   color: var(--base-paper-strong);
   font-size: var(--type-display-section);
-  line-height: 0.96;
+  line-height: var(--line-display);
   text-wrap: balance;
 }
 
 .sectionHeading p:not(.sectionKicker) {
   margin-top: 16px;
   color: var(--color-text-muted);
-  line-height: 1.62;
+  font-size: var(--type-body-large);
+  line-height: var(--line-body);
 }
 
 @media (min-width: 760px) {
@@ -221,14 +226,16 @@
   }
 
   .heroCopy h1 {
-    max-width: 7ch;
-    font-size: clamp(4.05rem, 18vw, 5.4rem);
+    max-width: 8ch;
+    font-size: clamp(3.7rem, 16vw, 5.05rem);
+    line-height: 1;
   }
 
   .heroDescription {
-    max-width: 31rem;
+    max-width: 30rem;
     margin-top: 18px;
     font-size: 1rem;
+    line-height: 1.58;
   }
 
   .actions {
@@ -252,7 +259,9 @@
   }
 
   .sectionHeading h2 {
-    font-size: clamp(2.4rem, 11vw, 3.1rem);
+    max-width: 11ch;
+    font-size: clamp(2.25rem, 10vw, 3rem);
+    line-height: 1.06;
   }
 }
 

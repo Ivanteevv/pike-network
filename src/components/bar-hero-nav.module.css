@@ -1,5 +1,7 @@
 .desktopRow,
 .mobileRow {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,13 +21,30 @@
   border: 0;
   border-radius: 0;
   background: none;
-  color: rgba(255, 255, 255, 0.72);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.98rem;
-  font-weight: 500;
+  --brand-link-text-gradient: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    var(--base-paper-strong) 42%,
+    #f6ead8 68%,
+    #ffffff 100%
+  );
+  --brand-link-text-opacity: 1;
+  --brand-link-underline-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.42),
+    rgba(255, 248, 239, 0.9),
+    rgba(246, 234, 216, 0.72)
+  );
+  color: rgba(255, 248, 239, 0.92);
+  font-size: var(--type-action);
+  font-weight: 600;
+  letter-spacing: var(--tracking-action);
+  line-height: 1.25;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.58);
   box-shadow: none;
-  transition: color var(--duration-medium) var(--ease-standard);
+  transition:
+    color var(--duration-medium) var(--ease-standard),
+    text-shadow var(--duration-medium) var(--ease-standard);
 }
 
 .mobileNavLabel::after,
@@ -222,9 +241,10 @@
 
 .mobileHeader p {
   color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.78rem;
+  font-size: var(--type-label);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.35;
 }
 
 .mobileBody {
@@ -282,17 +302,18 @@
 .mobileNavIndex {
   min-width: 2ch;
   color: var(--color-accent);
-  font-size: 0.88rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
 }
 
 .mobileNavLabel {
   position: relative;
   justify-self: start;
   padding-right: 48px;
-  font-size: 1.28rem;
-  line-height: 1.1;
+  font-size: 1.22rem;
+  font-weight: 800;
+  line-height: 1.18;
 }
 
 .mobileQuickLinks {
@@ -316,25 +337,30 @@
 }
 
 .mobileMap {
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  --button-hover-line-color: linear-gradient(
+    90deg,
+    rgba(255, 248, 239, 0.36),
+    rgba(255, 248, 239, 0.92)
+  );
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-action);
 }
 
 .mobilePhoneValue {
   position: relative;
   justify-self: start;
   color: var(--base-paper-strong);
-  font-size: clamp(1.42rem, 4.6vw, 1.86rem);
+  font-size: clamp(1.34rem, 4.2vw, 1.72rem);
   line-height: 1.2;
 }
 
 .mobilePhoneLabel {
   color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.8rem;
+  font-size: var(--type-label);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.35;
 }
 
 .backLink:focus-visible,
@@ -342,7 +368,8 @@
 .desktopNav a:focus-visible {
   outline: 2px solid rgba(255, 248, 239, 0.82);
   outline-offset: 8px;
-  color: rgba(255, 255, 255, 0.96);
+  color: var(--base-paper-strong);
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.72);
   box-shadow: none;
 }
 
@@ -384,6 +411,8 @@
   .phoneInline:hover,
   .desktopNav a:hover {
     background: none;
+    color: var(--base-paper-strong);
+    text-shadow: 0 10px 24px rgba(0, 0, 0, 0.72);
     box-shadow: none;
   }
 
@@ -472,7 +501,7 @@
 
   .mobileNavLabel {
     padding-right: 40px;
-    font-size: 1.18rem;
+    font-size: 1.12rem;
   }
 
   .mobileNavItem::after {

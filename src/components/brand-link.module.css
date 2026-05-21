@@ -100,15 +100,37 @@
 .variantNav {
   --brand-link-text-gradient: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.96) 100%
+    #ffffff 0%,
+    var(--base-paper-strong) 42%,
+    #f6ead8 68%,
+    #ffffff 100%
   );
-  --brand-link-text-opacity: 0.9;
+  --brand-link-text-opacity: 1;
+  --brand-link-underline-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.42),
+    rgba(255, 248, 239, 0.9),
+    rgba(246, 234, 216, 0.72)
+  );
   --brand-link-underline-offset: -6px;
   --brand-link-underline-thickness: 2px;
 }
 
 .variantFooter {
+  --brand-link-text-gradient: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    var(--base-paper-strong) 42%,
+    #f6ead8 68%,
+    #ffffff 100%
+  );
+  --brand-link-text-opacity: 1;
+  --brand-link-underline-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.36),
+    rgba(255, 248, 239, 0.84),
+    rgba(246, 234, 216, 0.66)
+  );
   --brand-link-underline-offset: -6px;
 }
 
@@ -119,6 +141,20 @@
    ~16px shift. On mobile the link drops min-height, so the offset falls
    back to the original ~8px gap. */
 .variantPhone {
+  --brand-link-text-gradient: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    var(--base-paper-strong) 42%,
+    #f6ead8 68%,
+    #ffffff 100%
+  );
+  --brand-link-text-opacity: 1;
+  --brand-link-underline-gradient: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.38),
+    rgba(255, 248, 239, 0.86),
+    rgba(246, 234, 216, 0.68)
+  );
   --brand-link-underline-offset: -24px;
   --brand-link-underline-thickness: 2px;
 }
