@@ -133,7 +133,18 @@ export const mockSiteData = {
         imageUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
         posterUrl: "/mock/bars/shchuka-8-marta-18k1/hero/hero.webp",
       },
-      gallery: [],
+      gallery: [
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/01.jpg", alt: "Интерьер бара Щука на 8 Марта" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/02.webp", alt: "Гости в баре Щука на 8 Марта" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/03.webp", alt: "Атмосфера вечера в баре Щука" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/04.jpg", alt: "Спортивные трансляции в баре Щука" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/05.jpg", alt: "Подача блюд в баре Щука" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/06.jpg", alt: "Мидии в меню бара Щука" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/07.jpg", alt: "Закуски в баре Щука" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/08.jpg", alt: "Блюдо из меню бара Щука" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/09.jpg", alt: "Подача тартар в баре Щука" },
+        { src: "/mock/bars/shchuka-8-marta-18k1/gallery/10.jpg", alt: "Крылышки и закуски в баре Щука" },
+      ],
       broadcasts: [
         {
           dayLabel: "Сегодня",
@@ -264,7 +275,21 @@ export const mockSiteData = {
         imageUrl: "/mock/bars/shchuka-9-marta-19k2/hero/hero.webp",
         posterUrl: "/mock/bars/shchuka-9-marta-19k2/hero/hero.webp",
       },
-      gallery: [],
+      gallery: [
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/01.webp", alt: "Гости в баре Щука на 9 Марта" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/02.webp", alt: "Интерьер бара Щука на 9 Марта" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/03.jpg", alt: "Посадка и интерьер бара Щука" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/04.jpg", alt: "Атмосфера бара вечером" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/05.webp", alt: "Фотография гостей бара Щука" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/06.webp", alt: "Освещение и интерьер бара Щука" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/07.webp", alt: "Компания гостей в баре Щука" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/08.webp", alt: "Зал бара Щука на 9 Марта" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/09.webp", alt: "Вечерняя атмосфера бара Щука" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/10.webp", alt: "Бар Щука, интерьер и свет" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/11.webp", alt: "Интерьер с посадочными местами" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/12.webp", alt: "Обстановка для встречи с друзьями" },
+        { src: "/mock/bars/shchuka-9-marta-19k2/gallery/13.jpg", alt: "Закуски в баре Щука на 9 Марта" },
+      ],
       broadcasts: [
         {
           dayLabel: "Сегодня",
