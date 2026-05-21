@@ -57,7 +57,10 @@ export default async function HomePage() {
                 <p className={styles.heroDescription}>{network.hero.description}</p>
 
                 <div className={styles.actions}>
-                  <MagneticSelectBarButton href="#bar-list" />
+                  <MagneticSelectBarButton
+                    className={styles.heroSelectAction}
+                    href="#bar-list"
+                  />
                   <BrandLink
                     variant="ghost"
                     className={cx(
