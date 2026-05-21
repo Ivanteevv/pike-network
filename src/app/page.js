@@ -57,7 +57,7 @@ export default async function HomePage() {
                 <p className={styles.heroDescription}>{network.hero.description}</p>
 
                 <div className={styles.actions}>
-                  <MagneticSelectBarButton href="#bars" />
+                  <MagneticSelectBarButton href="#bar-list" />
                   <BrandLink
                     variant="ghost"
                     className={cx(
@@ -90,7 +90,6 @@ export default async function HomePage() {
                 <NetworkPointsSection
                   bars={bars}
                   copy={network.locationChoice}
-                  phoneE164={network.phoneE164}
                 />
               </div>
             </section>

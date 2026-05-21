@@ -24,14 +24,15 @@
 .pointsGrid {
   display: grid;
   gap: 14px;
+  scroll-margin-top: 12px;
 }
 
 .pointCard {
   position: relative;
   display: grid;
-  gap: 13px;
-  min-height: 280px;
-  padding: 22px;
+  gap: 12px;
+  min-height: 184px;
+  padding: 20px;
   overflow: hidden;
   border: 1px solid var(--paper-border-a14);
   border-radius: 16px;
@@ -59,16 +60,8 @@
 .pointTopline {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
-}
-
-.pointTopline > span:first-child {
-  color: var(--orange-350);
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
 }
 
 .status {
@@ -115,9 +108,13 @@
 .cardActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 10px 16px;
   align-self: end;
   margin-top: 4px;
+}
+
+.cardAction {
+  font-size: 0.82rem;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -135,7 +132,6 @@
       0 30px 78px rgba(0, 0, 0, 0.28);
     transform: translateY(-2px);
   }
-
 }
 
 @media (min-width: 760px) {
@@ -149,8 +145,7 @@
     align-items: stretch;
   }
 
-  .pointsCount,
-  .reservationLink {
+  .pointsCount {
     width: 100%;
   }
 
@@ -160,20 +155,34 @@
 
   .pointCard {
     min-height: 0;
-    padding: 20px 18px;
+    gap: 9px;
+    padding: 15px 16px;
+    border-radius: 12px;
   }
 
   .pointTopline {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
   }
 
-  .cardActions {
-    flex-direction: column;
+  .status {
+    font-size: 0.68rem;
+  }
+
+  .status::before {
+    width: 14px;
+  }
+
+  .pointCard h3 {
+    font-size: clamp(1.62rem, 8vw, 2.02rem);
+  }
+
+  .address {
+    font-size: 0.94rem;
   }
 
   .cardAction {
-    width: 100%;
+    margin-top: 2px;
+    font-size: 0.76rem;
   }
 }
 

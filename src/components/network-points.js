@@ -16,7 +16,7 @@ function formatBarsCount(barsCount, countLabels) {
   return `${barsCount} ${label}`;
 }
 
-export function NetworkPointsSection({ bars, copy, phoneE164 }) {
+export function NetworkPointsSection({ bars, copy }) {
   const barsCountLabel =
     copy?.countLabels
       ? formatBarsCount(bars.length, copy.countLabels)
@@ -26,35 +26,19 @@ export function NetworkPointsSection({ bars, copy, phoneE164 }) {
     <div className={styles.pointsShell}>
       <div className={styles.pointsMeta}>
         <span className={styles.pointsCount}>{barsCountLabel}</span>
-        <BrandLink
-          variant="ghost"
-          className={cx(
-            buttonStyles.buttonBase,
-            buttonStyles.buttonGhostAction,
-            buttonStyles.buttonSm,
-            styles.reservationLink
-          )}
-          href={`tel:${phoneE164}`}
-        >
-          {copy.reservationLabel}
-        </BrandLink>
       </div>
 
-      <div className={styles.pointsGrid} aria-label="Точки сети">
-        {bars.map((bar, index) => (
+      <div id="bar-list" className={styles.pointsGrid} aria-label="Точки сети">
+        {bars.map((bar) => (
           <article key={bar.slug} className={styles.pointCard}>
-            <div className={styles.pointTopline}>
-              <span>
-                {copy.cardIndexLabel} {String(index + 1).padStart(2, "0")}
-              </span>
-              {bar.statusLabel ? (
+            {bar.statusLabel ? (
+              <div className={styles.pointTopline}>
                 <span className={styles.status}>{bar.statusLabel}</span>
-              ) : null}
-            </div>
+              </div>
+            ) : null}
 
             <h3>{bar.shortLabel}</h3>
             <p className={styles.address}>{bar.addressLine}</p>
-            <p className={styles.summary}>{bar.summary}</p>
 
             <div className={styles.cardActions}>
               <BrandLink
