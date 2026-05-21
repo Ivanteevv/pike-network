@@ -9,6 +9,18 @@ import styles from "./menu-pdf-viewer.module.css";
 
 const MENU_SCROLL_LOCK_ID = "menu-pdf-viewer";
 const LIGHTBOX_EXIT_MS = 200;
+const MOBILE_PDF_NEW_TAB = "new-tab";
+
+function getMobilePdfLinkProps(menu) {
+  if (menu.mobilePdfOpenMode !== MOBILE_PDF_NEW_TAB) {
+    return {};
+  }
+
+  return {
+    target: "_blank",
+    rel: "noopener noreferrer",
+  };
+}
 
 export function MenuPdfViewer({ menus = [] }) {
   const availableMenus = useMemo(
@@ -100,20 +112,32 @@ export function MenuPdfViewer({ menus = [] }) {
   return (
     <div className={styles.menuViewer}>
       <div className={styles.menuLinks} aria-label="PDF меню">
-        {availableMenus.map((menu, index) => (
-          <button
-            key={menu.title}
-            type="button"
-            className={cx(
-              buttonStyles.buttonBase,
-              buttonStyles.buttonGhostAction,
-              styles.menuLink
-            )}
-            onClick={() => openMenu(index)}
-          >
-            {menu.title}
-          </button>
-        ))}
+        {availableMenus.map((menu, index) => {
+          const actionClassName = cx(
+            buttonStyles.buttonBase,
+            buttonStyles.buttonGhostAction,
+            styles.menuLink
+          );
+
+          return (
+            <div key={menu.title} className={styles.menuAction}>
+              <button
+                type="button"
+                className={cx(actionClassName, styles.desktopMenuAction)}
+                onClick={() => openMenu(index)}
+              >
+                {menu.title}
+              </button>
+              <a
+                className={cx(actionClassName, styles.mobileMenuAction)}
+                href={menu.href}
+                {...getMobilePdfLinkProps(menu)}
+              >
+                {menu.title}
+              </a>
+            </div>
+          );
+        })}
       </div>
 
       <dialog

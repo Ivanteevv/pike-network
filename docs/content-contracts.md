@@ -191,6 +191,7 @@ Rules:
       "title": "string",
       "description": "string",
       "href": "string|null",
+      "mobilePdfOpenMode": "new-tab|current-tab|null",
       "status": "string",
       "fileType": "pdf|null",
       "previewImages": [
@@ -247,6 +248,8 @@ Rules:
   time, category, and title.
 - `menuLinks[].href` may point to a CMS-managed PDF menu file. The menu UI
   keeps that PDF available for direct opening or download.
+- `menuLinks[].mobilePdfOpenMode` controls mobile-only PDF opening behavior
+  when a menu skips the lightweight preview on compact viewports.
 - `menuLinks[].status` remains required even when `href` is `null`.
 - `menuLinks[].fileType` is optional compatibility metadata. When present and
   set to `pdf`, consumers may use PDF-specific viewer behavior.
