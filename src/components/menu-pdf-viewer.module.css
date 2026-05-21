@@ -8,11 +8,19 @@
   gap: 16px 28px;
 }
 
+.menuAction {
+  display: inline-flex;
+}
+
 .menuLink {
   font-size: clamp(1rem, 1.45vw, 1.18rem);
   letter-spacing: var(--tracking-action);
   line-height: 1.28;
   text-transform: none;
+}
+
+.mobileMenuAction {
+  display: none;
 }
 
 .menuLink::after {
@@ -312,6 +320,14 @@
   .menuLinks {
     display: grid;
     gap: 14px;
+  }
+
+  .desktopMenuAction {
+    display: none;
+  }
+
+  .mobileMenuAction {
+    display: inline-flex;
   }
 
   .menuLink {

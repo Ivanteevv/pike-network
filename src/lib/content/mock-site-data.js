@@ -181,6 +181,7 @@ export const mockSiteData = {
           description:
             "PDF с напитками для этой точки. В CMS файл должен заменяться отдельно для каждого бара.",
           href: "/mock/menus/bar-menu.pdf",
+          mobilePdfOpenMode: "new-tab",
           status: "PDF",
           fileType: "pdf",
           previewImages: [
@@ -197,6 +198,7 @@ export const mockSiteData = {
           description:
             "PDF с кухней для этой точки. В CMS файл должен заменяться отдельно для каждого бара.",
           href: "/mock/menus/kitchen-menu.pdf",
+          mobilePdfOpenMode: "current-tab",
           status: "PDF",
           fileType: "pdf",
           previewImages: [
@@ -317,6 +319,7 @@ export const mockSiteData = {
           description:
             "PDF с напитками для этой точки. В CMS файл должен заменяться отдельно для каждого бара.",
           href: "/mock/menus/bar-menu.pdf",
+          mobilePdfOpenMode: "new-tab",
           status: "PDF",
           fileType: "pdf",
           previewImages: [
@@ -333,6 +336,7 @@ export const mockSiteData = {
           description:
             "PDF с кухней для этой точки. В CMS файл должен заменяться отдельно для каждого бара.",
           href: "/mock/menus/kitchen-menu.pdf",
+          mobilePdfOpenMode: "current-tab",
           status: "PDF",
           fileType: "pdf",
           previewImages: [
