@@ -6,12 +6,18 @@ import buttonStyles from "@/components/button.module.css";
 import { RollingNumber, formatRollingNumber } from "@/components/rolling-number";
 import { cx } from "@/lib/class-names";
 import { lockPageScroll, unlockPageScroll } from "@/lib/client-scroll-lock";
+import {
+  getRenderableGalleryImages,
+  hasMultipleGalleryImages,
+} from "@/lib/content/content-guards";
 import styles from "./bar-gallery.module.css";
 
 const COMPACT_PREVIEW_QUERY = "(max-width: 759px)";
 const GALLERY_SCROLL_LOCK_ID = "bar-gallery-preview";
 
 export function BarGallery({ images }) {
+  const galleryImages = getRenderableGalleryImages(images);
+  const isCarousel = hasMultipleGalleryImages(galleryImages);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isCompactPreviewDisabled, setIsCompactPreviewDisabled] =
     useState(false);
@@ -52,17 +58,17 @@ export function BarGallery({ images }) {
 
     const indicesToPreload = [
       previewIndex,
-      previewIndex === 0 ? images.length - 1 : previewIndex - 1,
-      previewIndex === images.length - 1 ? 0 : previewIndex + 1,
-    ];
+      isCarousel && previewIndex === 0 ? galleryImages.length - 1 : previewIndex - 1,
+      isCarousel && previewIndex === galleryImages.length - 1 ? 0 : previewIndex + 1,
+    ].filter((index) => index >= 0 && index < galleryImages.length);
 
     indicesToPreload.forEach((index) => {
       const preloadImage = new window.Image();
-      preloadImage.src = images[index].src;
+      preloadImage.src = galleryImages[index].src;
     });
 
     return undefined;
-  }, [images, isPreviewOpen, previewIndex]);
+  }, [galleryImages, isCarousel, isPreviewOpen, previewIndex]);
 
   useEffect(() => {
     const dialog = previewDialogRef.current;
@@ -117,24 +123,42 @@ export function BarGallery({ images }) {
   }
 
   function showPrev(behavior = "smooth") {
-    const nextIndex = activeIndex === 0 ? images.length - 1 : activeIndex - 1;
+    if (!isCarousel) {
+      return;
+    }
+
+    const nextIndex =
+      activeIndex === 0 ? galleryImages.length - 1 : activeIndex - 1;
     goToIndex(nextIndex, behavior);
   }
 
   function showNext(behavior = "smooth") {
-    const nextIndex = activeIndex === images.length - 1 ? 0 : activeIndex + 1;
+    if (!isCarousel) {
+      return;
+    }
+
+    const nextIndex =
+      activeIndex === galleryImages.length - 1 ? 0 : activeIndex + 1;
     goToIndex(nextIndex, behavior);
   }
 
   function showPreviewPrev() {
+    if (!isCarousel) {
+      return;
+    }
+
     setPreviewIndex((currentIndex) =>
-      currentIndex === 0 ? images.length - 1 : currentIndex - 1
+      currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1
     );
   }
 
   function showPreviewNext() {
+    if (!isCarousel) {
+      return;
+    }
+
     setPreviewIndex((currentIndex) =>
-      currentIndex === images.length - 1 ? 0 : currentIndex + 1
+      currentIndex === galleryImages.length - 1 ? 0 : currentIndex + 1
     );
   }
 
@@ -154,6 +178,10 @@ export function BarGallery({ images }) {
   }
 
   function handlePreviewKeyDown(event) {
+    if (!isCarousel) {
+      return;
+    }
+
     if (event.key === "ArrowLeft") {
       event.preventDefault();
       showPreviewPrev();
@@ -193,6 +221,12 @@ export function BarGallery({ images }) {
     }
   }
 
+  if (galleryImages.length === 0) {
+    return null;
+  }
+
+  const previewImage = galleryImages[previewIndex] ?? galleryImages[0];
+
   return (
     <div className={styles.shell}>
       <div className={styles.stage}>
@@ -201,7 +235,7 @@ export function BarGallery({ images }) {
           className={styles.stageMedia}
           onScroll={handleScroll}
         >
-          {images.map((image, index) => (
+          {galleryImages.map((image, index) => (
             <div
               key={image.src}
               className={styles.stageSlide}
@@ -241,9 +275,9 @@ export function BarGallery({ images }) {
 
         <div className={styles.stageTopline}>
           <div className={styles.counter}>
-            <RollingNumber value={activeIndex + 1} total={images.length} />
+            <RollingNumber value={activeIndex + 1} total={galleryImages.length} />
             <span className={styles.counterDivider}>/</span>
-            <span>{formatRollingNumber(images.length)}</span>
+            <span>{formatRollingNumber(galleryImages.length)}</span>
           </div>
           {isCompactPreviewDisabled ? null : (
             <button
@@ -261,57 +295,63 @@ export function BarGallery({ images }) {
           )}
         </div>
 
-        <div className={styles.controls}>
-          <button
-            type="button"
-            className={cx(
-              buttonStyles.buttonBase,
-              buttonStyles.buttonUtility,
-              styles.navButton
-            )}
-            onClick={() => showPrev()}
-            aria-label="Предыдущее фото"
-          >
-            <span aria-hidden="true">←</span>
-          </button>
-          <button
-            type="button"
-            className={cx(
-              buttonStyles.buttonBase,
-              buttonStyles.buttonUtility,
-              styles.navButton
-            )}
-            onClick={() => showNext()}
-            aria-label="Следующее фото"
-          >
-            <span aria-hidden="true">→</span>
-          </button>
-        </div>
+        {isCarousel ? (
+          <div className={styles.controls}>
+            <button
+              type="button"
+              className={cx(
+                buttonStyles.buttonBase,
+                buttonStyles.buttonUtility,
+                styles.navButton
+              )}
+              onClick={() => showPrev()}
+              aria-label="Предыдущее фото"
+            >
+              <span aria-hidden="true">←</span>
+            </button>
+            <button
+              type="button"
+              className={cx(
+                buttonStyles.buttonBase,
+                buttonStyles.buttonUtility,
+                styles.navButton
+              )}
+              onClick={() => showNext()}
+              aria-label="Следующее фото"
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        ) : null}
       </div>
 
-      <div className={styles.thumbRail} aria-label="Навигация по галерее">
-        {images.map((image, index) => (
-          <button
-            key={image.src}
-            type="button"
-            className={`${styles.thumbButton} ${index === activeIndex ? styles.thumbButtonActive : ""}`}
-            onClick={() => goToIndex(index)}
-            aria-label={`Открыть фото ${index + 1}`}
-            aria-pressed={index === activeIndex}
-          >
-            <span className={styles.thumbIndex}>{String(index + 1).padStart(2, "0")}</span>
-            <span className={styles.thumbPreview}>
-              <Image
-                src={image.src}
-                alt=""
-                fill
-                sizes="120px"
-                className={styles.thumbImage}
-              />
-            </span>
-          </button>
-        ))}
-      </div>
+      {isCarousel ? (
+        <div className={styles.thumbRail} aria-label="Навигация по галерее">
+          {galleryImages.map((image, index) => (
+            <button
+              key={image.src}
+              type="button"
+              className={`${styles.thumbButton} ${index === activeIndex ? styles.thumbButtonActive : ""}`}
+              onClick={() => goToIndex(index)}
+              aria-label={`Открыть фото ${index + 1}`}
+              aria-pressed={index === activeIndex}
+            >
+              <span className={styles.thumbIndex}>
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className={styles.thumbPreview}>
+                <Image
+                  src={image.src}
+                  alt=""
+                  fill
+                  sizes="120px"
+                  className={styles.thumbImage}
+                />
+              </span>
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <dialog
         ref={previewDialogRef}
@@ -343,9 +383,12 @@ export function BarGallery({ images }) {
 
             <div className={styles.previewActions}>
               <div className={styles.counter}>
-                <RollingNumber value={previewIndex + 1} total={images.length} />
+                <RollingNumber
+                  value={previewIndex + 1}
+                  total={galleryImages.length}
+                />
                 <span className={styles.counterDivider}>/</span>
-                <span>{formatRollingNumber(images.length)}</span>
+                <span>{formatRollingNumber(galleryImages.length)}</span>
               </div>
               <button
                 type="button"
@@ -364,24 +407,26 @@ export function BarGallery({ images }) {
           </div>
 
           <div className={styles.previewViewport}>
-            <button
-              type="button"
-              className={cx(
-                buttonStyles.buttonBase,
-                buttonStyles.buttonUtility,
-                styles.navButton,
-                styles.previewNavButton
-              )}
-              onClick={showPreviewPrev}
-              aria-label="Предыдущее фото"
-            >
-              <span aria-hidden="true">←</span>
-            </button>
+            {isCarousel ? (
+              <button
+                type="button"
+                className={cx(
+                  buttonStyles.buttonBase,
+                  buttonStyles.buttonUtility,
+                  styles.navButton,
+                  styles.previewNavButton
+                )}
+                onClick={showPreviewPrev}
+                aria-label="Предыдущее фото"
+              >
+                <span aria-hidden="true">←</span>
+              </button>
+            ) : null}
 
             <div className={styles.previewMedia}>
               <Image
-                src={images[previewIndex].src}
-                alt={images[previewIndex].alt}
+                src={previewImage.src}
+                alt={previewImage.alt}
                 fill
                 sizes="100vw"
                 className={styles.previewImage}
@@ -389,19 +434,21 @@ export function BarGallery({ images }) {
               />
             </div>
 
-            <button
-              type="button"
-              className={cx(
-                buttonStyles.buttonBase,
-                buttonStyles.buttonUtility,
-                styles.navButton,
-                styles.previewNavButton
-              )}
-              onClick={showPreviewNext}
-              aria-label="Следующее фото"
-            >
-              <span aria-hidden="true">→</span>
-            </button>
+            {isCarousel ? (
+              <button
+                type="button"
+                className={cx(
+                  buttonStyles.buttonBase,
+                  buttonStyles.buttonUtility,
+                  styles.navButton,
+                  styles.previewNavButton
+                )}
+                onClick={showPreviewNext}
+                aria-label="Следующее фото"
+              >
+                <span aria-hidden="true">→</span>
+              </button>
+            ) : null}
           </div>
         </section>
       </dialog>

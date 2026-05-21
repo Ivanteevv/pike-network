@@ -435,6 +435,17 @@
   line-height: 1.35;
 }
 
+.switchEmpty {
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--paper-border-a12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--color-text-muted);
+  font-size: var(--type-meta);
+  line-height: var(--line-body);
+}
+
 .switchOptionCurrent {
   cursor: default;
   opacity: 0.9;

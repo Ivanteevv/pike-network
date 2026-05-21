@@ -5,6 +5,7 @@ import Image from "next/image";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
 import { lockPageScroll, unlockPageScroll } from "@/lib/client-scroll-lock";
+import { getRenderableMenus } from "@/lib/content/content-guards";
 import styles from "./menu-pdf-viewer.module.css";
 
 const MENU_SCROLL_LOCK_ID = "menu-pdf-viewer";
@@ -24,7 +25,7 @@ function getMobilePdfLinkProps(menu) {
 
 export function MenuPdfViewer({ menus = [] }) {
   const availableMenus = useMemo(
-    () => menus.filter((menu) => menu.href && menu.previewImages?.length),
+    () => getRenderableMenus(menus),
     [menus]
   );
   const [activeIndex, setActiveIndex] = useState(0);

@@ -27,6 +27,10 @@
   scroll-margin-top: 12px;
 }
 
+.pointsGridSingle {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .pointCard {
   position: relative;
   display: grid;
@@ -105,6 +109,34 @@
   line-height: var(--line-body);
 }
 
+.emptyState {
+  display: grid;
+  gap: 8px;
+  min-height: 148px;
+  align-content: center;
+  padding: 20px;
+  border: 1px solid var(--paper-border-a14);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(17, 12, 10, 0.58);
+}
+
+.emptyState p {
+  color: var(--orange-350);
+  font-size: var(--type-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.emptyState strong {
+  color: var(--base-paper-strong);
+  font-size: clamp(1.2rem, 2.4vw, 1.58rem);
+  line-height: var(--line-display);
+}
+
 .cardActions {
   display: flex;
   flex-wrap: wrap;
@@ -139,6 +171,10 @@
 @media (min-width: 760px) {
   .pointsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pointsGridSingle {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

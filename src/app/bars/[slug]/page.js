@@ -11,6 +11,12 @@ import { SiteFooter } from "@/components/site-footer";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
 import { getBarBySlug, getBars, getSiteData } from "@/lib/content/get-site-data";
+import {
+  getRenderableBars,
+  getRenderableGalleryImages,
+  getRenderableMenus,
+  getVisibleBarNavItems,
+} from "@/lib/content/content-guards";
 import { siteUrl } from "@/lib/site-url";
 import styles from "./page.module.css";
 
@@ -70,8 +76,19 @@ export default async function BarPage({ params }) {
 
   const heroEyebrow = formatHeroEyebrow(bar);
   const heroLocation = formatHeroLocation(bar);
-  const networkBars = siteData.bars;
+  const networkBars = getRenderableBars(siteData.bars);
   const broadcasts = bar.broadcasts ?? [];
+  const menuLinks = getRenderableMenus(bar.menuLinks);
+  const galleryImages = getRenderableGalleryImages(bar.gallery);
+  const hasMenuSection = menuLinks.length > 0;
+  const hasGallerySection = galleryImages.length > 0;
+  const navItems = getVisibleBarNavItems({
+    hasBroadcastsSection: true,
+    hasMenuSection,
+    hasGallerySection,
+    hasContactsSection: true,
+  });
+  const hasMultipleNetworkBars = networkBars.length > 1;
 
   return (
     <div id="page-top" className={styles.page}>
@@ -84,6 +101,7 @@ export default async function BarPage({ params }) {
               phoneDisplay={bar.phoneDisplay}
               phoneE164={bar.phoneE164}
               mapUrl={bar.mapUrl}
+              navItems={navItems}
             />
           </div>
 
@@ -112,18 +130,20 @@ export default async function BarPage({ params }) {
                 >
                   Позвонить
                 </BrandLink>
-                <BrandLink
-                  variant="ghost"
-                  className={cx(
-                    buttonStyles.buttonBase,
-                    buttonStyles.buttonGhostAction,
-                    buttonStyles.buttonArrow,
-                    styles.heroTextAction
-                  )}
-                  href="#menu"
-                >
-                  Меню
-                </BrandLink>
+                {hasMenuSection ? (
+                  <BrandLink
+                    variant="ghost"
+                    className={cx(
+                      buttonStyles.buttonBase,
+                      buttonStyles.buttonGhostAction,
+                      buttonStyles.buttonArrow,
+                      styles.heroTextAction
+                    )}
+                    href="#menu"
+                  >
+                    Меню
+                  </BrandLink>
+                ) : null}
               </div>
             </div>
           </div>
@@ -139,21 +159,25 @@ export default async function BarPage({ params }) {
           <BarBroadcasts broadcasts={broadcasts} />
         </section>
 
-        <section id="menu" className={styles.section}>
-          <div className={`${styles.sectionHeading} ${styles.menuHeading}`}>
-            <p className={styles.sectionKicker}>Меню</p>
-            <h2>Барная карта и меню кухни</h2>
-          </div>
-          <MenuPdfViewer menus={bar.menuLinks} />
-        </section>
+        {hasMenuSection ? (
+          <section id="menu" className={styles.section}>
+            <div className={`${styles.sectionHeading} ${styles.menuHeading}`}>
+              <p className={styles.sectionKicker}>Меню</p>
+              <h2>Барная карта и меню кухни</h2>
+            </div>
+            <MenuPdfViewer menus={menuLinks} />
+          </section>
+        ) : null}
 
-        <section id="gallery" className={styles.section}>
-          <div className={styles.sectionHeading}>
-            <p className={styles.sectionKicker}>Галерея</p>
-            <h2>Визуальная атмосфера бара</h2>
-          </div>
-          <BarGallery images={bar.gallery} />
-        </section>
+        {hasGallerySection ? (
+          <section id="gallery" className={styles.section}>
+            <div className={styles.sectionHeading}>
+              <p className={styles.sectionKicker}>Галерея</p>
+              <h2>Визуальная атмосфера бара</h2>
+            </div>
+            <BarGallery images={galleryImages} />
+          </section>
+        ) : null}
 
         <section
           id="contacts"
@@ -194,41 +218,53 @@ export default async function BarPage({ params }) {
             </div>
 
             <div className={styles.switchSection}>
-              <p className={styles.switchLabel}>Другие локации</p>
-              <div className={styles.switchGrid}>
-                {networkBars.map((networkBar) => {
-                  const isCurrentBar = networkBar.slug === bar.slug;
+              <p className={styles.switchLabel}>
+                {hasMultipleNetworkBars ? "Другие локации" : "Локация"}
+              </p>
+              {networkBars.length > 0 ? (
+                <div className={styles.switchGrid}>
+                  {networkBars.map((networkBar) => {
+                    const isCurrentBar = networkBar.slug === bar.slug;
 
-                  return isCurrentBar ? (
-                    <div
-                      key={networkBar.slug}
-                      className={`${styles.switchOption} ${styles.switchOptionCurrent}`}
-                    >
-                      <span className={styles.switchOptionTitle}>
-                        {networkBar.shortLabel}
-                      </span>
-                      <span className={styles.switchOptionMeta}>
-                        {networkBar.addressLine}
-                      </span>
-                      <span className={styles.switchOptionState}>Вы сейчас здесь</span>
-                    </div>
-                  ) : (
-                    <Link
-                      key={networkBar.slug}
-                      href={`/bars/${networkBar.slug}`}
-                      className={styles.switchOption}
-                    >
-                      <span className={styles.switchOptionTitle}>
-                        {networkBar.shortLabel}
-                      </span>
-                      <span className={styles.switchOptionMeta}>
-                        {networkBar.addressLine}
-                      </span>
-                      <span className={styles.switchOptionState}>Открыть страницу</span>
-                    </Link>
-                  );
-                })}
-              </div>
+                    return isCurrentBar ? (
+                      <div
+                        key={networkBar.slug}
+                        className={`${styles.switchOption} ${styles.switchOptionCurrent}`}
+                      >
+                        <span className={styles.switchOptionTitle}>
+                          {networkBar.shortLabel}
+                        </span>
+                        <span className={styles.switchOptionMeta}>
+                          {networkBar.addressLine}
+                        </span>
+                        <span className={styles.switchOptionState}>
+                          Вы сейчас здесь
+                        </span>
+                      </div>
+                    ) : (
+                      <Link
+                        key={networkBar.slug}
+                        href={`/bars/${networkBar.slug}`}
+                        className={styles.switchOption}
+                      >
+                        <span className={styles.switchOptionTitle}>
+                          {networkBar.shortLabel}
+                        </span>
+                        <span className={styles.switchOptionMeta}>
+                          {networkBar.addressLine}
+                        </span>
+                        <span className={styles.switchOptionState}>
+                          Открыть страницу
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className={styles.switchEmpty}>
+                  Список точек обновляется. Ближайшую Щуку подскажем по телефону.
+                </p>
+              )}
             </div>
           </div>
         </section>

@@ -3,6 +3,7 @@
 import { BrandLink } from "@/components/brand-link";
 import buttonStyles from "@/components/button.module.css";
 import { cx } from "@/lib/class-names";
+import { getRenderableBars } from "@/lib/content/content-guards";
 import styles from "./network-points.module.css";
 
 function formatBarsCount(barsCount, countLabels) {
@@ -17,10 +18,12 @@ function formatBarsCount(barsCount, countLabels) {
 }
 
 export function NetworkPointsSection({ bars, copy }) {
+  const visibleBars = getRenderableBars(bars);
   const barsCountLabel =
     copy?.countLabels
-      ? formatBarsCount(bars.length, copy.countLabels)
-      : `${bars.length}`;
+      ? formatBarsCount(visibleBars.length, copy.countLabels)
+      : `${visibleBars.length}`;
+  const isSingleBar = visibleBars.length === 1;
 
   return (
     <div className={styles.pointsShell}>
@@ -28,47 +31,60 @@ export function NetworkPointsSection({ bars, copy }) {
         <span className={styles.pointsCount}>{barsCountLabel}</span>
       </div>
 
-      <div id="bar-list" className={styles.pointsGrid} aria-label="Точки сети">
-        {bars.map((bar) => (
-          <article key={bar.slug} className={styles.pointCard}>
-            {bar.statusLabel ? (
-              <div className={styles.pointTopline}>
-                <span className={styles.status}>{bar.statusLabel}</span>
+      <div
+        id="bar-list"
+        className={`${styles.pointsGrid} ${isSingleBar ? styles.pointsGridSingle : ""}`}
+        aria-label="Точки сети"
+      >
+        {visibleBars.length > 0 ? (
+          visibleBars.map((bar) => (
+            <article key={bar.slug} className={styles.pointCard}>
+              {bar.statusLabel ? (
+                <div className={styles.pointTopline}>
+                  <span className={styles.status}>{bar.statusLabel}</span>
+                </div>
+              ) : null}
+
+              <h3>{bar.shortLabel}</h3>
+              <p className={styles.address}>{bar.addressLine}</p>
+
+              <div className={styles.cardActions}>
+                <BrandLink
+                  variant="ghost"
+                  href={`/bars/${bar.slug}`}
+                  className={cx(
+                    buttonStyles.buttonBase,
+                    buttonStyles.buttonGhostAction,
+                    buttonStyles.buttonMd,
+                    buttonStyles.buttonArrow,
+                    styles.cardAction
+                  )}
+                >
+                  {copy.openLabel}
+                </BrandLink>
+                {bar.phoneE164 ? (
+                  <BrandLink
+                    variant="ghost"
+                    href={`tel:${bar.phoneE164}`}
+                    className={cx(
+                      buttonStyles.buttonBase,
+                      buttonStyles.buttonGhostAction,
+                      buttonStyles.buttonMd,
+                      styles.cardAction
+                    )}
+                  >
+                    {copy.phoneLabel}
+                  </BrandLink>
+                ) : null}
               </div>
-            ) : null}
-
-            <h3>{bar.shortLabel}</h3>
-            <p className={styles.address}>{bar.addressLine}</p>
-
-            <div className={styles.cardActions}>
-              <BrandLink
-                variant="ghost"
-                href={`/bars/${bar.slug}`}
-                className={cx(
-                  buttonStyles.buttonBase,
-                  buttonStyles.buttonGhostAction,
-                  buttonStyles.buttonMd,
-                  buttonStyles.buttonArrow,
-                  styles.cardAction
-                )}
-              >
-                {copy.openLabel}
-              </BrandLink>
-              <BrandLink
-                variant="ghost"
-                href={`tel:${bar.phoneE164}`}
-                className={cx(
-                  buttonStyles.buttonBase,
-                  buttonStyles.buttonGhostAction,
-                  buttonStyles.buttonMd,
-                  styles.cardAction
-                )}
-              >
-                {copy.phoneLabel}
-              </BrandLink>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))
+        ) : (
+          <div className={styles.emptyState}>
+            <p>Список точек обновляется.</p>
+            <strong>Скоро здесь появятся актуальные адреса Щуки.</strong>
+          </div>
+        )}
       </div>
     </div>
   );
